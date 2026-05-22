@@ -1,0 +1,11 @@
+# This file defines which users and teams are responsible for code in the repository
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owners
+* @wloulou842-star
+
+# Security-related files require review
+.gitignore @wloulou842-star
+SECURITY.md @wloulou842-star
+CONTRIBUTING.md @wloulou842-star
+.github/ @wloulou842-star
