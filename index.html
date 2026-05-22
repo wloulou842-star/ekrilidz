@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أكريلي Ekrili v0.3 - منصة كراء المنازل الصيفية [تجريبية]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --glass: rgba(20, 25, 35, 0.8);
+      --glass-light: rgba(30, 40, 60, 0.6);
+      --accent: #1e88e5;
+      --accent-dark: #1565c0;
+      --accent-light: #42a5f5;
+      --success: #1b5e20;
+      --danger: #b71c1c;
+      --warning: #e65100;
+      --bg: #0a0e17;
+      --text-primary: #e8eaed;
+      --text-secondary: #9ca3af;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, #0a0e17 0%, #0d1220 50%, #0a0e17 100%);
+      background-attachment: fixed;
+      padding-bottom: 120px;
+      min-height: 100vh;
+    }
+
+    /* ====== DEMO BANNER ====== */
+    .demo-banner {
+      background: linear-gradient(90deg, #b71c1c 0%, #c62828 100%);
+      padding: 16px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: 13px;
+      border-bottom: 3px solid #7f0000;
+      box-shadow: 0 4px 12px rgba(183, 28, 28, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 101;
+    }
+
+    .demo-banner p {
+      margin: 5px 0;
+      line-height: 1.5;
+    }
+
+    .demo-banner-title {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    /* ====== HEADER ====== */
+    header {
+      padding: 20px;
+      text-align: center;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 48px;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      font-size: 26px;
+      margin-bottom: 5px;
+      background: linear-gradient(135deg, #42a5f5, #1e88e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+    }
+
+    header p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    header .beta-label {
+      font-size: 11px;
+      color: #ff9800;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    /* ====== CONTAINER ====== */
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 15px;
+    }
+
+    /* ====== SEARCH & FILTER ====== */
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--glass-light);
+      color: var(--text-primary);
+      outline: none;
+      font-family: 'Cairo', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(30, 136, 229, 0.2);
+      background: rgba(30, 136, 229, 0.05);
+    }
+
+    input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+      box-shadow: 0 0 20px rgba(30, 136, 229, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ====== CARDS ====== */
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(30, 136, 229, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .img-container {
+      position: relative;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 180px;
+    }
+
+    .img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .img:hover {
+      transform: scale(1.08);
+    }
+
+    /* verified = أعلى يمين */
+    .verified-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(27, 94, 32, 0.95);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+
+    /* hot = أعلى يسار */
+    .hot-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(183, 28, 28, 0.95);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(244, 67, 54, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+
+    /* عينة = أسفل يمين */
+    .demo-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(230, 81, 0, 0.95);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 10px;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 152, 0, 0.3);
+      white-space: nowrap;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .demo-badge {
+      background: rgba(230, 81, 0, 0.95);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 18px;
+      font-size: 10px;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+
+    .rating {
+      color: #fbc02d;
+      font-size: 13px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .price {
+      color: var(--accent-light);
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ====== TAGS ====== */
+    .tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      background: rgba(30, 136, 229, 0.3);
+      border: 1px solid var(--accent);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-10px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .description {
+      background: rgba(255,255,255,0.04);
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      border-left: 3px solid var(--accent);
+    }
+
+    /* ====== ACTIONS ====== */
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-call {
+      background: var(--success);
+      flex: 2;
+      padding: 10px;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn-call:hover {
+      background: #2e7d32;
+      transform: translateY(-2px);
+    }
+
+    .btn-fav {
+      background: rgba(230, 81, 0, 0.3);
+      border: 1px solid var(--warning);
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-fav:hover {
+      background: var(--warning);
+    }
+
+    .btn-edit {
+      background: rgba(30, 136, 229, 0.3);
+      border: 1px solid var(--accent);
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-edit:hover {
+      background: var(--accent);
+    }
+
+    .btn-delete {
+      background: rgba(183, 28, 28, 0.3);
+      border: 1px solid var(--danger);
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-delete:hover {
+      background: var(--danger);
+    }
+
+    .btn-review {
+      background: rgba(156, 39, 176, 0.3);
+      border: 1px solid #9c27b0;
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-review:hover {
+      background: #9c27b0;
+    }
+
+    /* ====== MODAL ====== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--glass);
+      padding: 25px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 400px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      margin: 20px auto;
+      backdrop-filter: blur(20px);
+    }
+
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .demo-warning {
+      background: rgba(230, 81, 0, 0.1);
+      border: 1px solid var(--warning);
+      color: #ffb74d;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .modal-content input,
+    .modal-content select,
+    .modal-content textarea {
+      width: 100%;
+      margin-bottom: 12px !important;
+      padding: 10px !important;
+      background: var(--glass-light) !important;
+      border: 1px solid var(--border) !important;
+      color: var(--text-primary) !important;
+      border-radius: 8px !important;
+      font-family: 'Cairo', sans-serif !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .modal-content input:focus,
+    .modal-content select:focus,
+    .modal-content textarea:focus {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 10px rgba(30, 136, 229, 0.2) !important;
+    }
+
+    .modal-content textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .modal-buttons button {
+      flex: 1;
+    }
+
+    /* ====== BOTTOM NAV ====== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0;
+      border-top: 1px solid var(--border);
+      z-index: 99;
+      box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+    }
+
+    .nav-item {
+      text-align: center;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+      padding: 8px 15px;
+      font-weight: 600;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ====== EMPTY STATE ====== */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state h3 {
+      margin-bottom: 10px;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    /* ====== SUCCESS MESSAGE ====== */
+    .success-message {
+      background: rgba(27, 94, 32, 0.2);
+      color: #81c784;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(129, 199, 132, 0.3);
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .spinner {
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+  <p class="demo-banner-title">⚠️ منصة تجريبية تطويرية | DEMO VERSION</p>
+  <p>جميع الإعلانات والعروض وهمية للتجربة فقط - All Listings Are Sample Data For Testing Only</p>
+  <p>هذا ليس موقع حقيقي للبيع أو الإيجار | This Is Not A Real Rental Platform</p>
+</div>
+
+<header>
+  <h1>🏠 أكريلي Ekrili</h1>
+  <p>منصة كراء المنازل الصيفية الذكية | Location de Villas d'Été</p>
+  <div class="beta-label">🧪 نسخة تجريبية v0.3 - Test Version</div>
+</header>
+
+<div class="container">
+  <div class="success-message" id="successMsg">✅ تم تنفيذ العملية بنجاح!</div>
+  
+  <div class="search-box">
+    <input id="searchInput" placeholder="ابحث عن: بحر، شاليات، F3..." oninput="handleSearch()">
+  </div>
+
+  <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+    <select id="cityFilter" onchange="search()">
+      <option value="">📍 كل المدن</option>
+      <option value="تيبازة">تيبازة</option>
+      <option value="الجزائر">الجزائر</option>
+      <option value="وهران">وهران</option>
+      <option value="عنابة">عنابة</option>
+      <option value="سيدي فراج">سيدي فراج</option>
+    </select>
+    <select id="typeFilter" onchange="search()">
+      <option value="">🏠 نوع المنزل</option>
+      <option value="F2">F2</option>
+      <option value="F3">F3</option>
+      <option value="F4">F4</option>
+      <option value="studio">Studio</option>
+      <option value="chalet">Chalet</option>
+      <option value="villa">Villa</option>
+    </select>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <div id="results"></div>
+</div>
+
+<!-- شريط التنقل السفلي -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="showHome()">🏠<br>الرئيسية</div>
+  <div class="nav-item" onclick="openAddModal()">➕<br>أضف إعلان</div>
+  <div class="nav-item" onclick="showFavorites()">❤️<br>المفضلة</div>
+  <div class="nav-item" onclick="showMyListings()">📋<br>إعلاناتي</div>
+</div>
+
+<!-- Modal لإضافة منزل جديد -->
+<div id="addModal" class="modal">
+  <div class="modal-content">
+    <h2>➕ إضافة إعلان جديد</h2>
+    <div class="demo-warning">
+      ⚠️ هذا نموذج تجريبي فقط - البيانات لن تُحفظ بشكل دائم
+      Demo Data Only - Will Not Be Saved Permanently
+    </div>
+    
+    <input id="newTitle" placeholder="عنوان الإعلان">
+    <select id="newCity">
+      <option value="تيبازة">تيبازة</option>
+      <option value="الجزائر">الجزائر</option>
+      <option value="وهران">وهران</option>
+      <option value="عنابة">عنابة</option>
+      <option value="سيدي فراج">سيدي فراج</option>
+    </select>
+    <select id="newType">
+      <option value="F2">F2</option>
+      <option value="F3">F3</option>
+      <option value="F4">F4</option>
+      <option value="studio">Studio</option>
+      <option value="chalet">Chalet</option>
+      <option value="villa">Villa</option>
+    </select>
+    <input id="newPrice" type="number" placeholder="السعر (دج)">
+    <input id="newPhone" placeholder="رقم الهاتف">
+    <textarea id="newDescription" placeholder="وصف المنزل"></textarea>
+    
+    <div class="modal-buttons">
+      <button onclick="addNewProperty()" style="background: var(--success);">نشر الإعلان 🚀</button>
+      <button onclick="closeAddModal()" style="background: rgba(255,255,255,0.1); border: 1px solid var(--border);">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal للتعديل -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <h2>✏️ تعديل الإعلان</h2>
+    
+    <input id="editTitle" placeholder="عنوان الإعلان">
+    <select id="editCity">
+      <option value="تيبازة">تيبازة</option>
+      <option value="الجزائر">الجزائر</option>
+      <option value="وهران">وهران</option>
+      <option value="عنابة">عنابة</option>
+      <option value="سيدي فراج">سيدي فراج</option>
+    </select>
+    <select id="editType">
+      <option value="F2">F2</option>
+      <option value="F3">F3</option>
+      <option value="F4">F4</option>
+      <option value="studio">Studio</option>
+      <option value="chalet">Chalet</option>
+      <option value="villa">Villa</option>
+    </select>
+    <input id="editPrice" type="number" placeholder="السعر (دج)">
+    <input id="editPhone" placeholder="رقم الهاتف">
+    <textarea id="editDescription" placeholder="وصف المنزل"></textarea>
+    
+    <div class="modal-buttons">
+      <button onclick="saveEditProperty()" style="background: var(--accent);">حفظ التعديلات ✅</button>
+      <button onclick="closeEditModal()" style="background: rgba(255,255,255,0.1); border: 1px solid var(--border);">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal لإضافة تقييم -->
+<div id="reviewModal" class="modal">
+  <div class="modal-content">
+    <h2>⭐ أضف تقييماً</h2>
+    
+    <div style="margin-bottom: 15px;">
+      <label style="color: var(--text-primary); font-size: 14px;">التقييم:</label>
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <button onclick="setRating(1)" style="background: transparent; flex: 1; color: #fbc02d; font-size: 24px; border: 1px solid var(--border); padding: 8px;">⭐</button>
+        <button onclick="setRating(2)" style="background: transparent; flex: 1; color: #fbc02d; font-size: 24px; border: 1px solid var(--border); padding: 8px;">⭐⭐</button>
+        <button onclick="setRating(3)" style="background: transparent; flex: 1; color: #fbc02d; font-size: 24px; border: 1px solid var(--border); padding: 8px;">⭐⭐⭐</button>
+        <button onclick="setRating(4)" style="background: transparent; flex: 1; color: #fbc02d; font-size: 24px; border: 1px solid var(--border); padding: 8px;">⭐⭐⭐⭐</button>
+        <button onclick="setRating(5)" style="background: transparent; flex: 1; color: #fbc02d; font-size: 24px; border: 1px solid var(--border); padding: 8px;">⭐⭐⭐⭐⭐</button>
+      </div>
+    </div>
+    
+    <input id="reviewerName" placeholder="اسمك">
+    <textarea id="reviewText" placeholder="رأيك في هذا المنزل..."></textarea>
+    
+    <div class="modal-buttons">
+      <button onclick="submitReview()" style="background: #9c27b0;">نشر التقييم 📝</button>
+      <button onclick="closeReviewModal()" style="background: rgba(255,255,255,0.1); border: 1px solid var(--border);">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ====== DATA MANAGEMENT ======
+let myProperties = JSON.parse(localStorage.getItem("myProperties") || "[]");
+let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+let currentView = "home";
+let searchTimeout;
+let currentEditId = null;
+let currentReviewId = null;
+let currentRating = 0;
+
+const getTags = (type) => {
+  const tags = ["عينة", "Sample"];
+  if (type === "villa") tags.push("فيلا");
+  if (type === "chalet") tags.push("شاليه");
+  if (type === "studio") tags.push("استوديو");
+  if (type.startsWith("F")) tags.push("عائلي");
+  return tags;
+};
+
+const baseListings = [
+  { 
+    id: 1, 
+    title: "فيلا فاخرة بإطلالة بحر [عينة]", 
+    city: "تيبازة", 
+    type: "villa",
+    price: 450000, 
+    phone: "0550123456", 
+    img: "https://images.unsplash.com/photo-1512917774080-9b6b7d6d07d0?auto=format&fit=crop&w=800&q=60", 
+    isVerified: true,
+    rating: 5,
+    description: "عينة توضيحية فقط - Sample Data Only",
+    isHot: true,
+    reviews: [
+      { user: "أحمد (عينة)", stars: 5, comment: "بيانات توضيحية فقط" }
+    ]
+  },
+  { 
+    id: 2, 
+    title: "شاليه حديث مع Wi-Fi [عينة]", 
+    city: "الجزائر", 
+    type: "chalet",
+    price: 350000, 
+    phone: "0550765432", 
+    img: "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=800&q=60", 
+    isVerified: true,
+    rating: 4,
+    description: "عينة توضيحية فقط - Sample Data Only",
+    isHot: false,
+    reviews: []
+  },
+  { 
+    id: 3, 
+    title: "استوديو للطلبة [عينة]", 
+    city: "وهران", 
+    type: "studio",
+    price: 180000, 
+    phone: "0550987654", 
+    img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=60", 
+    isVerified: true,
+    rating: 3,
+    description: "عينة توضيحية فقط - Sample Data Only",
+    isHot: false,
+    reviews: []
+  },
+  { 
+    id: 4, 
+    title: "F3 عائلية بإطلالة بحر [عينة]", 
+    city: "سيدي فراج", 
+    type: "F3",
+    price: 320000, 
+    phone: "0551234567", 
+    img: "https://images.unsplash.com/photo-1445126613408-c92ded7d3f0a?auto=format&fit=crop&w=800&q=60", 
+    isVerified: true,
+    rating: 5,
+    description: "عينة توضيحية فقط - Sample Data Only",
+    isHot: true,
+    reviews: []
+  },
+  { 
+    id: 5, 
+    title: "F2 حديثة [عينة]", 
+    city: "تيبازة", 
+    type: "F2",
+    price: 280000, 
+    phone: "0552345678", 
+    img: "https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?auto=format&fit=crop&w=800&q=60", 
+    isVerified: true,
+    rating: 4,
+    description: "عينة توضيحية فقط - Sample Data Only",
+    isHot: false,
+    reviews: []
+  }
+];
+
+// ====== UI FUNCTIONS ======
+function openAddModal() { document.getElementById("addModal").classList.add("active"); }
+function closeAddModal() { document.getElementById("addModal").classList.remove("active"); }
+function openEditModal(id) {
+  currentEditId = id;
+  const allData = [...baseListings, ...myProperties];
+  const property = allData.find(p => p.id === id);
+  if (property) {
+    document.getElementById("editTitle").value = property.title;
+    document.getElementById("editCity").value = property.city;
+    document.getElementById("editType").value = property.type;
+    document.getElementById("editPrice").value = property.price;
+    document.getElementById("editPhone").value = property.phone;
+    document.getElementById("editDescription").value = property.description;
+    document.getElementById("editModal").classList.add("active");
+  }
+}
+function closeEditModal() { document.getElementById("editModal").classList.remove("active"); }
+function openReviewModal(id) {
+  currentReviewId = id;
+  currentRating = 0;
+  document.getElementById("reviewerName").value = "";
+  document.getElementById("reviewText").value = "";
+  document.getElementById("reviewModal").classList.add("active");
+}
+function closeReviewModal() { document.getElementById("reviewModal").classList.remove("active"); }
+function setRating(stars) { currentRating = stars; }
+function showMessage(msg) {
+  const msgEl = document.getElementById("successMsg");
+  msgEl.textContent = msg;
+  msgEl.classList.add("show");
+  setTimeout(() => msgEl.classList.remove("show"), 2500);
+}
+function getRatingStars(rating) { return "⭐".repeat(rating) + "☆".repeat(5 - rating); }
+function showLoading() { document.getElementById("loading").style.display = "block"; }
+function hideLoading() { document.getElementById("loading").style.display = "none"; }
+
+// ====== RENDERING ======
+function renderListings(listings, containerId = "results") {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+
+  if (listings.length === 0) {
+    const emptyDiv = document.createElement("div");
+    emptyDiv.className = "empty-state";
+    emptyDiv.innerHTML = "<h3>📭 لا توجد نتائج</h3><p>حاول البحث عن شيء آخر</p>";
+    container.appendChild(emptyDiv);
+    return;
+  }
+
+  listings.forEach(property => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const isFav = favorites.includes(property.id);
+    const isOwner = myProperties.some(p => p.id === property.id);
+    const tags = getTags(property.type);
+    const tagsHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join("");
+
+    const reviewsHTML = property.reviews && property.reviews.length > 0 ? `
+      <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px;">
+        <div style="color: var(--accent); font-weight: bold; margin-bottom: 8px;">⭐ التقييمات (${property.reviews.length})</div>
+        ${property.reviews.slice(0, 2).map(r => `
+          <div style="background: rgba(255,255,255,0.02); padding: 8px; border-radius: 6px; margin-bottom: 6px; border-left: 2px solid var(--accent);">
+            <div style="color: var(--accent); font-weight: bold; font-size: 11px;">${r.user}</div>
+            <div style="color: #fbc02d; font-size: 11px;">${getRatingStars(r.stars)}</div>
+            <div style="color: var(--text-secondary); margin-top: 4px; font-size: 11px;">"${r.comment}"</div>
+          </div>
+        `).join("")}
+      </div>
+    ` : "";
+
+    card.innerHTML = `
+      <div class="img-container">
+        <img class="img" src="${property.img}" alt="${property.title}" />
+        ${property.isVerified ? '<span class="verified-badge">✅ موثق</span>' : ''}
+        ${property.isHot ? '<span class="hot-badge">🔥 ساخن</span>' : ''}
+        <span class="demo-badge">🧪 عينة</span>
+      </div>
+      <div class="tags">${tagsHTML}</div>
+      <div class="title">${property.title}</div>
+      <div class="rating">${getRatingStars(property.rating || 0)} (${property.reviews ? property.reviews.length : 0})</div>
+      <div class="price">${property.price.toLocaleString('ar-EG')} دج</div>
+      <div class="meta">
+        <span>📍 ${property.city}</span>
+        <span>🏠 ${property.type}</span>
+      </div>
+      <div class="description">📌 ${property.description}</div>
+      ${reviewsHTML}
+      <div class="actions">
+        <button class="btn-call" onclick="window.open('tel:${property.phone}')">📞 اتصل الآن</button>
+        <button class="btn-fav" onclick="toggleFav(${property.id})">${isFav ? "❤️ مفضل" : "⭐ حفظ"}</button>
+        <button class="btn-review" onclick="openReviewModal(${property.id})">💬 تقييم</button>
+        ${isOwner ? `
+          <button class="btn-edit" onclick="openEditModal(${property.id})">✏️ عدّل</button>
+          <button class="btn-delete" onclick="deleteProperty(${property.id})">🗑️ حذف</button>
+        ` : ''}
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+// ====== SEARCH ======
+function handleSearch() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(search, 300);
+}
+
+function search() {
+  currentView = "home";
+  updateNav();
+  showLoading();
+
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const city = document.getElementById("cityFilter").value;
+  const type = document.getElementById("typeFilter").value;
+
+  const allData = [...baseListings, ...myProperties];
+  
+  let filtered = allData.filter(item => {
+    const matchCity = !city || item.city === city;
+    const matchType = !type || item.type === type;
+    const matchSearch = !q || 
+      item.title.toLowerCase().includes(q) || 
+      item.description.toLowerCase().includes(q);
+    return matchCity && matchType && matchSearch;
+  });
+
+  setTimeout(() => {
+    hideLoading();
+    renderListings(filtered);
+  }, 300);
+}
+
+// ====== FAVORITES ======
+function toggleFav(id) {
+  if (favorites.includes(id)) {
+    favorites = favorites.filter(x => x !== id);
+    showMessage("❌ تم الحذف من المفضلة");
+  } else {
+    favorites.push(id);
+    showMessage("❤️ تم الحفظ في المفضلة");
+  }
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  search();
+}
+
+function showFavorites() {
+  currentView = "favorites";
+  updateNav();
+  const allData = [...baseListings, ...myProperties];
+  const favListings = allData.filter(item => favorites.includes(item.id));
+  renderListings(favListings);
+}
+
+// ====== MY LISTINGS ======
+function showMyListings() {
+  currentView = "mylistings";
+  updateNav();
+  renderListings(myProperties);
+}
+
+function deleteProperty(id) {
+  if (confirm("هل أنت متأكد من حذف هذا الإعلان؟")) {
+    myProperties = myProperties.filter(p => p.id !== id);
+    localStorage.setItem("myProperties", JSON.stringify(myProperties));
+    favorites = favorites.filter(f => f !== id);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    showMessage("🗑️ تم حذف الإعلان بنجاح");
+    showMyListings();
+  }
+}
+
+// ====== EDIT ======
+function saveEditProperty() {
+  const title = document.getElementById("editTitle").value;
+  const city = document.getElementById("editCity").value;
+  const type = document.getElementById("editType").value;
+  const price = parseInt(document.getElementById("editPrice").value);
+  const phone = document.getElementById("editPhone").value;
+  const description = document.getElementById("editDescription").value;
+
+  if (!title || !price || !phone) {
+    alert("⚠️ يرجى ملء جميع الحقول!");
+    return;
+  }
+
+  const propertyIndex = myProperties.findIndex(p => p.id === currentEditId);
+  if (propertyIndex !== -1) {
+    myProperties[propertyIndex] = {
+      ...myProperties[propertyIndex],
+      title, city, type, price, phone, description
+    };
+    localStorage.setItem("myProperties", JSON.stringify(myProperties));
+    showMessage("✅ تم التعديل بنجاح!");
+    closeEditModal();
+    showMyListings();
+  }
+}
+
+// ====== ADD ======
+function addNewProperty() {
+  const title = document.getElementById("newTitle").value;
+  const city = document.getElementById("newCity").value;
+  const type = document.getElementById("newType").value;
+  const price = parseInt(document.getElementById("newPrice").value);
+  const phone = document.getElementById("newPhone").value;
+  const description = document.getElementById("newDescription").value;
+
+  if (!title || !price || !phone) {
+    alert("⚠️ يرجى ملء جميع الحقول المطلوبة!");
+    return;
+  }
+
+  const newProperty = {
+    id: Date.now(),
+    title: title + " [إعلان تجريبي]",
+    city,
+    type,
+    price,
+    phone,
+    description: description || "عينة توضيحية",
+    img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=60",
+    isVerified: true,
+    rating: 5,
+    isHot: false,
+    reviews: []
+  };
+
+  myProperties.push(newProperty);
+  localStorage.setItem("myProperties", JSON.stringify(myProperties));
+
+  closeAddModal();
+  showMessage("🎉 تم نشر الإعلان بنجاح!");
+  showMyListings();
+}
+
+// ====== REVIEWS ======
+function submitReview() {
+  const name = document.getElementById("reviewerName").value;
+  const text = document.getElementById("reviewText").value;
+
+  if (!name || !text || currentRating === 0) {
+    alert("⚠️ يرجى ملء جميع الحقول واختيار تقييم!");
+    return;
+  }
+
+  const allData = [...baseListings, ...myProperties];
+  const property = allData.find(p => p.id === currentReviewId);
+
+  if (property) {
+    if (!property.reviews) property.reviews = [];
+    property.reviews.push({
+      user: name + " (عينة)",
+      stars: currentRating,
+      comment: text
+    });
+
+    const myPropIndex = myProperties.findIndex(p => p.id === currentReviewId);
+    if (myPropIndex !== -1) {
+      localStorage.setItem("myProperties", JSON.stringify(myProperties));
+    }
+
+    showMessage("📝 شكراً على تقييمك!");
+    closeReviewModal();
+    search();
+  }
+}
+
+// ====== NAVIGATION ======
+function showHome() {
+  currentView = "home";
+  updateNav();
+  document.getElementById("searchInput").value = "";
+  document.getElementById("cityFilter").value = "";
+  document.getElementById("typeFilter").value = "";
+  search();
+}
+
+function updateNav() {
+  document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+  const navItems = document.querySelectorAll(".nav-item");
+  if (currentView === "home") navItems[0].classList.add("active");
+  if (currentView === "favorites") navItems[2].classList.add("active");
+  if (currentView === "mylistings") navItems[3].classList.add("active");
+}
+
+// Initialize
+search();
+</script>
+
+</body>
+</html>
