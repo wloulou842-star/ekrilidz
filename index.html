@@ -590,12 +590,42 @@
   </div>
 </div>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
+
 <script>
+// ====== FIREBASE CONFIG ======
+// استبدل هذه البيانات ببيانات مشروعك من Firebase Console
+const firebaseConfig = {
+  apiKey: "AIzaSyDL-YOUR-API-KEY-HERE",
+  authDomain: "ekrili-app.firebaseapp.com",
+  projectId: "ekrili-app",
+  storageBucket: "ekrili-app.appspot.com",
+  messagingSenderId: "YOUR-MESSAGING-SENDER-ID",
+  appId: "YOUR-APP-ID",
+  databaseURL: "https://ekrili-app-default-rtdb.firebaseio.com"
+};
+
+// إذا لم تملك Firebase، استخدم localStorage كبديل مؤقت
+let useFirebase = false;
+let db;
+
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+  useFirebase = true;
+} catch (error) {
+  console.warn("Firebase غير متصل. استخدام localStorage", error);
+  useFirebase = false;
+}
+
 // ====== DATA MANAGEMENT ======
-let myProperties = JSON.parse(localStorage.getItem("myProperties") || "[]");
-let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+let myProperties = [];
+let favorites = [];
 let currentView = "home";
 let editingId = null;
+let userId = localStorage.getItem("userId") || "guest_" + Date.now();
 
 const baseListings = [
   { 
@@ -608,7 +638,7 @@ const baseListings = [
     img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=60", 
     isVerified: true,
     rating: 5,
-    description: "منزل فاخر مع إطلالة بحرية خلابة، مسبح خاص، حديقة كبيرة، واي فاي سريع"
+    description: "منزل فاخر مع إطلالة بحرية خلابة، مسبح خاص، حديقة كبيرة، واي فا�� سريع"
   },
   { 
     id: 2, 
@@ -647,6 +677,46 @@ const baseListings = [
     description: "فيلا فاخرة جداً على الشاطئ مباشرة، 4 غرف، حمام سباحة خاص، حديقة واسعة"
   }
 ];
+
+// ====== FIREBASE FUNCTIONS ======
+async function saveToDatabase() {
+  if (!useFirebase) {
+    localStorage.setItem("myProperties", JSON.stringify(myProperties));
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    return;
+  }
+  
+  try {
+    await db.ref("users/" + userId).set({
+      myProperties: myProperties,
+      favorites: favorites,
+      lastUpdated: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error("خطأ في حفظ البيانات:", error);
+  }
+}
+
+async function loadFromDatabase() {
+  if (!useFirebase) {
+    myProperties = JSON.parse(localStorage.getItem("myProperties") || "[]");
+    favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    return;
+  }
+
+  try {
+    const snapshot = await db.ref("users/" + userId).get();
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      myProperties = data.myProperties || [];
+      favorites = data.favorites || [];
+    }
+  } catch (error) {
+    console.error("خطأ في تحميل البيانات:", error);
+    myProperties = [];
+    favorites = [];
+  }
+}
 
 // ====== UI FUNCTIONS ======
 function openAddModal() {
@@ -702,7 +772,7 @@ function renderListings(listings, containerId = "results") {
   if (listings.length === 0) {
     const emptyDiv = document.createElement("div");
     emptyDiv.className = "empty-state";
-    emptyDiv.innerHTML = "<h3>📭 لا توجد نتائج</h3><p>حاول البحث عن شيء آخر أو أضف إعلانك الخاص</p>";
+    emptyDiv.innerHTML = "<h3>📭 لا ��وجد نتائج</h3><p>حاول البحث عن شيء آخر أو أضف إعلانك الخاص</p>";
     container.appendChild(emptyDiv);
     return;
   }
@@ -786,7 +856,7 @@ function toggleFav(id) {
     favorites.push(id);
     showMessage("❤️ تم الحفظ في المفضلة");
   }
-  localStorage.setItem("favorites", JSON.stringify(favorites));
+  saveToDatabase();
   search();
 }
 
@@ -809,9 +879,8 @@ function showMyListings() {
 function deleteProperty(id) {
   if (confirm("هل أنت متأكد من حذف هذا الإعلان؟")) {
     myProperties = myProperties.filter(p => p.id !== id);
-    localStorage.setItem("myProperties", JSON.stringify(myProperties));
     favorites = favorites.filter(f => f !== id);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    saveToDatabase();
     showMessage("🗑️ تم حذف الإعلان بنجاح");
     showMyListings();
   }
@@ -867,7 +936,7 @@ function saveProperty() {
     showMessage("🎉 تم نشر الإعلان بنجاح!");
   }
 
-  localStorage.setItem("myProperties", JSON.stringify(myProperties));
+  saveToDatabase();
   closeAddModal();
   showMyListings();
 }
@@ -894,7 +963,13 @@ function updateNav() {
 }
 
 // تهيئة الصفحة
-search();
+async function initPage() {
+  await loadFromDatabase();
+  search();
+}
+
+localStorage.setItem("userId", userId);
+initPage();
 </script>
 
 </body>
