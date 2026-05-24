@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة المؤجر - أكريلي</title>
+    <style>
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; text-align: center; }
+        .box { max-width: 400px; margin: 20px auto; background: #1e293b; padding: 20px; border-radius: 15px; border: 1px solid #3b82f6; }
+        input, textarea, select { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: none; background: #0f172a; color: white; }
+        button { width: 100%; padding: 15px; background: #10b981; border: none; border-radius: 8px; color: white; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div id="login-div" class="box">
+        <h2>🔒 دخول المؤجرين</h2>
+        <input id="email" type="email" placeholder="البريد الإلكتروني">
+        <input id="pass" type="password" placeholder="كلمة السر">
+        <button onclick="login()">دخول</button>
+    </div>
+
+    <div id="dashboard-div" class="box" style="display:none;">
+        <h2>مرحباً بك في ملفك</h2>
+        <input id="title" placeholder="عنوان العقار (مثلاً: F3 في تيزي وزو)">
+        <select id="city">
+            <option value="الجزائر">الجزائر</option>
+            <option value="تيزي وزو">تيزي وزو</option>
+            <option value="وهران">وهران</option>
+        </select>
+        <textarea id="desc" placeholder="وصف العقار"></textarea>
+        <button onclick="saveAd()">نشر الإعلان 🚀</button>
+        <a href="https://wa.me/213661123456" target="_blank" style="display:block; margin-top:20px; color:#3b82f6;">📞 اتصل بنا عبر الواتساب</a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
+            authDomain: "ekrilidz-af404.firebaseapp.com",
+            projectId: "ekrilidz-af404",
+            storageBucket: "ekrilidz-af404.firebasestorage.app",
+            messagingSenderId: "945902801388",
+            appId: "1:945902801388:web:5a79223f369ee0544df0c9"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // وظيفة الدخول
+        window.login = () => {
+            signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value)
+            .then(() => {
+                document.getElementById('login-div').style.display = 'none';
+                document.getElementById('dashboard-div').style.display = 'block';
+            }).catch(e => alert("تأكد من البريد وكلمة السر"));
+        };
+
+        // وظيفة نشر الإعلان
+        window.saveAd = async () => {
+            await addDoc(collection(db, "properties"), {
+                title: document.getElementById('title').value,
+                city: document.getElementById('city').value,
+                desc: document.getElementById('desc').value,
+                owner: auth.currentUser.email
+            });
+            alert("تم نشر إعلانك بنجاح!");
+        };
+    </script>
+</body>
+</html>
