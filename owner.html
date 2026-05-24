@@ -18,6 +18,18 @@
         <input id="pass" type="password" placeholder="كلمة السر">
         <button onclick="login()">دخول</button>
     </div>
+<button onclick="updateStatus('${doc.id}', 'reserved')" style="background:#ef4444;">
+   تغيير إلى: محجوز 🔒
+</button>
+
+<script>
+    // دالة تحديث الحالة في Firebase
+    window.updateStatus = async (id, newStatus) => {
+        const docRef = doc(db, "properties", id);
+        await updateDoc(docRef, { status: newStatus });
+        alert("تم تحديث حالة العقار!");
+    };
+</script>
 
     <div class="box" id="ad-div" style="display:none;">
         <h2>إضافة عقار</h2>
