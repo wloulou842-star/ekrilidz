@@ -2,50 +2,72 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>أضف إعلانك - أكريلي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المؤجر - أكريلي</title>
     <style>
         body { font-family: 'Cairo', sans-serif; background: #0f172a; color: white; padding: 20px; }
-        .form-container { max-width: 500px; margin: auto; background: #1e293b; padding: 25px; border-radius: 15px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; }
+        .box { max-width: 400px; margin: auto; background: #1e293b; padding: 20px; border-radius: 15px; }
+        input, textarea, select { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+        button { width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>➕ أضف منزلك لأكريلي</h2>
-        <input id="title" placeholder="عنوان الإعلان">
+    <div class="box" id="login-div">
+        <h2>دخول المؤجر</h2>
+        <input id="email" type="email" placeholder="البريد الإلكتروني">
+        <input id="pass" type="password" placeholder="كلمة السر">
+        <button onclick="login()">دخول</button>
+    </div>
+
+    <div class="box" id="ad-div" style="display:none;">
+        <h2>إضافة عقار</h2>
+        <input id="title" placeholder="عنوان العقار">
         <select id="city">
             <option value="الجزائر">الجزائر</option>
-            <option value="تيزي وزو">تيزي وزو</option>
             <option value="وهران">وهران</option>
+            <option value="تيزي وزو">تيزي وزو</option>
         </select>
-        <input id="price" type="number" placeholder="السعر (دج)">
-        <textarea id="desc" placeholder="وصف المنزل..."></textarea>
-        
-        <div style="margin: 20px 0; padding: 15px; border: 1px dashed #3b82f6; border-radius: 10px;">
-            <h4 style="color: #3b82f6;">💡 أراؤكم تهمنا!</h4>
-            <p style="font-size: 11px; color: #94a3b8;">نحن نعمل على توفير بيئة آمنة للجميع. شاركنا ملاحظاتك، هي سرية ولا يراها أحد.</p>
-            <textarea id="feedback" placeholder="ملاحظاتك لنا..."></textarea>
-        </div>
-        
-        <button onclick="saveAd()" style="width:100%; padding:15px; background:#10b981; border:none; border-radius:8px; cursor:pointer;">نشر الإعلان 🚀</button>
+        <textarea id="desc" placeholder="وصف العقار"></textarea>
+        <textarea id="feedback" placeholder="أراؤكم تهمنا.. ملاحظاتك سرية لنا"></textarea>
+        <button onclick="saveAd()">نشر 🚀</button>
+        <a href="https://wa.me/213661123456" target="_blank" style="display:block; margin-top:10px; color:#3b82f6;">📞 تواصل معنا واتساب</a>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        
-        const firebaseConfig = { /* انسخ كود Firebase الخاص بك هنا */ };
-        const db = getFirestore(initializeApp(firebaseConfig));
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
+            authDomain: "ekrilidz-af404.firebaseapp.com",
+            projectId: "ekrilidz-af404",
+            storageBucket: "ekrilidz-af404.firebasestorage.app",
+            messagingSenderId: "945902801388",
+            appId: "1:945902801388:web:5a79223f369ee0544df0c9",
+            measurementId: "G-P19FP8BLJQ"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.login = () => {
+            signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value)
+            .then(() => {
+                document.getElementById('login-div').style.display = 'none';
+                document.getElementById('ad-div').style.display = 'block';
+            }).catch(() => alert("خطأ في الدخول"));
+        };
 
         window.saveAd = async () => {
             await addDoc(collection(db, "properties"), {
                 title: document.getElementById('title').value,
                 city: document.getElementById('city').value,
-                price: document.getElementById('price').value,
-                feedback: document.getElementById('feedback').value, // تُحفظ في Firebase ولا تُعرض في الصفحة
-                status: 'available'
+                description: document.getElementById('desc').value,
+                feedback: document.getElementById('feedback').value,
+                owner: auth.currentUser.email
             });
-            alert("تم إرسال إعلانك بنجاح!");
+            alert("تم النشر بنجاح!");
         };
     </script>
 </body>
