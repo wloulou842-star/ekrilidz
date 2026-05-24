@@ -1,33 +1,22 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>أكريلي - السوق نظيف</title>
-    <style>
-        .card { background: #1e293b; padding: 20px; border-radius: 15px; margin: 15px; border: 1px solid #3b82f6; }
-    </style>
-</head>
+<head><meta charset="UTF-8"><title>أكريلي - عرض المنازل</title></head>
 <body>
-    <header style="text-align:center; padding:20px;">
-        <h1>🏠 أكريلي Ekrili</h1>
-        <p>حوس، تلقى، وتكري.. كاين 'أكريلي'، السوق نظيف.</p>
-    </header>
-
+    <h1>🏠 أكريلي</h1>
+    <a href="owner.html">➕ إضافة إعلانك</a>
     <div id="results"></div>
 
     <script type="module">
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        // ... (نفس كود تهيئة Firebase)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
         
-        const querySnapshot = await getDocs(collection(db, "properties"));
-        querySnapshot.forEach((doc) => {
+        const firebaseConfig = { /* انسخ نفس الـ config هنا */ };
+        const db = getFirestore(initializeApp(firebaseConfig));
+
+        const snapshot = await getDocs(collection(db, "properties"));
+        snapshot.forEach(doc => {
             const p = doc.data();
-            document.getElementById('results').innerHTML += `
-                <div class="card">
-                    <h3>${p.title}</h3>
-                    <p>📍 ${p.city} | 💰 ${p.price} دج</p>
-                </div>
-            `;
+            document.getElementById('results').innerHTML += `<div><h3>${p.title}</h3><p>${p.city}</p></div>`;
         });
     </script>
 </body>
