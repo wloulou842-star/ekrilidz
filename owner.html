@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>أضف إعلانك - أكريلي</title>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: #0f172a; color: white; padding: 20px; }
+        .form-container { max-width: 500px; margin: auto; background: #1e293b; padding: 25px; border-radius: 15px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>➕ أضف منزلك لأكريلي</h2>
+        <input id="title" placeholder="عنوان الإعلان">
+        <select id="city">
+            <option value="الجزائر">الجزائر</option>
+            <option value="تيزي وزو">تيزي وزو</option>
+            <option value="وهران">وهران</option>
+        </select>
+        <input id="price" type="number" placeholder="السعر (دج)">
+        <textarea id="desc" placeholder="وصف المنزل..."></textarea>
+        
+        <div style="margin: 20px 0; padding: 15px; border: 1px dashed #3b82f6; border-radius: 10px;">
+            <h4 style="color: #3b82f6;">💡 أراؤكم تهمنا!</h4>
+            <p style="font-size: 11px; color: #94a3b8;">نحن نعمل على توفير بيئة آمنة للجميع. شاركنا ملاحظاتك، هي سرية ولا يراها أحد.</p>
+            <textarea id="feedback" placeholder="ملاحظاتك لنا..."></textarea>
+        </div>
+        
+        <button onclick="saveAd()" style="width:100%; padding:15px; background:#10b981; border:none; border-radius:8px; cursor:pointer;">نشر الإعلان 🚀</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        
+        const firebaseConfig = { /* انسخ كود Firebase الخاص بك هنا */ };
+        const db = getFirestore(initializeApp(firebaseConfig));
+
+        window.saveAd = async () => {
+            await addDoc(collection(db, "properties"), {
+                title: document.getElementById('title').value,
+                city: document.getElementById('city').value,
+                price: document.getElementById('price').value,
+                feedback: document.getElementById('feedback').value, // تُحفظ في Firebase ولا تُعرض في الصفحة
+                status: 'available'
+            });
+            alert("تم إرسال إعلانك بنجاح!");
+        };
+    </script>
+</body>
+</html>
