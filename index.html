@@ -2,20 +2,38 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكريلي Ekrili</title>
     <style>
-        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; }
-        .card { background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #3b82f6; }
+        body { font-family: sans-serif; background: #0f172a; color: white; text-align: center; padding: 20px; }
+        h1 { font-size: 50px; background: linear-gradient(to right, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card { background: #1e293b; padding: 20px; border-radius: 15px; margin: 15px auto; max-width: 500px; border: 1px solid #3b82f6; text-align: right; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; background: #0f172a; color: white; }
+        button { width: 100%; padding: 15px; background: #10b981; border: none; border-radius: 8px; color: white; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>🏠 أكريلي</h1>
-    <a href="owner.html" style="color: #10b981;">➕ إضافة إعلانك</a>
-    <div id="results" style="margin-top: 20px;">جاري تحميل الإعلانات...</div>
+
+    <h1>🏠 أكريلي Ekrili</h1>
+    <p>السكن بين يديك.. بلا فوضى وبلا تعب</p>
+    
+    <div class="card">
+        <h3>أضف إعلانك</h3>
+        <input id="title" placeholder="عنوان العقار">
+        <select id="city">
+            <option value="الجزائر">الجزائر</option>
+            <option value="وهران">وهران</option>
+        </select>
+        <textarea id="desc" placeholder="الوصف"></textarea>
+        <textarea id="feedback" placeholder="أراؤكم تهمنا.. ملاحظاتكم سرية لنا"></textarea>
+        <button onclick="saveAd()">نشر الإعلان 🚀</button>
+    </div>
+
+    <div id="results"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
@@ -27,19 +45,26 @@
         };
         const db = getFirestore(initializeApp(firebaseConfig));
 
+        // دالة الحفظ
+        window.saveAd = async () => {
+            await addDoc(collection(db, "properties"), {
+                title: document.getElementById('title').value,
+                city: document.getElementById('city').value,
+                desc: document.getElementById('desc').value,
+                feedback: document.getElementById('feedback').value
+            });
+            alert("تم النشر بنجاح!");
+            loadAds();
+        };
+
+        // دالة العرض
         async function loadAds() {
-            const resultsDiv = document.getElementById('results');
-            const snapshot = await getDocs(collection(db, "properties"));
-            resultsDiv.innerHTML = "";
-            snapshot.forEach(doc => {
+            const res = document.getElementById('results');
+            const snap = await getDocs(collection(db, "properties"));
+            res.innerHTML = "<h2>الإعلانات المتاحة</h2>";
+            snap.forEach(doc => {
                 const p = doc.data();
-                resultsDiv.innerHTML += `
-                    <div class="card">
-                        <h3>${p.title || 'إعلان بدون عنوان'}</h3>
-                        <p>📍 ${p.city || 'غير محدد'}</p>
-                        <p>💰 ${p.price || 0} دج</p>
-                    </div>
-                `;
+                res.innerHTML += `<div class="card"><h3>${p.title}</h3><p>${p.city}</p><p>${p.desc}</p></div>`;
             });
         }
         loadAds();
