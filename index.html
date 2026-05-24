@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head><meta charset="UTF-8"><title>أكريلي - عرض المنازل</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>أكريلي Ekrili</title>
+    <style>
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; }
+        .card { background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #3b82f6; }
+    </style>
+</head>
 <body>
     <h1>🏠 أكريلي</h1>
-    <a href="owner.html">➕ إضافة إعلانك</a>
-    <div id="results"></div>
+    <a href="owner.html" style="color: #10b981;">➕ إضافة إعلانك</a>
+    <div id="results" style="margin-top: 20px;">جاري تحميل الإعلانات...</div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-        
-        const firebaseConfig = { /* انسخ نفس الـ config هنا */ };
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
+            authDomain: "ekrilidz-af404.firebaseapp.com",
+            projectId: "ekrilidz-af404",
+            storageBucket: "ekrilidz-af404.firebasestorage.app",
+            messagingSenderId: "945902801388",
+            appId: "1:945902801388:web:5a79223f369ee0544df0c9"
+        };
         const db = getFirestore(initializeApp(firebaseConfig));
 
-        const snapshot = await getDocs(collection(db, "properties"));
-        snapshot.forEach(doc => {
-            const p = doc.data();
-            document.getElementById('results').innerHTML += `<div><h3>${p.title}</h3><p>${p.city}</p></div>`;
-        });
+        async function loadAds() {
+            const resultsDiv = document.getElementById('results');
+            const snapshot = await getDocs(collection(db, "properties"));
+            resultsDiv.innerHTML = "";
+            snapshot.forEach(doc => {
+                const p = doc.data();
+                resultsDiv.innerHTML += `
+                    <div class="card">
+                        <h3>${p.title || 'إعلان بدون عنوان'}</h3>
+                        <p>📍 ${p.city || 'غير محدد'}</p>
+                        <p>💰 ${p.price || 0} دج</p>
+                    </div>
+                `;
+            });
+        }
+        loadAds();
     </script>
 </body>
 </html>
