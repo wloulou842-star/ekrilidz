@@ -2,548 +2,892 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>أكريلي Akrili - تسجيل الدخول</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>إكريلي | Mekri DZ</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80') center/cover;
-      position: relative;
+    body{
+      font-family:'Cairo',sans-serif;
+      background:#071018;
+      overflow-x:hidden;
+      color:white;
     }
 
-    /* Glass Morphism للصورة */
-    .container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(20px);
-      z-index: 1;
+    a{
+      text-decoration:none;
+      color:inherit;
     }
 
-    /* Header - عنوان أكريلي */
-    .header {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      padding: 40px 20px;
-      margin-bottom: 30px;
+    /* =========================
+       BACKGROUND EFFECTS
+    ==========================*/
+
+    .bg-glow{
+      position:fixed;
+      width:500px;
+      height:500px;
+      background:#00ffae20;
+      filter:blur(120px);
+      border-radius:50%;
+      z-index:-1;
     }
 
-    .header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 64px;
-      background: linear-gradient(135deg, #3b82f6, #10b981, #f59e0b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 10px;
-      text-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
-      letter-spacing: 2px;
+    .glow1{
+      top:-150px;
+      left:-150px;
     }
 
-    .header p {
-      font-size: 24px;
-      color: #93c5fd;
-      font-weight: 300;
-      letter-spacing: 3px;
+    .glow2{
+      bottom:-200px;
+      right:-100px;
     }
 
-    /* الصورة مع الأزرار */
-    .main-content {
-      position: relative;
-      z-index: 10;
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    /* =========================
+       MAIN HERO
+    ==========================*/
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
     }
 
-    .buttons-container {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      height: 400px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 40px;
+    .hero-container{
+      width:100%;
+      max-width:1450px;
+      display:grid;
+      grid-template-columns:1fr 420px 1fr;
+      gap:35px;
+      align-items:center;
     }
 
-    /* زر الزائر (يسار) */
-    .btn-visitor {
-      width: 180px;
-      height: 240px;
-      border-radius: 50px;
-      background: linear-gradient(135deg, #3b82f6, #1e40af);
-      border: none;
-      color: white;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      font-family: 'Cairo', sans-serif;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
+    /* =========================
+       SIDE CARDS
+    ==========================*/
+
+    .side-card{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:35px;
+      overflow:hidden;
+      backdrop-filter:blur(10px);
+      box-shadow:
+      0 0 30px rgba(0,255,170,0.08);
     }
 
-    .btn-visitor::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-      animation: ledPulse1 3s infinite;
-      z-index: 1;
+    .side-image{
+      height:420px;
+      position:relative;
+      overflow:hidden;
     }
 
-    .btn-visitor span {
-      position: relative;
-      z-index: 2;
+    .side-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
-    .btn-visitor:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 60px rgba(59, 130, 246, 0.9);
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top,
+      rgba(0,0,0,0.7),
+      rgba(0,0,0,0.05));
     }
 
-    /* زر صاحب المنزل (يمين) */
-    .btn-host {
-      width: 180px;
-      height: 240px;
-      border-radius: 50px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      border: none;
-      color: white;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      font-family: 'Cairo', sans-serif;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 40px rgba(245, 158, 11, 0.6);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
+    .side-content{
+      padding:30px;
     }
 
-    .btn-host::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-      animation: ledPulse2 3s infinite;
-      z-index: 1;
+    .side-title{
+      font-size:42px;
+      font-weight:800;
+      margin-bottom:8px;
     }
 
-    .btn-host span {
-      position: relative;
-      z-index: 2;
+    .green{
+      color:#18d88f;
     }
 
-    .btn-host:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 60px rgba(245, 158, 11, 0.9);
+    .side-desc{
+      color:#cfd5dc;
+      line-height:1.8;
+      margin-bottom:25px;
+      font-size:18px;
     }
 
-    /* Animation LED */
-    @keyframes ledPulse1 {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
+    /* =========================
+       VISITOR BUTTON
+    ==========================*/
+
+    .visitor-btn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      padding:18px 22px;
+      border-radius:25px;
+      cursor:pointer;
+      transition:0.3s;
     }
 
-    @keyframes ledPulse2 {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
+    .visitor-btn:hover{
+      transform:translateY(-3px);
+      border-color:#18d88f;
+      box-shadow:0 0 20px rgba(24,216,143,0.3);
     }
 
-    /* الشريط الإعلاني */
-    .banner {
-      position: relative;
-      z-index: 10;
-      background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b, #ef4444);
-      background-size: 400% 100%;
-      animation: gradientShift 8s ease infinite;
-      padding: 25px;
-      text-align: center;
-      border-top: 2px solid rgba(255,255,255,0.2);
+    .visitor-left{
+      display:flex;
+      align-items:center;
+      gap:15px;
     }
 
-    .banner p {
-      font-size: 20px;
-      font-weight: bold;
-      color: white;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      letter-spacing: 1px;
+    .visitor-icon{
+      width:65px;
+      height:65px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#18d88f20;
+      border:2px solid #18d88f;
+      font-size:25px;
+      color:#18d88f;
     }
 
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% center; }
-      50% { background-position: 100% center; }
+    .visitor-btn h3{
+      font-size:24px;
     }
 
-    /* Modal للتسجيل */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    .visitor-btn p{
+      color:#b6c0c8;
     }
 
-    .modal.active {
-      display: flex;
+    /* =========================
+       PHONE
+    ==========================*/
+
+    .phone{
+      position:relative;
+      width:100%;
+      height:860px;
+      border-radius:55px;
+      padding:15px;
+      background:#111;
+      border:3px solid #2d2d2d;
+      box-shadow:
+      0 0 50px rgba(0,255,170,0.15);
     }
 
-    .modal-content {
-      background: linear-gradient(135deg, #1f2937, #111827);
-      padding: 40px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 450px;
-      border: 2px solid rgba(59,130,246,0.3);
-      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+    .screen{
+      width:100%;
+      height:100%;
+      background:#f8fafc;
+      border-radius:40px;
+      overflow:hidden;
+      position:relative;
     }
 
-    .modal-content h2 {
-      font-size: 28px;
-      color: white;
-      margin-bottom: 20px;
-      text-align: center;
+    .notch{
+      position:absolute;
+      top:12px;
+      left:50%;
+      transform:translateX(-50%);
+      width:170px;
+      height:35px;
+      background:black;
+      border-radius:20px;
+      z-index:10;
     }
 
-    .modal-content input, .modal-content select {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      background: rgba(31,41,55,0.8);
-      color: white;
-      font-family: 'Cairo', sans-serif;
-      font-size: 14px;
-      transition: 0.3s;
+    /* =========================
+       APP HEADER
+    ==========================*/
+
+    .app-header{
+      padding:60px 25px 20px;
+      text-align:center;
+      background:linear-gradient(to bottom,
+      #dff5ea,
+      #ffffff);
     }
 
-    .modal-content input:focus, .modal-content select:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 15px rgba(59,130,246,0.4);
+    .logo{
+      font-size:52px;
+      font-weight:800;
+      color:#11a86d;
+      line-height:1;
     }
 
-    .modal-content input::placeholder {
-      color: #64748b;
+    .logo span{
+      color:#222;
+      font-size:20px;
+      display:block;
+      margin-top:10px;
     }
 
-    .modal-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
+    /* =========================
+       SEARCH
+    ==========================*/
+
+    .search{
+      margin:20px;
+      background:white;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      padding:15px 18px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.08);
     }
 
-    .btn-submit {
-      flex: 1;
-      padding: 14px;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px;
-      transition: 0.3s;
+    .search input{
+      border:none;
+      outline:none;
+      flex:1;
+      font-size:17px;
+      background:transparent;
+      font-family:'Cairo';
     }
 
-    .btn-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+    .search i{
+      color:#666;
+      font-size:20px;
     }
 
-    .btn-cancel {
-      flex: 1;
-      padding: 14px;
-      background: #4b5563;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px;
-      transition: 0.3s;
+    /* =========================
+       CATEGORIES
+    ==========================*/
+
+    .categories{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      padding:0 20px;
+      margin-bottom:22px;
     }
 
-    .btn-cancel:hover {
-      background: #5a6677;
+    .cat{
+      background:white;
+      border-radius:20px;
+      padding:18px 10px;
+      text-align:center;
+      box-shadow:0 5px 12px rgba(0,0,0,0.06);
+      transition:0.3s;
     }
 
-    .error-message {
-      background: rgba(239,68,68,0.2);
-      color: #fca5a5;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #dc2626;
-      display: none;
-      font-size: 14px;
+    .cat:hover{
+      transform:translateY(-4px);
     }
 
-    .error-message.show {
-      display: block;
+    .cat i{
+      color:#12b879;
+      font-size:24px;
+      margin-bottom:10px;
     }
 
-    @media (max-width: 768px) {
-      .header h1 { font-size: 40px; }
-      .header p { font-size: 16px; }
-      .buttons-container { flex-direction: column; height: auto; gap: 20px; }
-      .btn-visitor, .btn-host { width: 160px; height: 220px; }
-      .banner p { font-size: 16px; }
+    .cat p{
+      color:#222;
+      font-weight:700;
+      font-size:14px;
     }
+
+    /* =========================
+       PROPERTY CARD
+    ==========================*/
+
+    .property{
+      margin:0 20px;
+      background:white;
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .property-image{
+      position:relative;
+      height:260px;
+    }
+
+    .property-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .badge{
+      position:absolute;
+      top:18px;
+      right:18px;
+      background:#11b776;
+      padding:8px 18px;
+      border-radius:30px;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .heart{
+      position:absolute;
+      bottom:18px;
+      left:18px;
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      background:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#11b776;
+      font-size:20px;
+    }
+
+    .property-content{
+      padding:20px;
+    }
+
+    .property-title{
+      color:#111;
+      font-size:28px;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+
+    .property-location{
+      color:#777;
+      margin-bottom:15px;
+    }
+
+    .property-info{
+      display:flex;
+      justify-content:space-between;
+      color:#555;
+      font-weight:700;
+    }
+
+    /* =========================
+       OWNER BUTTON
+    ==========================*/
+
+    .owner-button{
+      width:280px;
+      height:280px;
+      margin:30px auto;
+      border-radius:50%;
+      background:
+      radial-gradient(circle at center,
+      #0d5138,
+      #05281d);
+      border:8px solid rgba(255,255,255,0.2);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      box-shadow:
+      0 0 40px rgba(0,255,170,0.35),
+      inset 0 0 25px rgba(255,255,255,0.08);
+      transition:0.3s;
+      cursor:pointer;
+    }
+
+    .owner-button:hover{
+      transform:scale(1.05);
+    }
+
+    .owner-button i{
+      font-size:70px;
+      margin-bottom:15px;
+      color:white;
+    }
+
+    .owner-button h2{
+      font-size:38px;
+      margin-bottom:5px;
+    }
+
+    .owner-button p{
+      color:#d9f7eb;
+    }
+
+    /* =========================
+       FEATURES
+    ==========================*/
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:15px;
+      margin-top:20px;
+    }
+
+    .feature{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:22px 10px;
+      border-radius:22px;
+      text-align:center;
+    }
+
+    .feature i{
+      color:#18d88f;
+      font-size:28px;
+      margin-bottom:12px;
+    }
+
+    .feature h4{
+      margin-bottom:6px;
+    }
+
+    .feature p{
+      color:#b8c2ca;
+      font-size:14px;
+    }
+
+    /* =========================
+       MOBILE
+    ==========================*/
+
+    @media(max-width:1200px){
+
+      .hero-container{
+        grid-template-columns:1fr;
+      }
+
+      .phone{
+        max-width:420px;
+        margin:auto;
+      }
+
+    }
+
+    @media(max-width:600px){
+
+      .side-title{
+        font-size:32px;
+      }
+
+      .phone{
+        height:780px;
+      }
+
+      .categories{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .owner-button{
+        width:230px;
+        height:230px;
+      }
+
+      .owner-button h2{
+        font-size:30px;
+      }
+
+    }
+
   </style>
 </head>
+
 <body>
 
-<div class="container">
-  <!-- Header -->
-  <div class="header">
-    <h1>أكريلي</h1>
-    <p>Akrili</p>
-  </div>
+  <div class="bg-glow glow1"></div>
+  <div class="bg-glow glow2"></div>
 
-  <!-- Main Content - الأزرار -->
-  <div class="main-content">
-    <div class="buttons-container">
-      <!-- زر الزائر -->
-      <button class="btn-visitor" onclick="openVisitorModal()">
-        <span>👤</span>
-        <span>زائر</span>
-      </button>
+  <section class="hero">
 
-      <!-- زر صاحب المنزل -->
-      <button class="btn-host" onclick="openHostModal()">
-        <span>🏠</span>
-        <span>صاحب منزل</span>
-      </button>
+    <div class="hero-container">
+
+      <!-- LEFT -->
+      <div class="side-card">
+
+        <div class="side-content">
+          <h1 class="side-title">
+            للـ<span class="green">زوار</span>
+          </h1>
+
+          <p class="side-desc">
+            ابحث عن منزلك المثالي بسهولة
+            واستكشف آلاف الإعلانات
+            في جميع ولايات الجزائر.
+          </p>
+        </div>
+
+        <div class="side-image">
+          <div class="overlay"></div>
+
+          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop" />
+
+        </div>
+
+        <div class="side-content">
+
+          <div class="visitor-btn">
+
+            <div class="visitor-left">
+
+              <div class="visitor-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+
+              <div>
+                <h3>الصفحة الثانية للزوار</h3>
+                <p>استكشف الإعلانات بسهولة</p>
+              </div>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-left"></i>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PHONE -->
+      <div class="phone">
+
+        <div class="notch"></div>
+
+        <div class="screen">
+
+          <div class="app-header">
+
+            <div class="logo">
+              إكريلي
+              <span>Mekri DZ</span>
+            </div>
+
+          </div>
+
+          <div class="search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input type="text"
+            placeholder="ابحث عن عقار..." />
+
+            <i class="fa-solid fa-sliders"></i>
+
+          </div>
+
+          <!-- IMPORTANT:
+               NO USER NAVIGATION
+               FOR FIRST PAGE
+          -->
+
+          <div class="categories">
+
+            <div class="cat">
+              <i class="fa-solid fa-house"></i>
+              <p>فلل</p>
+            </div>
+
+            <div class="cat">
+              <i class="fa-solid fa-building"></i>
+              <p>شقق</p>
+            </div>
+
+            <div class="cat">
+              <i class="fa-solid fa-location-dot"></i>
+              <p>أراضي</p>
+            </div>
+
+            <div class="cat">
+              <i class="fa-solid fa-key"></i>
+              <p>للإيجار</p>
+            </div>
+
+          </div>
+
+          <div class="property">
+
+            <div class="property-image">
+
+              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200&auto=format&fit=crop" />
+
+              <div class="badge">
+                للإيجار
+              </div>
+
+              <div class="heart">
+                <i class="fa-regular fa-heart"></i>
+              </div>
+
+            </div>
+
+            <div class="property-content">
+
+              <h2 class="property-title">
+                فيلا فاخرة مع مسبح
+              </h2>
+
+              <p class="property-location">
+                الجزائر العاصمة
+              </p>
+
+              <div class="property-info">
+                <span>4 غرف</span>
+                <span>3 حمامات</span>
+                <span>250م²</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="side-card">
+
+        <div class="side-content">
+
+          <h1 class="side-title">
+            لصاحب <span class="green">المنزل</span>
+          </h1>
+
+          <p class="side-desc">
+            أضف عقارك ووصل
+            لآلاف المهتمين بسرعة وسهولة.
+          </p>
+
+        </div>
+
+        <div class="side-image">
+
+          <div class="overlay"></div>
+
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"/>
+
+        </div>
+
+        <div class="side-content">
+
+          <div class="owner-button">
+
+            <i class="fa-solid fa-house"></i>
+
+            <h2>إضافة إعلان</h2>
+
+            <p>ابدأ الآن</p>
+
+          </div>
+
+          <div class="features">
+
+            <div class="feature">
+              <i class="fa-solid fa-shield-halved"></i>
+              <h4>آمن</h4>
+              <p>حماية كاملة</p>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-users"></i>
+              <h4>وصول واسع</h4>
+              <p>آلاف الزوار</p>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-bolt"></i>
+              <h4>سريع</h4>
+              <p>إضافة فورية</p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
-  </div>
 
-  <!-- Banner الإعلاني -->
-  <div class="banner">
-    <p>🎁 أول 1000 إعلان = 3 سنوات مجانية + أولوية دائمة!</p>
-  </div>
-</div>
+  </section>
+<!-- =========================
+FIREBASE SDK
+ضع هذا قبل </body>
+========================= -->
 
-<!-- Modal الزائر -->
-<div id="visitorModal" class="modal">
-  <div class="modal-content">
-    <h2>👤 تسجيل زائر</h2>
-    <div class="error-message" id="visitorError"></div>
-    <input type="tel" id="visitorPhone" placeholder="رقم الهاتف" />
-    <div class="modal-buttons">
-      <button class="btn-submit" onclick="loginVisitor()">دخول</button>
-      <button class="btn-cancel" onclick="closeModal('visitorModal')">إلغاء</button>
-    </div>
-  </div>
-</div>
+<script type="module">
 
-<!-- Modal صاحب المنزل -->
-<div id="hostModal" class="modal">
-  <div class="modal-content">
-    <h2>🏠 تسجيل صاحب منزل</h2>
-    <div class="error-message" id="hostError"></div>
-    <input type="tel" id="hostPhone" placeholder="رقم الهاتف" />
-    <input type="email" id="hostEmail" placeholder="البريد الإلكتروني" />
-    <input type="password" id="hostPassword" placeholder="كلمة المرور" />
-    <div class="modal-buttons">
-      <button class="btn-submit" onclick="registerHost()">إنشاء حساب</button>
-      <button class="btn-cancel" onclick="closeModal('hostModal')">إلغاء</button>
-    </div>
-  </div>
-</div>
+  // Firebase SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+  import {
+    getAuth,
+    signInWithPopup,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-<script>
-  // Firebase Config
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+  /* =========================
+     FIREBASE CONFIG
+     بدل المعلومات بمعلومات مشروعك
+  ========================= */
+
   const firebaseConfig = {
-    apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
-    authDomain: "ekrilidz-af404.firebaseapp.com",
-    projectId: "ekrilidz-af404",
-    storageBucket: "ekrilidz-af404.firebasestorage.app",
-    messagingSenderId: "945902801388",
-    appId: "1:945902801388:web:5a79223f369ee0544df0c9",
-    measurementId: "G-P19FP8BLJQ"
+
+    apiKey: "YOUR_API_KEY",
+
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+
+    projectId: "YOUR_PROJECT_ID",
+
+    storageBucket: "YOUR_PROJECT.appspot.com",
+
+    messagingSenderId: "000000000",
+
+    appId: "YOUR_APP_ID"
+
   };
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
 
-  // Open Modal Functions
-  function openVisitorModal() {
-    document.getElementById('visitorModal').classList.add('active');
-  }
+  /* =========================
+     INIT FIREBASE
+  ========================= */
 
-  function openHostModal() {
-    document.getElementById('hostModal').classList.add('active');
-  }
+  const app = initializeApp(firebaseConfig);
 
-  function closeModal(modalId) {
-    document.getElementById(modalId).classList.remove('active');
-    clearErrors();
-  }
+  const auth = getAuth(app);
 
-  // Close Modal by clicking outside
-  document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', function(e) {
-      if (e.target === this) {
-        this.classList.remove('active');
-        clearErrors();
-      }
-    });
-  });
+  const db = getFirestore(app);
 
-  // Login Visitor
-  function loginVisitor() {
-    const phone = document.getElementById('visitorPhone').value.trim();
-    const errorEl = document.getElementById('visitorError');
+  const provider = new GoogleAuthProvider();
 
-    if (!phone || phone.length < 10) {
-      showError(errorEl, 'أدخل رقم هاتف صحيح');
-      return;
-    }
 
-    // حفظ بيانات الزائر
-    localStorage.setItem('visitorPhone', phone);
-    localStorage.setItem('userType', 'visitor');
+  /* =========================
+     LOGIN BUTTON
+  ========================= */
 
-    showSuccess('تم! سيتم نقلك إلى الإعلانات...');
-    setTimeout(() => {
-      window.location.href = 'listings.html'; // استبدل برابط صفحة الإعلانات
-    }, 1500);
-  }
+  const ownerButton = document.querySelector(".owner-button");
 
-  // Register Host
-  async function registerHost() {
-    const phone = document.getElementById('hostPhone').value.trim();
-    const email = document.getElementById('hostEmail').value.trim();
-    const password = document.getElementById('hostPassword').value.trim();
-    const errorEl = document.getElementById('hostError');
-
-    if (!phone || phone.length < 10) {
-      showError(errorEl, 'أدخل رقم هاتف صحيح');
-      return;
-    }
-
-    if (!email || !email.includes('@')) {
-      showError(errorEl, 'أدخل بريد إلكتروني صحيح');
-      return;
-    }
-
-    if (!password || password.length < 6) {
-      showError(errorEl, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
-      return;
-    }
+  ownerButton.addEventListener("click", async () => {
 
     try {
-      // Firebase Registration
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-      const uid = userCredential.user.uid;
 
-      // حفظ البيانات في Firestore
-      await db.collection('users').doc(uid).set({
-        userType: 'host',
-        phone: phone,
-        email: email,
-        createdAt: new Date(),
-        verified: false,
-        displayName: '',
-        avatar: '',
-        listings: []
-      });
+      const result = await signInWithPopup(auth, provider);
 
-      // حفظ في localStorage
-      localStorage.setItem('userId', uid);
-      localStorage.setItem('userType', 'host');
-      localStorage.setItem('userEmail', email);
+      const user = result.user;
 
-      showSuccess('تم إنشاء الحساب! سيتم نقلك للـ Dashboard...');
-      setTimeout(() => {
-        window.location.href = 'host-dashboard.html'; // استبدل برابط Dashboard
-      }, 1500);
+      alert("مرحبا " + user.displayName);
+
+      console.log(user);
 
     } catch (error) {
-      let message = 'حدث خطأ ما';
-      if (error.code === 'auth/email-already-in-use') {
-        message = 'البريد الإلكتروني مستخدم بالفعل';
-      } else if (error.code === 'auth/weak-password') {
-        message = 'كلمة المرور ضعيفة جداً';
-      }
-      showError(errorEl, message);
+
+      console.error(error);
+
+      alert("حدث خطأ أثناء تسجيل الدخول");
+
     }
+
+  });
+
+
+  /* =========================
+     USER STATE
+  ========================= */
+
+  onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+      console.log("مسجل دخول:", user.displayName);
+
+      // هنا تقدر تبدل الواجهة
+      // وتظهر navigation الخاصة بالمستخدم
+
+    } else {
+
+      console.log("لا يوجد مستخدم");
+
+    }
+
+  });
+
+
+  /* =========================
+     ADD PROPERTY EXAMPLE
+  ========================= */
+
+  async function addProperty() {
+
+    try {
+
+      await addDoc(collection(db, "listings"), {
+
+        title: "فيلا فاخرة",
+
+        city: "الجزائر",
+
+        rooms: 4,
+
+        bathrooms: 3,
+
+        area: 250,
+
+        createdAt: new Date()
+
+      });
+
+      console.log("تمت إضافة الإعلان");
+
+    } catch (e) {
+
+      console.error(e);
+
+    }
+
   }
 
-  // Helper Functions
-  function showError(element, message) {
-    element.textContent = message;
-    element.classList.add('show');
-  }
 
-  function clearErrors() {
-    document.querySelectorAll('.error-message').forEach(el => {
-      el.classList.remove('show');
+  /* =========================
+     GET LISTINGS
+  ========================= */
+
+  async function getListings() {
+
+    const querySnapshot =
+    await getDocs(collection(db, "listings"));
+
+    querySnapshot.forEach((doc) => {
+
+      console.log(doc.id, doc.data());
+
     });
+
   }
 
-  function showSuccess(message) {
-    alert(message);
-  }
+  getListings();
+
 </script>
 
 </body>
