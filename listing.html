@@ -2,20 +2,34 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>إعلانات أكريلي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكريلي - تصفح العقارات</title>
     <style>
-        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; text-align: center; }
-        .card { background: #1e293b; padding: 20px; border-radius: 15px; margin: 15px auto; max-width: 500px; border: 1px solid #10b981; }
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; text-align: center; margin: 0; }
+        .header { margin-bottom: 30px; }
+        .card { background: #1e293b; padding: 20px; border-radius: 15px; margin: 15px auto; max-width: 500px; border: 1px solid #10b981; text-align: right; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .card h3 { margin-top: 0; color: #10b981; }
+        .card .city { color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px; }
+        .empty-msg { padding: 30px; background: #1e293b; border-radius: 10px; max-width: 400px; margin: auto; color: #f87171; border: 1px dashed #ef4444; }
+        .back-btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #3b82f6; color: white; text-decoration: none; border-radius: 8px; }
     </style>
 </head>
 <body>
 
-    <h1>🏠 إعلانات أكريلي</h1>
-    <div id="results">جاري تحميل الإعلانات...</div>
+    <div class="header">
+        <h1>🔍 العقارات المتاحة</h1>
+        <p>تصفح أحدث العروض المضافة من طرف الملاك</p>
+    </div>
+
+    <div id="results">
+        <p>جاري جلب البيانات من الخادم...</p>
+    </div>
+
+    <a href="index.html" class="back-btn">العودة للرئيسية</a>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
@@ -29,19 +43,39 @@
 
         async function loadAds() {
             const resultsDiv = document.getElementById('results');
-            const querySnapshot = await getDocs(collection(db, "properties"));
-            resultsDiv.innerHTML = "";
-            querySnapshot.forEach((doc) => {
-                const p = doc.data();
-                resultsDiv.innerHTML += `
-                    <div class="card">
-                        <h3>${p.title}</h3>
-                        <p>📍 ${p.city}</p>
-                        <p>${p.desc}</p>
-                    </div>
-                `;
-            });
+            
+            try {
+                // جلب الإعلانات وترتيبها حسب الأحدث (إذا كان الحقل timestamp موجوداً)
+                const q = query(collection(db, "properties"));
+                const querySnapshot = await getDocs(q);
+                
+                resultsDiv.innerHTML = ""; // مسح رسالة "جاري التحميل"
+
+                if (querySnapshot.empty) {
+                    resultsDiv.innerHTML = `
+                        <div class="empty-msg">
+                            <h3>لا توجد إعلانات حالياً! 🚫</h3>
+                            <p>قاعدة البيانات فارغة، كن أول من يضيف إعلاناً من قسم المؤجرين.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const p = doc.data();
+                    resultsDiv.innerHTML += `
+                        <div class="card">
+                            <h3>${p.title || 'بدون عنوان'}</h3>
+                            <div class="city">📍 ${p.city || 'غير محدد'}</div>
+                            <p>${p.desc || 'لا يوجد وصف'}</p>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color:red;">حدث خطأ أثناء الاتصال بقاعدة البيانات: ${error.message}</p>`;
+            }
         }
+        
         loadAds();
     </script>
 </body>
