@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكريلي - لوحة المؤجر</title>
+    <style>
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; text-align: center; margin: 0; }
+        .container { max-width: 400px; margin: 40px auto; background: #1e293b; padding: 30px; border-radius: 15px; border: 1px solid #3b82f6; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #10b981; border: none; border-radius: 8px; color: white; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px; }
+        h2 { color: #3b82f6; }
+    </style>
+</head>
+<body>
+
+    <div id="login-section" class="container">
+        <h2>🔒 دخول المؤجرين</h2>
+        <input id="email" type="email" placeholder="البريد الإلكتروني">
+        <input id="pass" type="password" placeholder="كلمة السر">
+        <button onclick="login()">تسجيل الدخول</button>
+    </div>
+
+    <div id="dashboard-section" class="container" style="display:none;">
+        <h2>أضف إعلانك الجديد 🚀</h2>
+        <input id="title" placeholder="عنوان العقار (مثال: شقة F3)">
+        <select id="city">
+            <option value="الجزائر العاصمة">الجزائر العاصمة</option>
+            <option value="وهران">وهران</option>
+            <option value="تيزي وزو">تيزي وزو</option>
+            <option value="عنابة">عنابة</option>
+        </select>
+        <textarea id="desc" rows="4" placeholder="وصف العقار ومميزاته..."></textarea>
+        <button onclick="saveAd()">نشر الإعلان</button>
+        <a href="index.html" style="display: block; margin-top: 15px; color: #94a3b8; text-decoration: none;">العودة للرئيسية</a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
+            authDomain: "ekrilidz-af404.firebaseapp.com",
+            projectId: "ekrilidz-af404",
+            storageBucket: "ekrilidz-af404.firebasestorage.app",
+            messagingSenderId: "945902801388",
+            appId: "1:945902801388:web:5a79223f369ee0544df0c9"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.login = () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            signInWithEmailAndPassword(auth, email, pass)
+            .then(() => {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-section').style.display = 'block';
+            })
+            .catch((err) => {
+                alert("خطأ في تسجيل الدخول. تأكد من البيانات.");
+            });
+        };
+
+        window.saveAd = async () => {
+            const title = document.getElementById('title').value;
+            const city = document.getElementById('city').value;
+            const desc = document.getElementById('desc').value;
+
+            if(!title || !desc) { 
+                alert("يرجى ملء جميع الحقول!"); 
+                return; 
+            }
+
+            await addDoc(collection(db, "properties"), {
+                title: title,
+                city: city,
+                desc: desc,
+                timestamp: new Date()
+            });
+            
+            alert("تم نشر إعلانك بنجاح! يمكنك الآن رؤيته في صفحة المستأجر.");
+            document.getElementById('title').value = '';
+            document.getElementById('desc').value = '';
+        };
+    </script>
+</body>
+</html>
