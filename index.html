@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكريلي Ekrili - الرئيسية</title>
     <style>
-        /* استدعاء خط "كايرو" العصري للغة العربية */
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        /* استدعاء خط "كايرو" العصري */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
 
         * { 
             box-sizing: border-box; 
@@ -15,122 +15,168 @@
             padding: 0; 
         }
 
-        /* 1. الخلفية الحية والمتحركة (ألوان شبابية مدمجة) */
+        /* الخلفية: وضع ليلي فخم مع تدرج داكن عميق جداً */
         body {
-            background: linear-gradient(-45deg, #4158D0, #C850C0, #FFCC70);
-            background-size: 400% 400%;
-            animation: gradientBG 12s ease infinite;
+            background: radial-gradient(circle at center, #0f1f1a 0%, #050b08 100%);
             height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #ffffff;
             overflow: hidden;
             position: relative;
         }
 
-        /* حركة الألوان في الخلفية */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* هالات ضوئية نيون خضراء في الخلفية لإعطاء طابع عصري ومستقبلي */
+        .neon-glow {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.15);
+            filter: blur(80px);
+            z-index: 0;
+            animation: pulse 6s ease-in-out infinite alternate;
+        }
+        .glow-1 { width: 300px; height: 300px; top: -50px; right: -50px; }
+        .glow-2 { width: 350px; height: 350px; bottom: 50px; left: -100px; background: rgba(5, 150, 105, 0.1); }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.1); opacity: 0.9; }
         }
 
-        /* أشكال عائمة لإعطاء عمق للشاشة */
-        .blob { position: absolute; border-radius: 50%; filter: blur(40px); z-index: 0; opacity: 0.6; }
-        .blob-1 { width: 250px; height: 250px; background: #fff; top: -50px; right: -50px; animation: float 6s ease-in-out infinite; }
-        .blob-2 { width: 300px; height: 300px; background: #FFCC70; bottom: -80px; left: -80px; animation: float 8s ease-in-out infinite reverse; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(20px) scale(1.05); }
-        }
-
-        /* 2. تأثير الزجاج (Glassmorphism) للبطاقة الرئيسية */
+        /* اللوحة الزجاجية الخضراء الفخمة (Premium Glassmorphism) */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 50px 30px;
+            background: rgba(10, 25, 18, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 24px;
+            padding: 45px 30px;
             text-align: center;
             width: 90%;
             max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(16, 185, 129, 0.1);
             z-index: 1;
+            margin-bottom: 60px; /* ترك مساحة للشريط السفلي */
         }
 
+        /* شعار المنصة بلمسة نيون خضراء مذهلة */
         h1 { 
-            font-size: 4rem; 
+            font-size: 3.8rem; 
             font-weight: 900; 
-            margin-bottom: 5px; 
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.2); 
-            letter-spacing: -2px;
+            margin-bottom: 8px; 
+            color: #ffffff;
+            letter-spacing: -1px;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+        }
+
+        /* نقطة النيون الخضراء في نهاية الاسم للحداثة */
+        h1 span {
+            color: #10b981;
+            text-shadow: 0 0 20px #10b981;
         }
         
-        p { 
-            font-size: 1.2rem; 
-            margin-bottom: 40px; 
-            opacity: 0.9; 
-            font-weight: 700;
+        p.subtitle { 
+            font-size: 1.1rem; 
+            margin-bottom: 35px; 
+            color: #a7f3d0;
+            opacity: 0.85;
+            font-weight: 600;
         }
 
-        /* 3. تصميم الأزرار المبتكر */
         .options-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
         }
 
+        /* تصميم الأزرار الزجاجية التفاعلية */
         .modern-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            padding: 20px;
+            gap: 12px;
+            padding: 18px;
             text-decoration: none;
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* حركة ارتدادية عند اللمس */
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* زر المستأجر: بارز وجذاب */
+        /* زر المستأجر: أخضر نيون فخم وجذاب */
         .tenant-btn { 
-            background: #ffffff; 
-            color: #C850C0; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #042f1a;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
         .tenant-btn:hover { 
-            transform: translateY(-8px) scale(1.03); 
-            box-shadow: 0 15px 25px rgba(255,255,255,0.4); 
+            transform: translateY(-4px); 
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6); 
+            background: linear-gradient(135deg, #34d399, #10b981);
         }
 
-        /* زر المؤجر: شفاف بأطراف بيضاء (Outline) */
+        /* زر المؤجر: شفاف زجاجي مع حواف مضيئة */
         .owner-btn { 
-            background: transparent; 
-            border: 2px solid #fff;
-            color: #fff; 
+            background: rgba(16, 185, 129, 0.05); 
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #a7f3d0; 
         }
         .owner-btn:hover { 
-            background: #1e1e2f; 
-            border-color: #1e1e2f;
-            color: #FFCC70; 
-            transform: translateY(-8px) scale(1.03); 
-            box-shadow: 0 15px 25px rgba(30, 30, 47, 0.5); 
+            background: rgba(16, 185, 129, 0.15); 
+            border-color: #34d399;
+            color: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
         }
 
-        .icon { font-size: 2rem; }
+        .icon { font-size: 1.6rem; }
+
+        /* الشريط الترويجي السفلي الحديث */
+        .promo-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(5, 150, 105, 0.2), rgba(16, 185, 129, 0.2));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 12px 20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .promo-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #e6fffa;
+            font-weight: 600;
+        }
+
+        .badge {
+            background: #10b981;
+            color: #042f1a;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
     </style>
 </head>
 <body>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+    <div class="neon-glow glow-1"></div>
+    <div class="neon-glow glow-2"></div>
 
     <div class="glass-panel">
-        <h1>أكريلي</h1>
-        <p>السكن بين يديك.. بلمسة عصرية</p>
+        <h1>أكريلي<span>.</span></h1>
+        <p class="subtitle">السكن بين يديك.. بلمسة عصرية فخمة</p>
 
         <div class="options-container">
             <a href="listing.html" class="modern-btn tenant-btn">
@@ -141,6 +187,13 @@
                 <span class="icon">🔑</span>
                 <span>عندي دار نكريها (مؤجر)</span>
             </a>
+        </div>
+    </div>
+
+    <div class="promo-bar">
+        <div class="promo-content">
+            <span class="badge">100% مجاناً</span>
+            <span>انشر إعلاناتك، تصفح العروض، وتواصل مباشرة.. بدون وسطاء وبدون أي عمولات خفية! 🚀</span>
         </div>
     </div>
 </body>
