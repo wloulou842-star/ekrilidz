@@ -1,200 +1,550 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكريلي Ekrili - الرئيسية</title>
-    <style>
-        /* استدعاء خط "كايرو" العصري */
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أكريلي Akrili - تسجيل الدخول</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
-        * { 
-            box-sizing: border-box; 
-            font-family: 'Cairo', sans-serif; 
-            margin: 0; 
-            padding: 0; 
-        }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80') center/cover;
+      position: relative;
+    }
 
-        /* الخلفية: وضع ليلي فخم مع تدرج داكن عميق جداً */
-        body {
-            background: radial-gradient(circle at center, #0f1f1a 0%, #050b08 100%);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            overflow: hidden;
-            position: relative;
-        }
+    /* Glass Morphism للصورة */
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(20px);
+      z-index: 1;
+    }
 
-        /* هالات ضوئية نيون خضراء في الخلفية لإعطاء طابع عصري ومستقبلي */
-        .neon-glow {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(16, 185, 129, 0.15);
-            filter: blur(80px);
-            z-index: 0;
-            animation: pulse 6s ease-in-out infinite alternate;
-        }
-        .glow-1 { width: 300px; height: 300px; top: -50px; right: -50px; }
-        .glow-2 { width: 350px; height: 350px; bottom: 50px; left: -100px; background: rgba(5, 150, 105, 0.1); }
+    /* Header - عنوان أكريلي */
+    .header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 40px 20px;
+      margin-bottom: 30px;
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(1.1); opacity: 0.9; }
-        }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      background: linear-gradient(135deg, #3b82f6, #10b981, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      text-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+      letter-spacing: 2px;
+    }
 
-        /* اللوحة الزجاجية الخضراء الفخمة (Premium Glassmorphism) */
-        .glass-panel {
-            background: rgba(10, 25, 18, 0.5);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(16, 185, 129, 0.25);
-            border-radius: 24px;
-            padding: 45px 30px;
-            text-align: center;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(16, 185, 129, 0.1);
-            z-index: 1;
-            margin-bottom: 60px; /* ترك مساحة للشريط السفلي */
-        }
+    .header p {
+      font-size: 24px;
+      color: #93c5fd;
+      font-weight: 300;
+      letter-spacing: 3px;
+    }
 
-        /* شعار المنصة بلمسة نيون خضراء مذهلة */
-        h1 { 
-            font-size: 3.8rem; 
-            font-weight: 900; 
-            margin-bottom: 8px; 
-            color: #ffffff;
-            letter-spacing: -1px;
-            text-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
-        }
+    /* الصورة مع الأزرار */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-        /* نقطة النيون الخضراء في نهاية الاسم للحداثة */
-        h1 span {
-            color: #10b981;
-            text-shadow: 0 0 20px #10b981;
-        }
-        
-        p.subtitle { 
-            font-size: 1.1rem; 
-            margin-bottom: 35px; 
-            color: #a7f3d0;
-            opacity: 0.85;
-            font-weight: 600;
-        }
+    .buttons-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+    }
 
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
+    /* زر الزائر (يسار) */
+    .btn-visitor {
+      width: 180px;
+      height: 240px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      border: none;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Cairo', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
 
-        /* تصميم الأزرار الزجاجية التفاعلية */
-        .modern-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 18px;
-            text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 700;
-            border-radius: 16px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+    .btn-visitor::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: ledPulse1 3s infinite;
+      z-index: 1;
+    }
 
-        /* زر المستأجر: أخضر نيون فخم وجذاب */
-        .tenant-btn { 
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #042f1a;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-        .tenant-btn:hover { 
-            transform: translateY(-4px); 
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6); 
-            background: linear-gradient(135deg, #34d399, #10b981);
-        }
+    .btn-visitor span {
+      position: relative;
+      z-index: 2;
+    }
 
-        /* زر المؤجر: شفاف زجاجي مع حواف مضيئة */
-        .owner-btn { 
-            background: rgba(16, 185, 129, 0.05); 
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            color: #a7f3d0; 
-        }
-        .owner-btn:hover { 
-            background: rgba(16, 185, 129, 0.15); 
-            border-color: #34d399;
-            color: #ffffff;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
-        }
+    .btn-visitor:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 60px rgba(59, 130, 246, 0.9);
+    }
 
-        .icon { font-size: 1.6rem; }
+    /* زر صاحب المنزل (يمين) */
+    .btn-host {
+      width: 180px;
+      height: 240px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border: none;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Cairo', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 40px rgba(245, 158, 11, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
 
-        /* الشريط الترويجي السفلي الحديث */
-        .promo-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(90deg, rgba(5, 150, 105, 0.2), rgba(16, 185, 129, 0.2));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 12px 20px;
-            text-align: center;
-            z-index: 2;
-        }
+    .btn-host::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: ledPulse2 3s infinite;
+      z-index: 1;
+    }
 
-        .promo-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 0.95rem;
-            color: #e6fffa;
-            font-weight: 600;
-        }
+    .btn-host span {
+      position: relative;
+      z-index: 2;
+    }
 
-        .badge {
-            background: #10b981;
-            color: #042f1a;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-        }
-    </style>
+    .btn-host:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 60px rgba(245, 158, 11, 0.9);
+    }
+
+    /* Animation LED */
+    @keyframes ledPulse1 {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes ledPulse2 {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* الشريط الإعلاني */
+    .banner {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b, #ef4444);
+      background-size: 400% 100%;
+      animation: gradientShift 8s ease infinite;
+      padding: 25px;
+      text-align: center;
+      border-top: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .banner p {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      letter-spacing: 1px;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+    }
+
+    /* Modal للتسجيل */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1f2937, #111827);
+      padding: 40px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 450px;
+      border: 2px solid rgba(59,130,246,0.3);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+    }
+
+    .modal-content h2 {
+      font-size: 28px;
+      color: white;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .modal-content input, .modal-content select {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      background: rgba(31,41,55,0.8);
+      color: white;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .modal-content input:focus, .modal-content select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 15px rgba(59,130,246,0.4);
+    }
+
+    .modal-content input::placeholder {
+      color: #64748b;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-submit {
+      flex: 1;
+      padding: 14px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 14px;
+      background: #4b5563;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn-cancel:hover {
+      background: #5a6677;
+    }
+
+    .error-message {
+      background: rgba(239,68,68,0.2);
+      color: #fca5a5;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #dc2626;
+      display: none;
+      font-size: 14px;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 40px; }
+      .header p { font-size: 16px; }
+      .buttons-container { flex-direction: column; height: auto; gap: 20px; }
+      .btn-visitor, .btn-host { width: 160px; height: 220px; }
+      .banner p { font-size: 16px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="neon-glow glow-1"></div>
-    <div class="neon-glow glow-2"></div>
 
-    <div class="glass-panel">
-        <h1>أكريلي<span>.</span></h1>
-        <p class="subtitle">السكن بين يديك.. بلمسة عصرية فخمة</p>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>أكريلي</h1>
+    <p>Akrili</p>
+  </div>
 
-        <div class="options-container">
-            <a href="listing.html" class="modern-btn tenant-btn">
-                <span class="icon">🔍</span>
-                <span>نحوس نكري (مستأجر)</span>
-            </a>
-            <a href="owner.html" class="modern-btn owner-btn">
-                <span class="icon">🔑</span>
-                <span>عندي دار نكريها (مؤجر)</span>
-            </a>
-        </div>
+  <!-- Main Content - الأزرار -->
+  <div class="main-content">
+    <div class="buttons-container">
+      <!-- زر الزائر -->
+      <button class="btn-visitor" onclick="openVisitorModal()">
+        <span>👤</span>
+        <span>زائر</span>
+      </button>
+
+      <!-- زر صاحب المنزل -->
+      <button class="btn-host" onclick="openHostModal()">
+        <span>🏠</span>
+        <span>صاحب منزل</span>
+      </button>
     </div>
+  </div>
 
-    <div class="promo-bar">
-        <div class="promo-content">
-            <span class="badge">100% مجاناً</span>
-            <span>انشر إعلاناتك، تصفح العروض، وتواصل مباشرة.. بدون وسطاء وبدون أي عمولات خفية! 🚀</span>
-        </div>
+  <!-- Banner الإعلاني -->
+  <div class="banner">
+    <p>🎁 أول 1000 إعلان = 3 سنوات مجانية + أولوية دائمة!</p>
+  </div>
+</div>
+
+<!-- Modal الزائر -->
+<div id="visitorModal" class="modal">
+  <div class="modal-content">
+    <h2>👤 تسجيل زائر</h2>
+    <div class="error-message" id="visitorError"></div>
+    <input type="tel" id="visitorPhone" placeholder="رقم الهاتف" />
+    <div class="modal-buttons">
+      <button class="btn-submit" onclick="loginVisitor()">دخول</button>
+      <button class="btn-cancel" onclick="closeModal('visitorModal')">إلغاء</button>
     </div>
+  </div>
+</div>
+
+<!-- Modal صاحب المنزل -->
+<div id="hostModal" class="modal">
+  <div class="modal-content">
+    <h2>🏠 تسجيل صاحب منزل</h2>
+    <div class="error-message" id="hostError"></div>
+    <input type="tel" id="hostPhone" placeholder="رقم الهاتف" />
+    <input type="email" id="hostEmail" placeholder="البريد الإلكتروني" />
+    <input type="password" id="hostPassword" placeholder="كلمة المرور" />
+    <div class="modal-buttons">
+      <button class="btn-submit" onclick="registerHost()">إنشاء حساب</button>
+      <button class="btn-cancel" onclick="closeModal('hostModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+
+<script>
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
+    authDomain: "ekrilidz-af404.firebaseapp.com",
+    projectId: "ekrilidz-af404",
+    storageBucket: "ekrilidz-af404.firebasestorage.app",
+    messagingSenderId: "945902801388",
+    appId: "1:945902801388:web:5a79223f369ee0544df0c9",
+    measurementId: "G-P19FP8BLJQ"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // Open Modal Functions
+  function openVisitorModal() {
+    document.getElementById('visitorModal').classList.add('active');
+  }
+
+  function openHostModal() {
+    document.getElementById('hostModal').classList.add('active');
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+    clearErrors();
+  }
+
+  // Close Modal by clicking outside
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('active');
+        clearErrors();
+      }
+    });
+  });
+
+  // Login Visitor
+  function loginVisitor() {
+    const phone = document.getElementById('visitorPhone').value.trim();
+    const errorEl = document.getElementById('visitorError');
+
+    if (!phone || phone.length < 10) {
+      showError(errorEl, 'أدخل رقم هاتف صحيح');
+      return;
+    }
+
+    // حفظ بيانات الزائر
+    localStorage.setItem('visitorPhone', phone);
+    localStorage.setItem('userType', 'visitor');
+
+    showSuccess('تم! سيتم نقلك إلى الإعلانات...');
+    setTimeout(() => {
+      window.location.href = 'listings.html'; // استبدل برابط صفحة الإعلانات
+    }, 1500);
+  }
+
+  // Register Host
+  async function registerHost() {
+    const phone = document.getElementById('hostPhone').value.trim();
+    const email = document.getElementById('hostEmail').value.trim();
+    const password = document.getElementById('hostPassword').value.trim();
+    const errorEl = document.getElementById('hostError');
+
+    if (!phone || phone.length < 10) {
+      showError(errorEl, 'أدخل رقم هاتف صحيح');
+      return;
+    }
+
+    if (!email || !email.includes('@')) {
+      showError(errorEl, 'أدخل بريد إلكتروني صحيح');
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      showError(errorEl, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+      return;
+    }
+
+    try {
+      // Firebase Registration
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const uid = userCredential.user.uid;
+
+      // حفظ البيانات في Firestore
+      await db.collection('users').doc(uid).set({
+        userType: 'host',
+        phone: phone,
+        email: email,
+        createdAt: new Date(),
+        verified: false,
+        displayName: '',
+        avatar: '',
+        listings: []
+      });
+
+      // حفظ في localStorage
+      localStorage.setItem('userId', uid);
+      localStorage.setItem('userType', 'host');
+      localStorage.setItem('userEmail', email);
+
+      showSuccess('تم إنشاء الحساب! سيتم نقلك للـ Dashboard...');
+      setTimeout(() => {
+        window.location.href = 'host-dashboard.html'; // استبدل برابط Dashboard
+      }, 1500);
+
+    } catch (error) {
+      let message = 'حدث خطأ ما';
+      if (error.code === 'auth/email-already-in-use') {
+        message = 'البريد الإلكتروني مستخدم بالفعل';
+      } else if (error.code === 'auth/weak-password') {
+        message = 'كلمة المرور ضعيفة جداً';
+      }
+      showError(errorEl, message);
+    }
+  }
+
+  // Helper Functions
+  function showError(element, message) {
+    element.textContent = message;
+    element.classList.add('show');
+  }
+
+  function clearErrors() {
+    document.querySelectorAll('.error-message').forEach(el => {
+      el.classList.remove('show');
+    });
+  }
+
+  function showSuccess(message) {
+    alert(message);
+  }
+</script>
+
 </body>
 </html>
