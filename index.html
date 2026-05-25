@@ -5,22 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكريلي Ekrili - الرئيسية</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; text-align: center; padding: 50px 20px; margin: 0; }
-        h1 { font-size: 3rem; background: linear-gradient(to right, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        p { color: #94a3b8; font-size: 1.2rem; margin-bottom: 40px; }
-        .btn-container { display: flex; flex-direction: column; gap: 20px; max-width: 300px; margin: 0 auto; }
-        .btn { padding: 15px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; color: white; transition: 0.3s; }
-        .btn-owner { background: #3b82f6; border: 1px solid #2563eb; }
-        .btn-tenant { background: #10b981; border: 1px solid #059669; }
+        /* استدعاء خط "كايرو" العصري للغة العربية */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+        * { 
+            box-sizing: border-box; 
+            font-family: 'Cairo', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        /* 1. الخلفية الحية والمتحركة (ألوان شبابية مدمجة) */
+        body {
+            background: linear-gradient(-45deg, #4158D0, #C850C0, #FFCC70);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* حركة الألوان في الخلفية */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* أشكال عائمة لإعطاء عمق للشاشة */
+        .blob { position: absolute; border-radius: 50%; filter: blur(40px); z-index: 0; opacity: 0.6; }
+        .blob-1 { width: 250px; height: 250px; background: #fff; top: -50px; right: -50px; animation: float 6s ease-in-out infinite; }
+        .blob-2 { width: 300px; height: 300px; background: #FFCC70; bottom: -80px; left: -80px; animation: float 8s ease-in-out infinite reverse; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(20px) scale(1.05); }
+        }
+
+        /* 2. تأثير الزجاج (Glassmorphism) للبطاقة الرئيسية */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 50px 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        h1 { 
+            font-size: 4rem; 
+            font-weight: 900; 
+            margin-bottom: 5px; 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2); 
+            letter-spacing: -2px;
+        }
+        
+        p { 
+            font-size: 1.2rem; 
+            margin-bottom: 40px; 
+            opacity: 0.9; 
+            font-weight: 700;
+        }
+
+        /* 3. تصميم الأزرار المبتكر */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modern-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* حركة ارتدادية عند اللمس */
+        }
+
+        /* زر المستأجر: بارز وجذاب */
+        .tenant-btn { 
+            background: #ffffff; 
+            color: #C850C0; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .tenant-btn:hover { 
+            transform: translateY(-8px) scale(1.03); 
+            box-shadow: 0 15px 25px rgba(255,255,255,0.4); 
+        }
+
+        /* زر المؤجر: شفاف بأطراف بيضاء (Outline) */
+        .owner-btn { 
+            background: transparent; 
+            border: 2px solid #fff;
+            color: #fff; 
+        }
+        .owner-btn:hover { 
+            background: #1e1e2f; 
+            border-color: #1e1e2f;
+            color: #FFCC70; 
+            transform: translateY(-8px) scale(1.03); 
+            box-shadow: 0 15px 25px rgba(30, 30, 47, 0.5); 
+        }
+
+        .icon { font-size: 2rem; }
     </style>
 </head>
 <body>
-    <h1>🏠 أكريلي Ekrili</h1>
-    <p>السكن بين يديك.. بلا فوضى وبلا تعب</p>
-    
-    <div class="btn-container">
-        <a href="owner.html" class="btn btn-owner">أنا مؤجر (أضف عقارك)</a>
-        <a href="listing.html" class="btn btn-tenant">أنا مستأجر (تصفح العقارات)</a>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="glass-panel">
+        <h1>أكريلي</h1>
+        <p>السكن بين يديك.. بلمسة عصرية</p>
+
+        <div class="options-container">
+            <a href="listing.html" class="modern-btn tenant-btn">
+                <span class="icon">🔍</span>
+                <span>نحوس نكري (مستأجر)</span>
+            </a>
+            <a href="owner.html" class="modern-btn owner-btn">
+                <span class="icon">🔑</span>
+                <span>عندي دار نكريها (مؤجر)</span>
+            </a>
+        </div>
     </div>
 </body>
 </html>
