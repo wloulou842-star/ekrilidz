@@ -3,71 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكريلي Ekrili</title>
+    <title>أكريلي Ekrili - الرئيسية</title>
     <style>
-        body { font-family: sans-serif; background: #0f172a; color: white; text-align: center; padding: 20px; }
-        h1 { font-size: 50px; background: linear-gradient(to right, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .card { background: #1e293b; padding: 20px; border-radius: 15px; margin: 15px auto; max-width: 500px; border: 1px solid #3b82f6; text-align: right; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; background: #0f172a; color: white; }
-        button { width: 100%; padding: 15px; background: #10b981; border: none; border-radius: 8px; color: white; cursor: pointer; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; text-align: center; padding: 50px 20px; margin: 0; }
+        h1 { font-size: 3rem; background: linear-gradient(to right, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        p { color: #94a3b8; font-size: 1.2rem; margin-bottom: 40px; }
+        .btn-container { display: flex; flex-direction: column; gap: 20px; max-width: 300px; margin: 0 auto; }
+        .btn { padding: 15px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; color: white; transition: 0.3s; }
+        .btn-owner { background: #3b82f6; border: 1px solid #2563eb; }
+        .btn-tenant { background: #10b981; border: 1px solid #059669; }
     </style>
 </head>
 <body>
-
     <h1>🏠 أكريلي Ekrili</h1>
     <p>السكن بين يديك.. بلا فوضى وبلا تعب</p>
     
-    <div class="card">
-        <h3>أضف إعلانك</h3>
-        <input id="title" placeholder="عنوان العقار">
-        <select id="city">
-            <option value="الجزائر">الجزائر</option>
-            <option value="وهران">وهران</option>
-        </select>
-        <textarea id="desc" placeholder="الوصف"></textarea>
-        <textarea id="feedback" placeholder="أراؤكم تهمنا.. ملاحظاتكم سرية لنا"></textarea>
-        <button onclick="saveAd()">نشر الإعلان 🚀</button>
+    <div class="btn-container">
+        <a href="owner.html" class="btn btn-owner">أنا مؤجر (أضف عقارك)</a>
+        <a href="listing.html" class="btn btn-tenant">أنا مستأجر (تصفح العقارات)</a>
     </div>
-
-    <div id="results"></div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
-            authDomain: "ekrilidz-af404.firebaseapp.com",
-            projectId: "ekrilidz-af404",
-            storageBucket: "ekrilidz-af404.firebasestorage.app",
-            messagingSenderId: "945902801388",
-            appId: "1:945902801388:web:5a79223f369ee0544df0c9"
-        };
-        const db = getFirestore(initializeApp(firebaseConfig));
-
-        // دالة الحفظ
-        window.saveAd = async () => {
-            await addDoc(collection(db, "properties"), {
-                title: document.getElementById('title').value,
-                city: document.getElementById('city').value,
-                desc: document.getElementById('desc').value,
-                feedback: document.getElementById('feedback').value
-            });
-            alert("تم النشر بنجاح!");
-            loadAds();
-        };
-
-        // دالة العرض
-        async function loadAds() {
-            const res = document.getElementById('results');
-            const snap = await getDocs(collection(db, "properties"));
-            res.innerHTML = "<h2>الإعلانات المتاحة</h2>";
-            snap.forEach(doc => {
-                const p = doc.data();
-                res.innerHTML += `<div class="card"><h3>${p.title}</h3><p>${p.city}</p><p>${p.desc}</p></div>`;
-            });
-        }
-        loadAds();
-    </script>
 </body>
 </html>
