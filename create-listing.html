@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكريلي | إضافة إعلان جديد</title>
+    <!-- استدعاء خط كايرو المتفق عليه لهوية المشروع -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* تطبيق الهوية البصرية لأكريلي */
+        :root {
+            --primary-color: #10b981; /* اللون الأخضر الخاص بك */
+            --bg-color: #050d1a;      /* الخلفية الداكنة */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* تصميم Glass Morphism احترافي مناسب للهاتف */
+        .form-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        /* حقول الإدخال مهيأة للمس والكتابة السريعة من الهاتف */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+        }
+
+        select option {
+            background-color: var(--bg-color);
+            color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #059669;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>إضافة إعلان كراء جديد</h2>
+    <form id="listingForm">
+        <div class="form-group">
+            <label for="title">عنوان الإعلان</label>
+            <input type="text" id="title" required placeholder="مثال: فيلا مجهزة قريبة من البحر">
+        </div>
+
+        <div class="form-group">
+            <label for="city">الولاية</label>
+            <select id="city" required>
+                <option value="" disabled selected>اختر الولاية</option>
+                <option value="جيجل">جيجل</option>
+                <option value="بجاية">بجاية</option>
+                <option value="وهران">وهران</option>
+                <option value="عنابة">عنابة</option>
+                <option value="مستغانم">مستغانم</option>
+                <option value="الجزائر العاصمة">الجزائر العاصمة</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="price">السعر لليلة الواحدة (دج)</label>
+            <input type="number" id="price" required placeholder="مثال: 6000">
+        </div>
+
+        <div class="form-group">
+            <label for="imageUrl">رابط صورة المنزل</label>
+            <input type="url" id="imageUrl" required placeholder="ضع رابط الصورة المباشر هنا">
+        </div>
+
+        <div class="form-group">
+            <label for="description">وصف تفصيلي للمنزل</label>
+            <textarea id="description" rows="4" required placeholder="اكتب مواصفات المنزل والمرافق المتاحة..."></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">نشر الإعلان الآن</button>
+        <div class="message" id="statusMessage"></div>
+    </form>
+</div>
+
+<!-- البرمجة والربط بـ Firebase السحابي باستخدام إعداداتك الحقيقية -->
+<script type="module">
+    // 1. استدعاء الدوال من حزم Firebase المستضافة عبر الويب للـ ES6 Modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    // 2. إعدادات تطبيقك الحقيقية مدمجة بالكامل لتعمل تلقائياً
+    const firebaseConfig = {
+        apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
+        authDomain: "ekrilidz-af404.firebaseapp.com",
+        projectId: "ekrilidz-af404",
+        storageBucket: "ekrilidz-af404.firebasestorage.app",
+        messagingSenderId: "945902801388",
+        appId: "1:945902801388:web:05ee5a76725edf9d4df0c9",
+        measurementId: "G-B9FL7TQ8VC"
+    };
+
+    // 3. تهيئة المشروع والوصول لقاعدة البيانات Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 4. ربط عناصر واجهة المستخدم بجافاسكريبت عبر الـ ID
+    const listingForm = document.getElementById('listingForm');
+    const statusMessage = document.getElementById('statusMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // 5. الاستماع لحدث الضغط وإرسال البيانات (Form Submission)
+    listingForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // منع الصفحة من التحديث التلقائي لتجنب فقدان البيانات
+
+        // تغيير حالة الزر لمنع تكرار النقرات أثناء الرفع لـ Firebase
+        submitBtn.innerText = "جاري النشر سحابياً...";
+        submitBtn.disabled = true;
+
+        // تجميع القيم المكتوبة داخل الحقول في متغيرات ثابتة
+        const title = document.getElementById('title').value;
+        const city = document.getElementById('city').value;
+        const price = Number(document.getElementById('price').value); // تحويل قيمة السعر لنوع رقمي
+        const imageUrl = document.getElementById('imageUrl').value;
+        const description = document.getElementById('description').value;
+
+        try {
+            // 6. دالة addDoc لإرسال الكائن البرمجي مباشرة لمجموعة الإعلانات في Firestore
+            const docRef = await addDoc(collection(db, "listings"), {
+                title: title,
+                city: city,
+                price: price,
+                imageUrl: imageUrl,
+                description: description,
+                createdAt: new Date() // تسجيل وقت وتاريخ الإضافة
+            });
+
+            // إظهار رسالة النجاح وتلوينها بالأخضر المميز لهوية أكريلي
+            statusMessage.style.display = "block";
+            statusMessage.style.color = "#10b981";
+            statusMessage.innerText = "تهانينا يا وسيم! تم حفظ الإعلان بنجاح في Firestore.";
+            
+            // إعادة تصفير النموذج ليكون فارغاً وجاهزاً من جديد
+            listingForm.reset();
+
+        } catch (error) {
+            // معالجة الأخطاء وطباعتها في الـ Console للتحليل
+            console.error("خطأ أثناء النشر: ", error);
+            statusMessage.style.display = "block";
+            statusMessage.style.color = "#ef4444"; // تلوين الخطأ بالأحمر
+            statusMessage.innerText = "فشل النشر. تحقق من إعدادات الشبكة أو قواعد الحماية (Rules).";
+        } finally {
+            // إعادة الزر لحالته الأصلية بعد انتهاء المحاولة
+            submitBtn.innerText = "نشر الإعلان الآن";
+            submitBtn.disabled = false;
+        }
+    });
+</script>
+
+</body>
+</html>
