@@ -3,501 +3,338 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>إكريلي | Mekri DZ</title>
+  <title>أكريلي | منصة الكراء الذكية في الجزائر</title>
 
-  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+    /* ==========================================
+       RESET & BASE STYLES
+    ========================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
-      font-family:'Cairo',sans-serif;
-      background:#071018; /* الخلفية الداكنة المتفق عليها لهوية أكريلي */
-      overflow-x:hidden;
-      color:white;
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #071018; /* الخلفية الداكنة الفخمة لأكريلي */
+      color: white;
+      overflow-x: hidden;
     }
 
-    a{
-      text-decoration:none;
-      color:inherit;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    /* =========================
-       BACKGROUND EFFECTS
-    ==========================*/
-    .bg-glow{
-      position:fixed;
-      width:500px;
-      height:500px;
-      background:#00ffae20;
-      filter:blur(120px);
-      border-radius:50%;
-      z-index:-1;
+    /* تأثيرات التوهج الخلفية الثابتة */
+    .bg-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: #00ffae12;
+      filter: blur(120px);
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .glow1 { top: -150px; left: -150px; }
+    .glow2 { bottom: -200px; right: -100px; }
+
+    .green {
+      color: #10b981;
     }
 
-    .glow1{
-      top:-150px;
-      left:-150px;
+    /* ==========================================
+       DESKTOP DEFAULT LAYOUT (الكمبيوتر واللابتوب)
+    ========================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
     }
 
-    .glow2{
-      bottom:-200px;
-      right:-100px;
+    .hero-container {
+      width: 100%;
+      max-width: 1450px;
+      display: grid;
+      grid-template-columns: 1fr 420px 1fr; /* 3 أعمدة متجاورة على شاشات الكمبيوتر */
+      gap: 35px;
+      align-items: center;
     }
 
-    /* =========================
-       MAIN HERO
-    ==========================*/
-    .hero{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:40px 20px;
+    .side-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 35px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(0,255,170,0.05);
     }
 
-    .hero-container{
-      width:100%;
-      max-width:1450px;
-      display:grid;
-      grid-template-columns:1fr 420px 1fr;
-      gap:35px;
-      align-items:center;
+    .side-image {
+      height: 420px;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* =========================
-       SIDE CARDS
-    ==========================*/
-    .side-card{
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:35px;
-      overflow:hidden;
-      backdrop-filter:blur(10px);
-      box-shadow: 0 0 30px rgba(0,255,170,0.08);
+    .side-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .side-image{
-      height:420px;
-      position:relative;
-      overflow:hidden;
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.05));
     }
 
-    .side-image img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
+    .side-content {
+      padding: 30px;
     }
 
-    .overlay{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.05));
+    .section-title {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
-    .side-content{
-      padding:30px;
+    .section-desc {
+      color: #cfd5dc;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      font-size: 18px;
     }
 
-    .side-title{
-      font-size:42px;
-      font-weight:800;
-      margin-bottom:8px;
+    /* زر تصفح الإعلانات */
+    .visitor-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 18px 22px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
     }
-
-    .green{
-      color:#10b981; /* كود اللون الأخضر الموحد لهويتك البرمجية */
+    .visitor-btn:hover {
+      transform: translateY(-3px);
+      border-color: #10b981;
+      box-shadow: 0 0 20px rgba(16,185,129,0.3);
     }
-
-    .side-desc{
-      color:#cfd5dc;
-      line-height:1.8;
-      margin-bottom:25px;
-      font-size:18px;
+    .visitor-left { display: flex; align-items: center; gap: 15px; }
+    .visitor-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16,185,129,0.15);
+      border: 2px solid #10b981;
+      font-size: 25px;
+      color: #10b981;
     }
+    .visitor-btn h3 { font-size: 24px; }
+    .visitor-btn p { color: #b6c0c8; }
 
-    /* =========================
-       VISITOR BUTTON
-    ==========================*/
-    .visitor-btn{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.1);
-      padding:18px 22px;
-      border-radius:25px;
-      cursor:pointer;
-      transition:0.3s;
-    }
-
-    .visitor-btn:hover{
-      transform:translateY(-3px);
-      border-color:#10b981;
-      box-shadow:0 0 20px rgba(16,185,129,0.3);
-    }
-
-    .visitor-left{
-      display:flex;
-      align-items:center;
-      gap:15px;
-    }
-
-    .visitor-icon{
-      width:65px;
-      height:65px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(16,185,129,0.2);
-      border:2px solid #10b981;
-      font-size:25px;
-      color:#10b981;
-    }
-
-    .visitor-btn h3{
-      font-size:24px;
-    }
-
-    .visitor-btn p{
-      color:#b6c0c8;
-    }
-
-    /* =========================
-       PHONE CONTAINER
-    ==========================*/
-    .phone{
-      position:relative;
-      width:100%;
-      height:860px;
-      border-radius:55px;
-      padding:15px;
-      background:#111;
-      border:3px solid #2d2d2d;
+    /* محاكاة شاشة الموبايل في المنتصف للكمبيوتر */
+    .phone-view {
+      position: relative;
+      width: 100%;
+      height: 860px;
+      border-radius: 55px;
+      padding: 15px;
+      background: #111;
+      border: 3px solid #2d2d2d;
       box-shadow: 0 0 50px rgba(0,255,170,0.15);
     }
 
-    .screen{
-      width:100%;
-      height:100%;
-      background:#050d1a; /* تعديل خلفية الشاشة الداخلية لتتوافق مع هويتك الداكنة */
-      border-radius:40px;
-      overflow-y:auto; /* السماح بالتمرير الرأسي لرؤية كافة الإعلانات المحملة */
-      position:relative;
+    .screen {
+      width: 100%;
+      height: 100%;
+      background: #050d1a;
+      border-radius: 40px;
+      overflow-y: auto;
+      position: relative;
+    }
+    .screen::-webkit-scrollbar { width: 0px; }
+
+    .notch {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 170px;
+      height: 35px;
+      background: black;
+      border-radius: 20px;
+      z-index: 10;
     }
 
-    /* إخفاء شريط التمرير الافتراضي لجعل الشاشة تبدو كتطبيق هاتف حقيقي */
-    .screen::-webkit-scrollbar {
-      width: 0px;
+    .app-header {
+      padding: 60px 25px 20px;
+      text-align: center;
+      background: linear-gradient(to bottom, #091e3a, #050d1a);
     }
+    .logo { font-size: 52px; font-weight: 800; color: #10b981; line-height: 1; }
+    .logo span { color: #cbd5e1; font-size: 20px; display: block; margin-top: 10px; }
 
-    .notch{
-      position:absolute;
-      top:12px;
-      left:50%;
-      transform:translateX(-50%);
-      width:170px;
-      height:35px;
-      background:black;
-      border-radius:20px;
-      z-index:10;
+    .search {
+      margin: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      padding: 15px 18px;
     }
+    .search input { border: none; outline: none; flex: 1; font-size: 17px; background: transparent; color: white; font-family: 'Cairo'; }
+    .search i { color: #94a3b8; font-size: 20px; }
 
-    /* =========================
-       APP HEADER
-    ==========================*/
-    .app-header{
-      padding:60px 25px 20px;
-      text-align:center;
-      background:linear-gradient(to bottom, #091e3a, #050d1a);
+    /* الفئات المستقبلية الشاملة للمنصة */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 0 20px;
+      margin-bottom: 22px;
     }
+    .cat { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 20px; padding: 18px 10px; text-align: center; transition: 0.3s; }
+    .cat:hover { transform: translateY(-4px); border-color: #10b981; }
+    .cat i { color: #10b981; font-size: 24px; margin-bottom: 10px; }
+    .cat p { color: #e2e8f0; font-weight: 700; font-size: 14px; }
 
-    .logo{
-      font-size:52px;
-      font-weight:800;
-      color:#10b981;
-      line-height:1;
-    }
+    /* كروت الإعلانات الحية */
+    .property { margin: 0 20px 20px 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 28px; overflow: hidden; }
+    .property-image { position: relative; height: 220px; }
+    .property-image img { width: 100%; height: 100%; object-fit: cover; }
+    .badge { position: absolute; top: 18px; right: 18px; background: #10b981; padding: 8px 18px; border-radius: 30px; font-size: 14px; font-weight: 700; }
+    .property-content { padding: 20px; }
+    .property-title { color: white; font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+    .property-location { color: #94a3b8; margin-bottom: 15px; font-size: 15px; }
+    .property-price { font-size: 20px; color: #10b981; font-weight: 700; }
+    .loading-msg { text-align: center; color: #94a3b8; padding: 20px; }
 
-    .logo span{
-      color:#cbd5e1;
-      font-size:20px;
-      display:block;
-      margin-top:10px;
-    }
-
-    /* =========================
-       SEARCH BAR
-    ==========================*/
-    .search{
-      margin:20px;
-      background:rgba(255, 255, 255, 0.05);
-      border:1px solid rgba(255, 255, 255, 0.1);
-      border-radius:18px;
-      display:flex;
-      align-items:center;
-      padding:15px 18px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .search input{
-      border:none;
-      outline:none;
-      flex:1;
-      font-size:17px;
-      background:transparent;
-      font-family:'Cairo';
-      color: white;
-    }
-
-    .search i{
-      color:#94a3b8;
-      font-size:20px;
-    }
-
-    /* =========================
-       CATEGORIES
-    ==========================*/
-    .categories{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-      padding:0 20px;
-      margin-bottom:22px;
-    }
-
-    .cat{
-      background:rgba(255, 255, 255, 0.05);
-      border:1px solid rgba(255, 255, 255, 0.08);
-      border-radius:20px;
-      padding:18px 10px;
-      text-align:center;
-      box-shadow:0 5px 12px rgba(0,0,0,0.1);
-      transition:0.3s;
-    }
-
-    .cat:hover{
-      transform:translateY(-4px);
-      border-color:#10b981;
-    }
-
-    .cat i{
-      color:#10b981;
-      font-size:24px;
-      margin-bottom:10px;
-    }
-
-    .cat p{
-      color:#e2e8f0;
-      font-weight:700;
-      font-size:14px;
-    }
-
-    /* =========================
-       DYNAMIC PROPERTY CONTAINER (حاوية الإعلانات الحية)
-    ==========================*/
-    #listingsContainer {
-      padding-bottom: 30px;
-    }
-
-    .property {
-      margin: 0 20px 20px 20px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      transition: 0.3s ease;
-    }
-
-    .property:hover {
-      border-color: #10b981;
-    }
-
-    .property-image{
-      position:relative;
-      height:220px;
-    }
-
-    .property-image img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .badge{
-      position:absolute;
-      top:18px;
-      right:18px;
-      background:#10b981;
-      padding:8px 18px;
-      border-radius:30px;
-      font-size:14px;
-      font-weight:700;
-      color: white;
-    }
-
-    .heart{
-      position:absolute;
-      bottom:18px;
-      left:18px;
-      width:48px;
-      height:48px;
-      border-radius:50%;
-      background:rgba(5, 13, 26, 0.8);
-      border: 1px solid rgba(255,255,255,0.2);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#10b981;
-      font-size:20px;
+    /* زر إضافة إعلان للمؤجرين */
+    .owner-button {
+      width: 280px;
+      height: 280px;
+      margin: 30px auto;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #0d5138, #05281d);
+      border: 8px solid rgba(255,255,255,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 40px rgba(0,255,170,0.25), inset 0 0 25px rgba(255,255,255,0.08);
+      transition: 0.3s;
       cursor: pointer;
     }
+    .owner-button:hover { transform: scale(1.05); border-color: #10b981; }
+    .owner-button i { font-size: 70px; margin-bottom: 15px; color: white; }
+    .owner-button h2 { font-size: 38px; margin-bottom: 5px; }
+    .owner-button p { color: #d9f7eb; }
 
-    .property-content{
-      padding:20px;
-    }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+    .feature { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); padding: 22px 10px; border-radius: 22px; text-align: center; }
+    .feature i { color: #10b981; font-size: 28px; margin-bottom: 12px; }
+    .feature h4 { margin-bottom: 6px; }
+    .feature p { color: #b8c2ca; font-size: 14px; }
 
-    .property-title{
-      color:#ffffff;
-      font-size:24px;
-      font-weight:800;
-      margin-bottom:10px;
-    }
+    /* إخفاء تلميحات التمرير الافتراضية للكمبيوتر */
+    .scroll-indicator-hint { display: none; }
 
-    .property-location{
-      color:#94a3b8;
-      margin-bottom:15px;
-      font-size:15px;
-    }
-
-    .property-price {
-      font-size: 20px;
-      color: #10b981;
-      font-weight: 700;
-      margin-top: 10px;
-      display: block;
-    }
-
-    /* رسالة التحميل المؤقتة */
-    .loading-msg {
-      text-align: center;
-      color: #94a3b8;
-      padding: 20px;
-      font-size: 16px;
-    }
-
-    /* =========================
-       OWNER BUTTON
-    ==========================*/
-    .owner-button{
-      width:280px;
-      height:280px;
-      margin:30px auto;
-      border-radius:50%;
-      background: radial-gradient(circle at center, #0d5138, #05281d);
-      border:8px solid rgba(255,255,255,0.2);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      box-shadow: 0 0 40px rgba(0,255,170,0.35), inset 0 0 25px rgba(255,255,255,0.08);
-      transition:0.3s;
-      cursor:pointer;
-    }
-
-    .owner-button:hover{
-      transform:scale(1.05);
-      border-color: #10b981;
-    }
-
-    .owner-button i{
-      font-size:70px;
-      margin-bottom:15px;
-      color:white;
-    }
-
-    .owner-button h2{
-      font-size:38px;
-      margin-bottom:5px;
-    }
-
-    .owner-button p{
-      color:#d9f7eb;
-    }
-
-    /* =========================
-       FEATURES
-    ==========================*/
-    .features{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:15px;
-      margin-top:20px;
-    }
-
-    .feature{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      padding:22px 10px;
-      border-radius:22px;
-      text-align:center;
-    }
-
-    .feature i{
-      color:#10b981;
-      font-size:28px;
-      margin-bottom:12px;
-    }
-
-    .feature h4{
-      margin-bottom:6px;
-    }
-
-    .feature p{
-      color:#b8c2ca;
-      font-size:14px;
-    }
-
-    /* =========================
-       RESPONSIVE MEDIA QUERIES
-    ==========================*/
-    @media(max-width:1200px){
-      .hero-container{
-        grid-template-columns:1fr;
+    /* ==========================================
+       MOBILE RESPONSIVE LAYOUT (التعديل الذكي والسرّي للهواتف)
+    ========================================== */
+    @media (max-width: 1200px) {
+      html, body {
+        /* تفعيل الانتقال المغناطيسي العمودي الذكي فقط عند التصفح بالهاتف */
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        height: 100vh;
       }
-      .phone{
-        max-width:420px;
-        margin:auto;
-      }
-    }
 
-    @media(max-width:600px){
-      .side-title{
-        font-size:32px;
+      .hero {
+        padding: 0;
       }
-      .phone{
-        height:780px;
+
+      /* تحويل الحاوية الرئيسية إلى 3 صفحات رأسية منفصلة بحجم واجهة الهاتف */
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 0;
       }
-      .categories{
-        grid-template-columns:repeat(2,1fr);
+
+      /* تحويل كل قسم برمجياً ليأخذ 100% من حجم شاشة هاتف الزائر الحالي */
+      .app-section-wrapper {
+        height: 100vh;
+        width: 100vw;
+        scroll-snap-align: start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        position: relative;
       }
-      .owner-button{
-        width:230px;
-        height:230px;
+
+      /* ضبط وتوسيط الكروت على شاشات الهاتف */
+      .side-card {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 28px;
+        padding: 10px;
       }
-      .owner-button h2{
-        font-size:30px;
+      .side-image { height: 220px; border-radius: 20px; }
+      .section-title { font-size: 32px; text-align: center; }
+      .section-desc { font-size: 15px; text-align: center; margin-bottom: 15px; }
+
+      /* شاشة الهاتف الداخلية تصبح هي العرض الرئيسي في القسم الثاني للموبايل */
+      .phone-view {
+        height: 95vh;
+        max-width: 400px;
+        border-radius: 35px;
+        box-shadow: none;
+        border: 1px solid #2d2d2d;
+      }
+      .app-header { padding: 35px 15px 15px; }
+      .logo { font-size: 36px; }
+
+      .owner-button { width: 200px; height: 200px; }
+      .owner-button i { font-size: 50px; }
+      .owner-button h2 { font-size: 28px; }
+      .features { gap: 10px; }
+      .feature { padding: 12px 5px; border-radius: 15px; }
+      .feature h4 { font-size: 13px; }
+      .feature p { font-size: 11px; }
+
+      /* إظهار مؤشرات التمرير التوجيهية للزائر على الهاتف */
+      .scroll-indicator-hint {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        bottom: 15px;
+        font-size: 13px;
+        color: #94a3b8;
+        animation: bounce 2s infinite;
+        pointer-events: none;
+      }
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-8px); }
+        60% { transform: translateY(-4px); }
       }
     }
   </style>
@@ -511,80 +348,88 @@
   <section class="hero">
     <div class="hero-container">
 
-      <!-- LEFT SIDE CARD (لليرار) -->
-      <div class="side-card">
-        <div class="side-content">
-          <h1 class="side-title">للـ<span class="green">زوار</span></h1>
-          <p class="side-desc">
-            ابحث عن منزلك المثالي بسهولة واستكشف آلاف الإعلانات في جميع ولايات الجزائر.
-          </p>
-        </div>
-        <div class="side-image">
-          <div class="overlay"></div>
-          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop" />
-        </div>
-        <div class="side-content">
-          <div class="visitor-btn">
-            <div class="visitor-left">
-              <div class="visitor-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-              <div>
-                <h3>تصفح الإعلانات حية</h3>
-                <p>البيانات تحدث برمجياً وسحابياً</p>
+      <div class="app-section-wrapper" id="visitorSection">
+        <div class="side-card">
+          <div class="side-content">
+            <h1 class="section-title">للـ<span class="green">زوار</span></h1>
+            <p class="section-desc">ابحث عن أي شيء تحتاجه للكراء بسهولة، واستكشف مئات الإعلانات الذكية في جميع ولايات الجزائر.</p>
+          </div>
+          <div class="side-image">
+            <div class="overlay"></div>
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop" />
+          </div>
+          <div class="side-content">
+            <div class="visitor-btn" onclick="document.getElementById('liveFeedSection').scrollIntoView({behavior: 'smooth'});">
+              <div class="visitor-left">
+                <div class="visitor-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div>
+                  <h3>تصفح الإعلانات الحية</h3>
+                  <p>اضغط أو مرر لاستكشاف المنصة</p>
+                </div>
               </div>
+              <i class="fa-solid fa-chevron-left"></i>
             </div>
-            <i class="fa-solid fa-chevron-left"></i>
           </div>
+        </div>
+        <div class="scroll-indicator-hint">
+          <span>مرر لأسفل لرؤية الإعلانات مباشرة</span>
+          <i class="fa-solid fa-angles-down"></i>
         </div>
       </div>
 
-      <!-- MIDDLE PHONE (شاشة الهاتف التفاعلية) -->
-      <div class="phone">
-        <div class="notch"></div>
-        <div class="screen">
-          <div class="app-header">
-            <div class="logo">إكريلي<span>Mekri DZ</span></div>
-          </div>
+      <div class="app-section-wrapper" id="liveFeedSection">
+        <div class="phone-view">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="app-header">
+              <div class="logo">إكريلي<span>منصة الكراء الذكية الأولى</span></div>
+            </div>
 
-          <div class="search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="ابحث عن عقار..." />
-            <i class="fa-solid fa-sliders"></i>
-          </div>
+            <div class="search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="searchInput" placeholder="ابحث عن عقار، سيارة، عتاد..." />
+              <i class="fa-solid fa-sliders"></i>
+            </div>
 
-          <div class="categories">
-            <div class="cat"><i class="fa-solid fa-house"></i><p>فلل</p></div>
-            <div class="cat"><i class="fa-solid fa-building"></i><p>شقق</p></div>
-            <div class="cat"><i class="fa-solid fa-location-dot"></i><p>أراضي</p></div>
-            <div class="cat"><i class="fa-solid fa-key"></i><p>للإيجار</p></div>
-          </div>
+            <div class="categories">
+              <div class="cat"><i class="fa-solid fa-house"></i><p>عقارات</p></div>
+              <div class="cat"><i class="fa-solid fa-car"></i><p>سيارات</p></div>
+              <div class="cat"><i class="fa-solid fa-screwdriver-wrench"></i><p>عتاد</p></div>
+              <div class="cat"><i class="fa-solid fa-ellipsis"></i><p>المزيد</p></div>
+            </div>
 
-          <!-- الحاوية البرمجية التي سيتم ملؤها بالإعلانات من السحابة -->
-          <div id="listingsContainer">
-            <div class="loading-msg">جاري تحميل العقارات الحية من Firestore...</div>
+            <div id="listingsContainer">
+              <div class="loading-msg">جاري الاتصال بقاعدة البيانات السحابية الحية...</div>
+            </div>
           </div>
+        </div>
+        <div class="scroll-indicator-hint" style="bottom: 5px;">
+          <span>مرر لأسفل لتسجيل ونشر إعلانك</span>
+          <i class="fa-solid fa-angles-down"></i>
         </div>
       </div>
 
-      <!-- RIGHT SIDE CARD (لصاحب المنزل) -->
-      <div class="side-card">
-        <div class="side-content">
-          <h1 class="side-title">لصاحب <span class="green">المنزل</span></h1>
-          <p class="side-desc">أضف عقارك ووصل لآلاف المهتمين بسرعة وسهولة.</p>
-        </div>
-        <div class="side-image">
-          <div class="overlay"></div>
-          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"/>
-        </div>
-        <div class="side-content">
-          <div class="owner-button">
-            <i class="fa-solid fa-house"></i>
-            <h2>إضافة إعلان</h2>
-            <p>سجل دخول وانشر عقارك</p>
+      <div class="app-section-wrapper" id="ownerSection">
+        <div class="side-card">
+          <div class="side-content">
+            <h1 class="section-title">أصحاب <span class="green">الإعلانات</span></h1>
+            <p class="section-desc">لديك أي شيء قابل للكراء؟ أضفه الآن مجاناً وافتح الباب أمام آلاف المستأجرين في الجزائر.</p>
           </div>
-          <div class="features">
-            <div class="feature"><i class="fa-solid fa-shield-halved"></i><h4>آمن</h4><p>حماية كاملة</p></div>
-            <div class="feature"><i class="fa-solid fa-users"></i><h4>وصول واسع</h4><p>آلاف الزوار</p></div>
-            <div class="feature"><i class="fa-solid fa-bolt"></i><h4>سريع</h4><p>إضافة فورية</p></div>
+          <div class="side-image" style="height: 160px;">
+            <div class="overlay"></div>
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"/>
+          </div>
+          <div class="side-content">
+            <div class="owner-button">
+              <i class="fa-solid fa-bolt"></i>
+              <h2>إضافة إعلان</h2>
+              <p>سجل دخول وابدأ الاستثمار</p>
+            </div>
+            <div class="features">
+              <div class="feature"><i class="fa-solid fa-shield-halved"></i><h4>آمن 100%</h4><p>توثيق وحماية</p></div>
+              <div class="feature"><i class="fa-solid fa-users"></i><h4>تغطية شاملة</h4><p>كل الولايات</p></div>
+              <div class="feature"><i class="fa-solid fa-chart-line"></i><h4>ذكية</h4><p>إحصائيات فورية</p></div>
+            </div>
           </div>
         </div>
       </div>
@@ -592,16 +437,12 @@
     </div>
   </section>
 
-<!-- ==========================================
-     FIREBASE LOGIC (المنطق البرمجي السحابي المحدث)
-     ========================================== -->
 <script type="module">
-  // استدعاء الدوال الحقيقية والمحدثة المتوافقة مع الويب مباشرة
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
   import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-  // إعدادات تطبيقك الحقيقية والنشطة بالكامل
+  // إعدادات مشروعك السحابي النشط
   const firebaseConfig = {
     apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
     authDomain: "ekrilidz-af404.firebaseapp.com",
@@ -612,85 +453,64 @@
     measurementId: "G-B9FL7TQ8VC"
   };
 
-  // تفعيل وتهيئة بيئة العمل السحابية
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
 
-  // الإمساك بعناصر الواجهة البرمجية
   const ownerButton = document.querySelector(".owner-button");
   const listingsContainer = document.getElementById("listingsContainer");
 
-  /* ==========================================
-     منطق تسجيل الدخول وتوجيه المضيف تلقائياً
-     ========================================== */
+  // معالجة تسجيل الدخول بـ Google والتوجيه المباشر لصفحة النشر
   ownerButton.addEventListener("click", async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      alert("مرحباً بك يا " + result.user.displayName + "! تم تسجيل دخولك بنجاح.");
-      
-      // التوجيه التلقائي والمباشر لصفحة إضافة الإعلان التي قمت بإنشائها
+      alert("مرحباً بك يا " + result.user.displayName + " في منصة أكريلي الذكية!");
       window.location.href = "create-listing.html";
     } catch (error) {
-      console.error("حدث خطأ أثناء تسجيل الدخول:", error);
-      alert("فشل تسجيل الدخول، يرجى المحاولة مجدداً.");
+      console.error("خطأ أثناء تسجيل الدخول:", error);
+      alert("فشل تسجيل الدخول. يرجى تفعيل النطاق wloulou842-star.github.io داخل Authorized Domains في إعدادات Firebase ليعمل الزر بنجاح.");
     }
   });
 
-  /* ==========================================
-     دالة جلب الإعلانات الحقيقية وبنائها ديناميكياً
-     ========================================== */
+  // دالة قراءة وجلب الإعلانات الحقيقية من Firestore وعرضها ديناميكياً
   async function loadRealListings() {
     try {
-      // 1. جلب الوثائق المخزنة في مجموعة listings السحابية
       const querySnapshot = await getDocs(collection(db, "listings"));
-      
-      // مسح رسالة التحميل المؤقتة لتجهيز الحاوية
       listingsContainer.innerHTML = "";
 
-      // التحقق في حال كانت قاعدة البيانات فارغة تماماً من الإعلانات
       if (querySnapshot.empty) {
-        listingsContainer.innerHTML = '<div class="loading-msg">لا توجد إعلانات منشورة حالياً. كن أول من يضيف عقاراً!</div>';
+        listingsContainer.innerHTML = '<div class="loading-msg">لا توجد إعلانات نشطة حالياً في المنصة. كن أول من يضيف معروضاً!</div>';
         return;
       }
 
-      // 2. استخدام حلقة تكرارية للمرور على كل وثيقة وبناء كود الـ HTML الخاص بها
       querySnapshot.forEach((doc) => {
         const data = doc.data();
-
-        // إنشاء عنصر div برمجياً لكل بطاقة عقار
         const propertyCard = document.createElement("div");
         propertyCard.className = "property";
 
-        // ملء بطاقة العقار بالبيانات المرفوعة حقيقياً بأسلوب سلسلة النصوص التفاعلية (Template Literals)
         propertyCard.innerHTML = `
           <div class="property-image">
             <img src="${data.imageUrl || 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200&auto=format&fit=crop'}" alt="${data.title}" />
-            <div class="badge">كراء صيفي</div>
-            <div class="heart"><i class="fa-regular fa-heart"></i></div>
+            <div class="badge">متاح للكراء</div>
           </div>
           <div class="property-content">
             <h2 class="property-title">${data.title}</h2>
             <p class="property-location"><i class="fa-solid fa-location-dot"></i> الولاية: ${data.city}</p>
-            <p class="property-location">${data.description || 'لا يوجد وصف تفصيلي متوفر حالياً.'}</p>
-            <span class="property-price">${data.price} دج / الليلة</span>
+            <p class="property-location" style="font-size:13px; line-height: 1.5;">${data.description || 'تواصل مع صاحب الإعلان لمعرفة التفاصيل كاملة.'}</p>
+            <span class="property-price">${data.price} دج / المدة</span>
           </div>
         `;
-
-        // إضافة البطاقة البرمجية المشيدة داخل شاشة الهاتف
         listingsContainer.appendChild(propertyCard);
       });
 
     } catch (error) {
-      console.error("خطأ أثناء جلب البيانات من Firestore:", error);
-      listingsContainer.innerHTML = '<div class="loading-msg" style="color: #ef4444;">فشل تحميل الإعلانات السحابية. تحقق من الاتصال وقواعد الحماية.</div>';
+      console.error("خطأ أثناء استدعاء البيانات سحابياً:", error);
+      listingsContainer.innerHTML = '<div class="loading-msg" style="color: #ef4444;">فشل تحميل الإعلانات السحابية الحية. تفقد اتصال الشبكة.</div>';
     }
   }
 
-  // تشغيل الدالة فوراً عند تحميل واجهة الصفحة لقراءة البيانات تلقائياً
   loadRealListings();
-
 </script>
 </body>
 </html>
