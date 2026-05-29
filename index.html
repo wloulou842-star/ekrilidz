@@ -10,11 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Icons -->
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
   <style>
-
     *{
       margin:0;
       padding:0;
@@ -23,7 +21,7 @@
 
     body{
       font-family:'Cairo',sans-serif;
-      background:#071018;
+      background:#071018; /* الخلفية الداكنة المتفق عليها لهوية أكريلي */
       overflow-x:hidden;
       color:white;
     }
@@ -36,7 +34,6 @@
     /* =========================
        BACKGROUND EFFECTS
     ==========================*/
-
     .bg-glow{
       position:fixed;
       width:500px;
@@ -60,7 +57,6 @@
     /* =========================
        MAIN HERO
     ==========================*/
-
     .hero{
       min-height:100vh;
       display:flex;
@@ -81,15 +77,13 @@
     /* =========================
        SIDE CARDS
     ==========================*/
-
     .side-card{
       background:rgba(255,255,255,0.03);
       border:1px solid rgba(255,255,255,0.08);
       border-radius:35px;
       overflow:hidden;
       backdrop-filter:blur(10px);
-      box-shadow:
-      0 0 30px rgba(0,255,170,0.08);
+      box-shadow: 0 0 30px rgba(0,255,170,0.08);
     }
 
     .side-image{
@@ -107,9 +101,7 @@
     .overlay{
       position:absolute;
       inset:0;
-      background:linear-gradient(to top,
-      rgba(0,0,0,0.7),
-      rgba(0,0,0,0.05));
+      background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.05));
     }
 
     .side-content{
@@ -123,7 +115,7 @@
     }
 
     .green{
-      color:#18d88f;
+      color:#10b981; /* كود اللون الأخضر الموحد لهويتك البرمجية */
     }
 
     .side-desc{
@@ -136,7 +128,6 @@
     /* =========================
        VISITOR BUTTON
     ==========================*/
-
     .visitor-btn{
       display:flex;
       align-items:center;
@@ -151,8 +142,8 @@
 
     .visitor-btn:hover{
       transform:translateY(-3px);
-      border-color:#18d88f;
-      box-shadow:0 0 20px rgba(24,216,143,0.3);
+      border-color:#10b981;
+      box-shadow:0 0 20px rgba(16,185,129,0.3);
     }
 
     .visitor-left{
@@ -168,10 +159,10 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      background:#18d88f20;
-      border:2px solid #18d88f;
+      background:rgba(16,185,129,0.2);
+      border:2px solid #10b981;
       font-size:25px;
-      color:#18d88f;
+      color:#10b981;
     }
 
     .visitor-btn h3{
@@ -183,9 +174,8 @@
     }
 
     /* =========================
-       PHONE
+       PHONE CONTAINER
     ==========================*/
-
     .phone{
       position:relative;
       width:100%;
@@ -194,17 +184,21 @@
       padding:15px;
       background:#111;
       border:3px solid #2d2d2d;
-      box-shadow:
-      0 0 50px rgba(0,255,170,0.15);
+      box-shadow: 0 0 50px rgba(0,255,170,0.15);
     }
 
     .screen{
       width:100%;
       height:100%;
-      background:#f8fafc;
+      background:#050d1a; /* تعديل خلفية الشاشة الداخلية لتتوافق مع هويتك الداكنة */
       border-radius:40px;
-      overflow:hidden;
+      overflow-y:auto; /* السماح بالتمرير الرأسي لرؤية كافة الإعلانات المحملة */
       position:relative;
+    }
+
+    /* إخفاء شريط التمرير الافتراضي لجعل الشاشة تبدو كتطبيق هاتف حقيقي */
+    .screen::-webkit-scrollbar {
+      width: 0px;
     }
 
     .notch{
@@ -222,41 +216,38 @@
     /* =========================
        APP HEADER
     ==========================*/
-
     .app-header{
       padding:60px 25px 20px;
       text-align:center;
-      background:linear-gradient(to bottom,
-      #dff5ea,
-      #ffffff);
+      background:linear-gradient(to bottom, #091e3a, #050d1a);
     }
 
     .logo{
       font-size:52px;
       font-weight:800;
-      color:#11a86d;
+      color:#10b981;
       line-height:1;
     }
 
     .logo span{
-      color:#222;
+      color:#cbd5e1;
       font-size:20px;
       display:block;
       margin-top:10px;
     }
 
     /* =========================
-       SEARCH
+       SEARCH BAR
     ==========================*/
-
     .search{
       margin:20px;
-      background:white;
+      background:rgba(255, 255, 255, 0.05);
+      border:1px solid rgba(255, 255, 255, 0.1);
       border-radius:18px;
       display:flex;
       align-items:center;
       padding:15px 18px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.08);
+      box-shadow:0 5px 15px rgba(0,0,0,0.2);
     }
 
     .search input{
@@ -266,17 +257,17 @@
       font-size:17px;
       background:transparent;
       font-family:'Cairo';
+      color: white;
     }
 
     .search i{
-      color:#666;
+      color:#94a3b8;
       font-size:20px;
     }
 
     /* =========================
        CATEGORIES
     ==========================*/
-
     .categories{
       display:grid;
       grid-template-columns:repeat(4,1fr);
@@ -286,45 +277,56 @@
     }
 
     .cat{
-      background:white;
+      background:rgba(255, 255, 255, 0.05);
+      border:1px solid rgba(255, 255, 255, 0.08);
       border-radius:20px;
       padding:18px 10px;
       text-align:center;
-      box-shadow:0 5px 12px rgba(0,0,0,0.06);
+      box-shadow:0 5px 12px rgba(0,0,0,0.1);
       transition:0.3s;
     }
 
     .cat:hover{
       transform:translateY(-4px);
+      border-color:#10b981;
     }
 
     .cat i{
-      color:#12b879;
+      color:#10b981;
       font-size:24px;
       margin-bottom:10px;
     }
 
     .cat p{
-      color:#222;
+      color:#e2e8f0;
       font-weight:700;
       font-size:14px;
     }
 
     /* =========================
-       PROPERTY CARD
+       DYNAMIC PROPERTY CONTAINER (حاوية الإعلانات الحية)
     ==========================*/
+    #listingsContainer {
+      padding-bottom: 30px;
+    }
 
-    .property{
-      margin:0 20px;
-      background:white;
-      border-radius:28px;
-      overflow:hidden;
-      box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    .property {
+      margin: 0 20px 20px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: 0.3s ease;
+    }
+
+    .property:hover {
+      border-color: #10b981;
     }
 
     .property-image{
       position:relative;
-      height:260px;
+      height:220px;
     }
 
     .property-image img{
@@ -337,11 +339,12 @@
       position:absolute;
       top:18px;
       right:18px;
-      background:#11b776;
+      background:#10b981;
       padding:8px 18px;
       border-radius:30px;
       font-size:14px;
       font-weight:700;
+      color: white;
     }
 
     .heart{
@@ -351,12 +354,14 @@
       width:48px;
       height:48px;
       border-radius:50%;
-      background:white;
+      background:rgba(5, 13, 26, 0.8);
+      border: 1px solid rgba(255,255,255,0.2);
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#11b776;
+      color:#10b981;
       font-size:20px;
+      cursor: pointer;
     }
 
     .property-content{
@@ -364,51 +369,56 @@
     }
 
     .property-title{
-      color:#111;
-      font-size:28px;
+      color:#ffffff;
+      font-size:24px;
       font-weight:800;
       margin-bottom:10px;
     }
 
     .property-location{
-      color:#777;
+      color:#94a3b8;
       margin-bottom:15px;
+      font-size:15px;
     }
 
-    .property-info{
-      display:flex;
-      justify-content:space-between;
-      color:#555;
-      font-weight:700;
+    .property-price {
+      font-size: 20px;
+      color: #10b981;
+      font-weight: 700;
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* رسالة التحميل المؤقتة */
+    .loading-msg {
+      text-align: center;
+      color: #94a3b8;
+      padding: 20px;
+      font-size: 16px;
     }
 
     /* =========================
        OWNER BUTTON
     ==========================*/
-
     .owner-button{
       width:280px;
       height:280px;
       margin:30px auto;
       border-radius:50%;
-      background:
-      radial-gradient(circle at center,
-      #0d5138,
-      #05281d);
+      background: radial-gradient(circle at center, #0d5138, #05281d);
       border:8px solid rgba(255,255,255,0.2);
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      box-shadow:
-      0 0 40px rgba(0,255,170,0.35),
-      inset 0 0 25px rgba(255,255,255,0.08);
+      box-shadow: 0 0 40px rgba(0,255,170,0.35), inset 0 0 25px rgba(255,255,255,0.08);
       transition:0.3s;
       cursor:pointer;
     }
 
     .owner-button:hover{
       transform:scale(1.05);
+      border-color: #10b981;
     }
 
     .owner-button i{
@@ -429,7 +439,6 @@
     /* =========================
        FEATURES
     ==========================*/
-
     .features{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -446,7 +455,7 @@
     }
 
     .feature i{
-      color:#18d88f;
+      color:#10b981;
       font-size:28px;
       margin-bottom:12px;
     }
@@ -461,47 +470,36 @@
     }
 
     /* =========================
-       MOBILE
+       RESPONSIVE MEDIA QUERIES
     ==========================*/
-
     @media(max-width:1200px){
-
       .hero-container{
         grid-template-columns:1fr;
       }
-
       .phone{
         max-width:420px;
         margin:auto;
       }
-
     }
 
     @media(max-width:600px){
-
       .side-title{
         font-size:32px;
       }
-
       .phone{
         height:780px;
       }
-
       .categories{
         grid-template-columns:repeat(2,1fr);
       }
-
       .owner-button{
         width:230px;
         height:230px;
       }
-
       .owner-button h2{
         font-size:30px;
       }
-
     }
-
   </style>
 </head>
 
@@ -511,384 +509,188 @@
   <div class="bg-glow glow2"></div>
 
   <section class="hero">
-
     <div class="hero-container">
 
-      <!-- LEFT -->
+      <!-- LEFT SIDE CARD (لليرار) -->
       <div class="side-card">
-
         <div class="side-content">
-          <h1 class="side-title">
-            للـ<span class="green">زوار</span>
-          </h1>
-
+          <h1 class="side-title">للـ<span class="green">زوار</span></h1>
           <p class="side-desc">
-            ابحث عن منزلك المثالي بسهولة
-            واستكشف آلاف الإعلانات
-            في جميع ولايات الجزائر.
+            ابحث عن منزلك المثالي بسهولة واستكشف آلاف الإعلانات في جميع ولايات الجزائر.
           </p>
         </div>
-
         <div class="side-image">
           <div class="overlay"></div>
-
           <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop" />
-
         </div>
-
         <div class="side-content">
-
           <div class="visitor-btn">
-
             <div class="visitor-left">
-
-              <div class="visitor-icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </div>
-
+              <div class="visitor-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
               <div>
-                <h3>الصفحة الثانية للزوار</h3>
-                <p>استكشف الإعلانات بسهولة</p>
+                <h3>تصفح الإعلانات حية</h3>
+                <p>البيانات تحدث برمجياً وسحابياً</p>
               </div>
-
             </div>
-
             <i class="fa-solid fa-chevron-left"></i>
-
           </div>
-
         </div>
-
       </div>
 
-      <!-- PHONE -->
+      <!-- MIDDLE PHONE (شاشة الهاتف التفاعلية) -->
       <div class="phone">
-
         <div class="notch"></div>
-
         <div class="screen">
-
           <div class="app-header">
-
-            <div class="logo">
-              إكريلي
-              <span>Mekri DZ</span>
-            </div>
-
+            <div class="logo">إكريلي<span>Mekri DZ</span></div>
           </div>
 
           <div class="search">
-
             <i class="fa-solid fa-magnifying-glass"></i>
-
-            <input type="text"
-            placeholder="ابحث عن عقار..." />
-
+            <input type="text" id="searchInput" placeholder="ابحث عن عقار..." />
             <i class="fa-solid fa-sliders"></i>
-
           </div>
-
-          <!-- IMPORTANT:
-               NO USER NAVIGATION
-               FOR FIRST PAGE
-          -->
 
           <div class="categories">
-
-            <div class="cat">
-              <i class="fa-solid fa-house"></i>
-              <p>فلل</p>
-            </div>
-
-            <div class="cat">
-              <i class="fa-solid fa-building"></i>
-              <p>شقق</p>
-            </div>
-
-            <div class="cat">
-              <i class="fa-solid fa-location-dot"></i>
-              <p>أراضي</p>
-            </div>
-
-            <div class="cat">
-              <i class="fa-solid fa-key"></i>
-              <p>للإيجار</p>
-            </div>
-
+            <div class="cat"><i class="fa-solid fa-house"></i><p>فلل</p></div>
+            <div class="cat"><i class="fa-solid fa-building"></i><p>شقق</p></div>
+            <div class="cat"><i class="fa-solid fa-location-dot"></i><p>أراضي</p></div>
+            <div class="cat"><i class="fa-solid fa-key"></i><p>للإيجار</p></div>
           </div>
 
-          <div class="property">
-
-            <div class="property-image">
-
-              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200&auto=format&fit=crop" />
-
-              <div class="badge">
-                للإيجار
-              </div>
-
-              <div class="heart">
-                <i class="fa-regular fa-heart"></i>
-              </div>
-
-            </div>
-
-            <div class="property-content">
-
-              <h2 class="property-title">
-                فيلا فاخرة مع مسبح
-              </h2>
-
-              <p class="property-location">
-                الجزائر العاصمة
-              </p>
-
-              <div class="property-info">
-                <span>4 غرف</span>
-                <span>3 حمامات</span>
-                <span>250م²</span>
-              </div>
-
-            </div>
-
+          <!-- الحاوية البرمجية التي سيتم ملؤها بالإعلانات من السحابة -->
+          <div id="listingsContainer">
+            <div class="loading-msg">جاري تحميل العقارات الحية من Firestore...</div>
           </div>
-
         </div>
-
       </div>
 
-      <!-- RIGHT -->
+      <!-- RIGHT SIDE CARD (لصاحب المنزل) -->
       <div class="side-card">
-
         <div class="side-content">
-
-          <h1 class="side-title">
-            لصاحب <span class="green">المنزل</span>
-          </h1>
-
-          <p class="side-desc">
-            أضف عقارك ووصل
-            لآلاف المهتمين بسرعة وسهولة.
-          </p>
-
+          <h1 class="side-title">لصاحب <span class="green">المنزل</span></h1>
+          <p class="side-desc">أضف عقارك ووصل لآلاف المهتمين بسرعة وسهولة.</p>
         </div>
-
         <div class="side-image">
-
           <div class="overlay"></div>
-
           <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"/>
-
         </div>
-
         <div class="side-content">
-
           <div class="owner-button">
-
             <i class="fa-solid fa-house"></i>
-
             <h2>إضافة إعلان</h2>
-
-            <p>ابدأ الآن</p>
-
+            <p>سجل دخول وانشر عقارك</p>
           </div>
-
           <div class="features">
-
-            <div class="feature">
-              <i class="fa-solid fa-shield-halved"></i>
-              <h4>آمن</h4>
-              <p>حماية كاملة</p>
-            </div>
-
-            <div class="feature">
-              <i class="fa-solid fa-users"></i>
-              <h4>وصول واسع</h4>
-              <p>آلاف الزوار</p>
-            </div>
-
-            <div class="feature">
-              <i class="fa-solid fa-bolt"></i>
-              <h4>سريع</h4>
-              <p>إضافة فورية</p>
-            </div>
-
+            <div class="feature"><i class="fa-solid fa-shield-halved"></i><h4>آمن</h4><p>حماية كاملة</p></div>
+            <div class="feature"><i class="fa-solid fa-users"></i><h4>وصول واسع</h4><p>آلاف الزوار</p></div>
+            <div class="feature"><i class="fa-solid fa-bolt"></i><h4>سريع</h4><p>إضافة فورية</p></div>
           </div>
-
         </div>
-
       </div>
 
     </div>
-
   </section>
-<!-- =========================
-FIREBASE SDK
-ضع هذا قبل </body>
-========================= -->
 
+<!-- ==========================================
+     FIREBASE LOGIC (المنطق البرمجي السحابي المحدث)
+     ========================================== -->
 <script type="module">
+  // استدعاء الدوال الحقيقية والمحدثة المتوافقة مع الويب مباشرة
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-  // Firebase SDK
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-  import {
-    getAuth,
-    signInWithPopup,
-    GoogleAuthProvider,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-  /* =========================
-     FIREBASE CONFIG
-     بدل المعلومات بمعلومات مشروعك
-  ========================= */
-
+  // إعدادات تطبيقك الحقيقية والنشطة بالكامل
   const firebaseConfig = {
-
-    apiKey: "YOUR_API_KEY",
-
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-
-    projectId: "YOUR_PROJECT_ID",
-
-    storageBucket: "YOUR_PROJECT.appspot.com",
-
-    messagingSenderId: "000000000",
-
-    appId: "YOUR_APP_ID"
-
+    apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
+    authDomain: "ekrilidz-af404.firebaseapp.com",
+    projectId: "ekrilidz-af404",
+    storageBucket: "ekrilidz-af404.firebasestorage.app",
+    messagingSenderId: "945902801388",
+    appId: "1:945902801388:web:05ee5a76725edf9d4df0c9",
+    measurementId: "G-B9FL7TQ8VC"
   };
 
-
-  /* =========================
-     INIT FIREBASE
-  ========================= */
-
+  // تفعيل وتهيئة بيئة العمل السحابية
   const app = initializeApp(firebaseConfig);
-
   const auth = getAuth(app);
-
   const db = getFirestore(app);
-
   const provider = new GoogleAuthProvider();
 
-
-  /* =========================
-     LOGIN BUTTON
-  ========================= */
-
+  // الإمساك بعناصر الواجهة البرمجية
   const ownerButton = document.querySelector(".owner-button");
+  const listingsContainer = document.getElementById("listingsContainer");
 
+  /* ==========================================
+     منطق تسجيل الدخول وتوجيه المضيف تلقائياً
+     ========================================== */
   ownerButton.addEventListener("click", async () => {
-
     try {
-
       const result = await signInWithPopup(auth, provider);
-
-      const user = result.user;
-
-      alert("مرحبا " + user.displayName);
-
-      console.log(user);
-
+      alert("مرحباً بك يا " + result.user.displayName + "! تم تسجيل دخولك بنجاح.");
+      
+      // التوجيه التلقائي والمباشر لصفحة إضافة الإعلان التي قمت بإنشائها
+      window.location.href = "create-listing.html";
     } catch (error) {
-
-      console.error(error);
-
-      alert("حدث خطأ أثناء تسجيل الدخول");
-
+      console.error("حدث خطأ أثناء تسجيل الدخول:", error);
+      alert("فشل تسجيل الدخول، يرجى المحاولة مجدداً.");
     }
-
   });
 
-
-  /* =========================
-     USER STATE
-  ========================= */
-
-  onAuthStateChanged(auth, (user) => {
-
-    if (user) {
-
-      console.log("مسجل دخول:", user.displayName);
-
-      // هنا تقدر تبدل الواجهة
-      // وتظهر navigation الخاصة بالمستخدم
-
-    } else {
-
-      console.log("لا يوجد مستخدم");
-
-    }
-
-  });
-
-
-  /* =========================
-     ADD PROPERTY EXAMPLE
-  ========================= */
-
-  async function addProperty() {
-
+  /* ==========================================
+     دالة جلب الإعلانات الحقيقية وبنائها ديناميكياً
+     ========================================== */
+  async function loadRealListings() {
     try {
+      // 1. جلب الوثائق المخزنة في مجموعة listings السحابية
+      const querySnapshot = await getDocs(collection(db, "listings"));
+      
+      // مسح رسالة التحميل المؤقتة لتجهيز الحاوية
+      listingsContainer.innerHTML = "";
 
-      await addDoc(collection(db, "listings"), {
+      // التحقق في حال كانت قاعدة البيانات فارغة تماماً من الإعلانات
+      if (querySnapshot.empty) {
+        listingsContainer.innerHTML = '<div class="loading-msg">لا توجد إعلانات منشورة حالياً. كن أول من يضيف عقاراً!</div>';
+        return;
+      }
 
-        title: "فيلا فاخرة",
+      // 2. استخدام حلقة تكرارية للمرور على كل وثيقة وبناء كود الـ HTML الخاص بها
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
 
-        city: "الجزائر",
+        // إنشاء عنصر div برمجياً لكل بطاقة عقار
+        const propertyCard = document.createElement("div");
+        propertyCard.className = "property";
 
-        rooms: 4,
+        // ملء بطاقة العقار بالبيانات المرفوعة حقيقياً بأسلوب سلسلة النصوص التفاعلية (Template Literals)
+        propertyCard.innerHTML = `
+          <div class="property-image">
+            <img src="${data.imageUrl || 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200&auto=format&fit=crop'}" alt="${data.title}" />
+            <div class="badge">كراء صيفي</div>
+            <div class="heart"><i class="fa-regular fa-heart"></i></div>
+          </div>
+          <div class="property-content">
+            <h2 class="property-title">${data.title}</h2>
+            <p class="property-location"><i class="fa-solid fa-location-dot"></i> الولاية: ${data.city}</p>
+            <p class="property-location">${data.description || 'لا يوجد وصف تفصيلي متوفر حالياً.'}</p>
+            <span class="property-price">${data.price} دج / الليلة</span>
+          </div>
+        `;
 
-        bathrooms: 3,
-
-        area: 250,
-
-        createdAt: new Date()
-
+        // إضافة البطاقة البرمجية المشيدة داخل شاشة الهاتف
+        listingsContainer.appendChild(propertyCard);
       });
 
-      console.log("تمت إضافة الإعلان");
-
-    } catch (e) {
-
-      console.error(e);
-
+    } catch (error) {
+      console.error("خطأ أثناء جلب البيانات من Firestore:", error);
+      listingsContainer.innerHTML = '<div class="loading-msg" style="color: #ef4444;">فشل تحميل الإعلانات السحابية. تحقق من الاتصال وقواعد الحماية.</div>';
     }
-
   }
 
-
-  /* =========================
-     GET LISTINGS
-  ========================= */
-
-  async function getListings() {
-
-    const querySnapshot =
-    await getDocs(collection(db, "listings"));
-
-    querySnapshot.forEach((doc) => {
-
-      console.log(doc.id, doc.data());
-
-    });
-
-  }
-
-  getListings();
+  // تشغيل الدالة فوراً عند تحميل واجهة الصفحة لقراءة البيانات تلقائياً
+  loadRealListings();
 
 </script>
-
 </body>
 </html>
