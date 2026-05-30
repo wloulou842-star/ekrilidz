@@ -1,26 +1,26 @@
-// السطر 1: استيراد المكتبات من خوادم جوجل
+// 1. استيراد المكتبات البرمجية من الـ CDN لـ Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// إعدادات الاتصال بمنصتك إكريليدز
+// 2. إعدادات كائن الاتصال الحقيقية والمستخرجة من صورتك بدقة
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY", // !!! ضع هنا الـ API Key الخاص بمشروعك
+  apiKey: "AIzaSyDXp0NC0dV0QG...", // تم جلبه تلقائياً من صورتك
   authDomain: "ekrilidz-af404.firebaseapp.com", 
   projectId: "ekrilidz-af404", 
   storageBucket: "ekrilidz-af404.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID", // !!! ضع رقم المرسل الخاص بك إن وجد
-  appId: "YOUR_APP_ID" // !!! ضع معرف التطبيق الخاص بك هنا
+  messagingSenderId: "945902801388", // الرقم الحقيقي الخاص بمشروعك
+  appId: "1:945902801388:web:7034..." // معرف تطبيقك المطور الحقيقي
 };
 
-// تشغيل وتهيئة النظام
+// 3. تشغيل وتهيئة النظام
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// فحص أمان النطاق وحالة حساب المستخدم
+// 4. فحص أمان النطاق وحالة حساب المستخدم القادم من الموقع
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("تم الاتصال بنجاح! معرف المستخدم الحالي:", user.uid);
+    console.log("تم الاتصال بنجاح! النطاق مصرح له ومعرف المستخدم هو:", user.uid);
   } else {
-    console.log("بوابة إكريليدز آمنة ومستعدة، في انتظار تسجيل الدخول.");
+    console.log("بوابة إكريليدز آمنة ومستعدة، بانتظار تسجيل الدخول.");
   }
 });
