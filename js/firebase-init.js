@@ -1,26 +1,32 @@
-// 1. استيراد المكتبات البرمجية من الـ CDN لـ Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// 2. إعدادات كائن الاتصال الحقيقية والمستخرجة من صورتك بدقة
+// 🔐 Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyDXp0NC0dV0QG...", // تم جلبه تلقائياً من صورتك
-  authDomain: "ekrilidz-af404.firebaseapp.com", 
-  projectId: "ekrilidz-af404", 
-  storageBucket: "ekrilidz-af404.appspot.com",
-  messagingSenderId: "945902801388", // الرقم الحقيقي الخاص بمشروعك
-  appId: "1:945902801388:web:7034..." // معرف تطبيقك المطور الحقيقي
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
-// 3. تشغيل وتهيئة النظام
+// 🚀 Init
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
-// 4. فحص أمان النطاق وحالة حساب المستخدم القادم من الموقع
+// 🔑 Services
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// 👁️ Auth State Listener
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("تم الاتصال بنجاح! النطاق مصرح له ومعرف المستخدم هو:", user.uid);
+    console.log("✅ Logged in:", user.uid);
   } else {
-    console.log("بوابة إكريليدز آمنة ومستعدة، بانتظار تسجيل الدخول.");
+    console.log("🔒 No user logged in");
   }
 });
+
+// 📦 Export
+export { app, auth, db };
