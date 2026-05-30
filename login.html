@@ -1,487 +1,241 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>أكريلي | تسجيل الدخول</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أكريلي v2 - لوحة تحكم المالك</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    /* ── الألوان الملكية ── */
     :root {
-      --green: #10b981;
-      --green-light: #34d399;
-      --green-glow: rgba(16, 185, 129, 0.3);
-      --green-dim: rgba(16, 185, 129, 0.08);
-      --bg: #050e0a;
-      --bg2: #071810;
-      --glass: rgba(255,255,255,0.03);
-      --border: rgba(16, 185, 129, 0.15);
-      --text: #f0fdf4;
-      --text-muted: #86efac;
-      --gold: #d4af37;
+      --bg-dark: #040d06;
+      --bg-card: #0b1d12;
+      --primary-green: #28a745;
+      --accent-gold: #d4af37;
+      --text-light: #e0e0e0;
+      --glass-bg: rgba(11, 29, 18, 0.75);
+      --glass-border: rgba(212, 175, 55, 0.2);
+      --danger-red: #dc3545;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html, body {
-      height: 100%;
-      font-family: 'Cairo', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      /* تم التصليح هنا لضمان السكرول عند ظهور كيبورد الهاتف */
-      overflow-x: hidden;
-      overflow-y: auto;
+    body, html {
+      margin: 0; padding: 0; background-color: var(--bg-dark);
+      font-family: 'Cairo', sans-serif; color: var(--text-light);
     }
 
-    /* ── خلفية حية ── */
-    .bg-scene {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
+    /* ── الهيكل الرئيسي ── */
+    .dashboard-container {
+      padding: 20px 20px 90px 20px;
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr; gap: 20px;
     }
 
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(100px);
-      animation: drift 12s ease-in-out infinite alternate;
+    /* ── الكارتات الزجاجية ── */
+    .dash-card {
+      background: var(--glass-bg); backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border); border-radius: 16px;
+      padding: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     }
-    .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(16,185,129,0.18), transparent); top: -200px; right: -200px; animation-delay: 0s; }
-    .orb2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(5,46,22,0.6), transparent); bottom: -150px; left: -100px; animation-delay: 3s; }
-    .orb3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(212,175,55,0.06), transparent); top: 40%; left: 10%; animation-delay: 6s; }
-
-    @keyframes drift {
-      0% { transform: translate(0,0) scale(1); }
-      100% { transform: translate(30px, 20px) scale(1.1); }
+    
+    .card-title {
+      color: var(--accent-gold); font-size: 1.15rem; font-weight: 700;
+      margin-top: 0; border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 10px; display: flex; align-items: center; gap: 10px;
     }
 
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      z-index: 0;
+    /* ── بروفايل المالك ونقاط الوفاء ── */
+    .profile-header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, #0b1d12, #143521);
+      border: 1px solid var(--accent-gold); border-radius: 14px; padding: 20px;
+      margin-bottom: 20px;
+    }
+    .user-info h2 { margin: 0; color: #fff; font-size: 1.4rem; }
+    .badge-status {
+      display: inline-block; background: var(--accent-gold); color: #000;
+      padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; margin-top: 5px;
+    }
+    .fidelity-points { text-align: center; }
+    .fidelity-points span {
+      display: block; font-size: 2rem; color: var(--accent-gold); font-weight: 700;
+    }
+    .fidelity-points p { margin: 0; font-size: 0.85rem; color: #aaa; }
+
+    /* ── مقياس السبام والحد المسموح ── */
+    .limit-bar-bg {
+      background: rgba(255,255,255,0.1); width: 100%; height: 10px; border-radius: 5px; margin: 10px 0; overflow: hidden;
+    }
+    .limit-bar-fill {
+      background: var(--danger-red); height: 100%; width: 100%; /* 2/2 إعلانات */
+    }
+    .limit-text { font-size: 0.85rem; color: #ccc; display: flex; justify-content: space-between; }
+
+    /* ── قائمة الإعلانات ── */
+    .listing-item {
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px; padding: 15px; margin-bottom: 15px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .listing-details h4 { margin: 0 0 5px 0; color: #fff; }
+    .listing-details p { margin: 0; font-size: 0.85rem; color: #aaa; }
+    .listing-actions button {
+      background: none; border: none; color: #fff; cursor: pointer;
+      padding: 8px; border-radius: 6px; transition: 0.2s;
+    }
+    .btn-edit { background: rgba(40, 167, 69, 0.2) !important; color: var(--primary-green) !important; }
+    .btn-delete { background: rgba(220, 53, 69, 0.2) !important; color: var(--danger-red) !important; }
+
+    /* ── الشات والتقييم ── */
+    .chat-msg {
+      background: rgba(255,255,255,0.05); border-radius: 10px; padding: 12px; margin-bottom: 10px;
+    }
+    .chat-header { display: flex; justify-content: space-between; font-size: 0.85rem; color: #aaa; margin-bottom: 5px; }
+    .chat-header strong { color: var(--accent-gold); }
+    .reveal-btn {
+      background: var(--primary-green); color: white; border: none;
+      padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; margin-top: 8px; font-family: 'Cairo';
     }
 
-    .page {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+    /* ── خزنة الدفع الإلكتروني ── */
+    .locked-feature {
+      text-align: center; padding: 30px 10px; border: 1px dashed rgba(212, 175, 55, 0.5);
+      border-radius: 12px; background: rgba(212, 175, 55, 0.05);
     }
+    .locked-feature i { font-size: 2.5rem; color: #777; margin-bottom: 10px; }
 
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: linear-gradient(145deg, rgba(7,24,16,0.9), rgba(5,14,10,0.95));
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 40px 36px;
-      backdrop-filter: blur(20px);
-      box-shadow:
-        0 0 0 1px rgba(16,185,129,0.08),
-        0 30px 80px rgba(0,0,0,0.6),
-        0 0 60px rgba(16,185,129,0.06) inset;
-      animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    /* التنقل السفلي للهواتف */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #051409;
+      border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; align-items: center; z-index: 1000;
     }
+    .nav-link { display: flex; flex-direction: column; align-items: center; color: #77887d; text-decoration: none; font-size: 0.75rem; font-weight: 600; }
+    .nav-link.active, .nav-link:hover { color: var(--accent-gold); }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── التجاوب مع الحاسوب ── */
+    @media (min-width: 768px) {
+      .dashboard-container { grid-template-columns: 1fr 2fr 1fr; padding-top: 40px; }
+      .bottom-nav { display: none; }
+      .full-width-mobile { grid-column: span 3; }
     }
-
-    .logo-section {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .logo-icon {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 16px;
-      background: radial-gradient(circle at 40% 30%, rgba(16,185,129,0.25), rgba(5,46,22,0.4));
-      border: 1px solid rgba(16,185,129,0.3);
-      border-radius: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      box-shadow: 0 0 30px rgba(16,185,129,0.2);
-      animation: pulse-glow 3s ease-in-out infinite;
-    }
-
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(16,185,129,0.2); }
-      50%       { box-shadow: 0 0 40px rgba(16,185,129,0.4); }
-    }
-
-    .logo-text {
-      font-size: 38px;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--green-light), var(--green), #059669);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-
-    .logo-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 6px;
-      letter-spacing: 2px;
-      opacity: 0.7;
-    }
-
-    .tabs {
-      display: flex;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 4px;
-      margin-bottom: 28px;
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      background: transparent;
-      color: #4ade80;
-      font-family: 'Cairo', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: all 0.3s;
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.15));
-      color: var(--green-light);
-      box-shadow: 0 0 20px rgba(16,185,129,0.15);
-    }
-
-    .form-group { margin-bottom: 18px; }
-    .form-label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
-    .input-wrap { position: relative; }
-    .input-wrap i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: rgba(16,185,129,0.5); font-size: 15px; pointer-events: none; transition: color 0.3s; }
-
-    .field {
-      width: 100%;
-      padding: 14px 44px 14px 16px;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(16,185,129,0.15);
-      border-radius: 12px;
-      color: var(--text);
-      font-family: 'Cairo', sans-serif;
-      font-size: 15px;
-      outline: none;
-      transition: all 0.3s;
-    }
-    .field::placeholder { color: rgba(134,239,172,0.3); }
-    .field:focus { border-color: var(--green); background: rgba(16,185,129,0.05); box-shadow: 0 0 20px rgba(16,185,129,0.1); }
-    .field:focus + i, .input-wrap:focus-within i { color: var(--green); }
-
-    .eye-btn { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(16,185,129,0.4); cursor: pointer; font-size: 15px; transition: color 0.3s; padding: 4px; }
-    .eye-btn:hover { color: var(--green); }
-
-    .forgot { text-align: left; margin-top: -10px; margin-bottom: 16px; }
-    .forgot a { font-size: 12px; color: var(--text-muted); text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
-    .forgot a:hover { opacity: 1; color: var(--green-light); }
-
-    .btn-main {
-      width: 100%; padding: 16px; background: linear-gradient(135deg, #10b981, #059669); border: none; border-radius: 14px; color: white; font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 8px 30px rgba(16,185,129,0.3); margin-bottom: 20px;
-    }
-    .btn-main::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
-    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(16,185,129,0.45); }
-    .btn-main:hover::before { left: 100%; }
-    .btn-main:active { transform: translateY(0); }
-
-    .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: rgba(134,239,172,0.3); font-size: 12px; }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(16,185,129,0.1); }
-
-    .btn-google { width: 100%; padding: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; color: var(--text); font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .btn-google:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
-    .google-icon { width: 20px; height: 20px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23FFC107' d='M43.6 20.1H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z'/%3E%3Cpath fill='%23FF3D00' d='M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.1 7.9 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z'/%3E%3Cpath fill='%234CAF50' d='M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.3 26.8 36 24 36c-5.2 0-9.6-3.1-11.2-7.5l-6.6 5.1C9.5 39.5 16.2 44 24 44z'/%3E%3Cpath fill='%231976D2' d='M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.2 5.2C37.3 38.5 44 33 44 24c0-1.3-.1-2.6-.4-3.9z'/%3E%3C/svg%3E") center/contain no-repeat; }
-
-    .guest-link { text-align: center; margin-top: 20px; }
-    .guest-link a { font-size: 13px; color: rgba(134,239,172,0.5); text-decoration: none; transition: color 0.3s; }
-    .guest-link a:hover { color: var(--green-light); }
-
-    .bottom-line { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(16,185,129,0.08); display: flex; justify-content: center; gap: 20px; }
-    .bottom-line span { font-size: 11px; color: rgba(134,239,172,0.3); display: flex; align-items: center; gap: 5px; }
-    .bottom-line i { color: var(--green); }
-
-    #signupForm { display: none; }
   </style>
 </head>
 <body>
 
-<div class="bg-scene">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-</div>
-<div class="grid-bg"></div>
-
-<div class="page">
-  <div class="card">
-
-    <div class="logo-section">
-      <div class="logo-icon">🌿</div>
-      <div class="logo-text">أكريلي</div>
-      <div class="logo-sub">EKRILI · منصة الإعلانات الذكية</div>
+  <div class="dashboard-container">
+    
+    <div class="profile-header full-width-mobile">
+      <div class="user-info">
+        <h2>مرحباً، عبد القادر 👋</h2>
+        <span class="badge-status"><i class="fa-solid fa-user-check"></i> حساب عادي (غير موثق)</span>
+      </div>
+      <div class="fidelity-points">
+        <span>15</span>
+        <p><i class="fa-solid fa-gem" style="color: var(--accent-gold);"></i> نقطة وفاء</p>
+      </div>
     </div>
 
-    <div class="tabs">
-      <button class="tab-btn active" id="loginTab" onclick="switchForm('login')">تسجيل الدخول</button>
-      <button class="tab-btn" id="signupTab" onclick="switchForm('signup')">إنشاء حساب</button>
+    <div class="dash-card">
+      <h3 class="card-title"><i class="fa-solid fa-chart-pie"></i> حالة الحساب</h3>
+      
+      <div style="margin-top: 20px;">
+        <span style="color: #fff; font-size: 0.95rem;">حصتك من الإعلانات المجانية</span>
+        <div class="limit-bar-bg">
+          <div class="limit-bar-fill"></div>
+        </div>
+        <div class="limit-text">
+          <span>مستهلك: 2</span>
+          <span>الحد الأقصى: 2</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #ff6b6b; margin-top: 10px; line-height: 1.5;">
+          <i class="fa-solid fa-circle-exclamation"></i> لقد استهلكت الحد الأقصى! وثّق إعلانك القادم بالكاميرا الحية للحصول على نشر غير محدود مجاناً.
+        </p>
+      </div>
+
+      <hr style="border-color: rgba(255,255,255,0.05); margin: 20px 0;">
+
+      <div>
+        <span style="color: #fff; font-size: 0.95rem;">تقييم الموثوقية (Trust Score)</span>
+        <div style="color: var(--accent-gold); font-size: 1.2rem; margin-top: 5px;">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-regular fa-star-half-stroke"></i>
+          <span style="color: #fff; font-size: 1rem; margin-right: 5px;">4.5/5</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #aaa;">بناءً على تقييمات الزبائن وتجاوبك السريع.</p>
+      </div>
     </div>
 
-    <div id="loginForm">
-      <div class="form-group">
-        <label class="form-label">البريد الإلكتروني</label>
-        <div class="input-wrap">
-          <input class="field" type="email" id="loginEmail" placeholder="example@email.com" />
-          <i class="fa-regular fa-envelope"></i>
+    <div class="dash-card">
+      <h3 class="card-title"><i class="fa-solid fa-list-check"></i> إعلاناتي النشطة</h3>
+      
+      <div class="listing-item">
+        <div class="listing-details">
+          <h4>شقة F3 في سطيف - وسط المدينة</h4>
+          <p><i class="fa-solid fa-eye"></i> 142 مشاهدة | <i class="fa-solid fa-heart" style="color: #dc3545;"></i> 12 حفظ</p>
+        </div>
+        <div class="listing-actions">
+          <button class="btn-edit" title="تعديل"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn-delete" title="حذف"><i class="fa-solid fa-trash"></i></button>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">كلمة المرور</label>
-        <div class="input-wrap">
-          <input class="field" type="password" id="loginPass" placeholder="••••••••" />
+      <div class="listing-item">
+        <div class="listing-details">
+          <h4>سيارة سياحية كليو 4 للكراء</h4>
+          <p><i class="fa-solid fa-eye"></i> 89 مشاهدة | <i class="fa-solid fa-heart" style="color: #dc3545;"></i> 5 حفظ</p>
+        </div>
+        <div class="listing-actions">
+          <button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn-delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
+      <button onclick="window.location.href='create-listing.html'" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--accent-gold); color: var(--accent-gold); font-family: 'Cairo'; cursor: pointer; font-weight: bold;">
+        <i class="fa-solid fa-plus"></i> محاولة إضافة إعلان جديد
+      </button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      
+      <div class="dash-card">
+        <h3 class="card-title"><i class="fa-solid fa-comments"></i> رسائل الزبائن</h3>
+        
+        <div class="chat-msg">
+          <div class="chat-header">
+            <strong>زائر مهتم (موثق برقم هاتف)</strong>
+            <span>منذ 10 دقائق</span>
+          </div>
+          <p style="margin: 5px 0; font-size: 0.9rem; color: #fff;">سلام خويا، الشقة تاع سطيف مازالها ديسبونيبل هاد الويكاند؟</p>
+          <button class="reveal-btn" onclick="this.innerHTML='<i class=\'fa-solid fa-phone\'></i> 0555 12 34 56'; this.style.background='transparent'; this.style.color='#5cd67a'; this.style.border='1px solid #5cd67a';"><i class="fa-solid fa-lock-open"></i> إظهار رقم الزبون للاتصال</button>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3 class="card-title"><i class="fa-solid fa-vault"></i> محفظة العربون</h3>
+        <div class="locked-feature">
           <i class="fa-solid fa-lock"></i>
-          <button class="eye-btn" onclick="togglePass('loginPass', this)" type="button">
-            <i class="fa-regular fa-eye"></i>
-          </button>
+          <h4 style="margin: 10px 0 5px 0; color: #fff;">الدفع الإلكتروني (CIB / ذهبية)</h4>
+          <p style="font-size: 0.85rem; color: #aaa; margin: 0;">هذه الميزة قيد التطوير. مستقبلاً ستتمكن من استلام عربون الحجز مباشرة عبر المنصة بأمان تام. 🚀 2026</p>
         </div>
       </div>
 
-      <div class="forgot"><a href="#">نسيت كلمة المرور؟</a></div>
-
-      <button class="btn-main" onclick="handleLogin()">
-        <i class="fa-solid fa-arrow-right-to-bracket" style="margin-left:8px;"></i>
-        تسجيل الدخول
-      </button>
-
-      <div class="divider">أو</div>
-
-      <button class="btn-google" onclick="handleGoogle()">
-        <div class="google-icon"></div>
-        المتابعة مع Google
-      </button>
-
-      <div class="guest-link">
-        <a href="listings.html"><i class="fa-regular fa-eye" style="margin-left:5px;"></i>تصفح كزائر بدون حساب</a>
-      </div>
-    </div>
-
-    <div id="signupForm">
-      <div class="form-group">
-        <label class="form-label">الاسم الكامل</label>
-        <div class="input-wrap">
-          <input class="field" type="text" id="signupName" placeholder="وسيم لولو" required />
-          <i class="fa-regular fa-user"></i>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">البريد الإلكتروني</label>
-        <div class="input-wrap">
-          <input class="field" type="email" id="signupEmail" placeholder="example@email.com" required />
-          <i class="fa-regular fa-envelope"></i>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">رقم الهاتف</label>
-        <div class="input-wrap">
-          <input class="field" type="tel" id="signupPhone" placeholder="0555 123 456" required />
-          <i class="fa-solid fa-phone"></i>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">كلمة المرور</label>
-        <div class="input-wrap">
-          <input class="field" type="password" id="signupPass" placeholder="••••••••" required />
-          <i class="fa-solid fa-lock"></i>
-          <button class="eye-btn" onclick="togglePass('signupPass', this)" type="button">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-        </div>
-      </div>
-
-      <button class="btn-main" onclick="handleSignup()">
-        <i class="fa-solid fa-user-plus" style="margin-left:8px;"></i>
-        إنشاء حساب جديد
-      </button>
-
-      <div class="divider">أو</div>
-
-      <button class="btn-google" onclick="handleGoogle()">
-        <div class="google-icon"></div>
-        التسجيل مع Google
-      </button>
-    </div>
-
-    <div class="bottom-line">
-      <span><i class="fa-solid fa-shield-halved"></i> آمن 100%</span>
-      <span><i class="fa-solid fa-lock"></i> مشفر</span>
-      <span><i class="fa-solid fa-certificate"></i> موثوق</span>
     </div>
 
   </div>
-</div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  // تم استدعاء الـ Firestore هنا لحفظ بيانات اليوزر كاملة
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
-    authDomain: "ekrilidz-af404.firebaseapp.com",
-    projectId: "ekrilidz-af404",
-    storageBucket: "ekrilidz-af404.firebasestorage.app",
-    messagingSenderId: "945902801388",
-    appId: "1:945902801388:web:05ee5a76725edf9d4df0c9"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const provider = new GoogleAuthProvider();
-
-  window.handleLogin = async () => {
-    const email = document.getElementById('loginEmail').value;
-    const pass = document.getElementById('loginPass').value;
-    const btn = document.querySelector('#loginForm .btn-main');
-    
-    if(!email || !pass) { alert('يرجى إدخال البريد الإلكتروني وكلمة المرور'); return; }
-
-    btn.textContent = 'جاري الدخول...';
-    btn.disabled = true;
-    try {
-      await signInWithEmailAndPassword(auth, email, pass);
-      window.location.href = 'host-dashboard.html';
-    } catch (e) {
-      btn.textContent = 'بيانات خاطئة — حاول مجدداً';
-      btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
-      setTimeout(() => {
-        btn.textContent = 'تسجيل الدخول';
-        btn.style.background = '';
-        btn.disabled = false;
-      }, 2500);
-    }
-  };
-
-  window.handleSignup = async () => {
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    const phone = document.getElementById('signupPhone').value;
-    const pass = document.getElementById('signupPass').value;
-    const btn = document.querySelector('#signupForm .btn-main');
-    
-    if(!name || !email || !phone || !pass) { alert('يرجى ملء جميع الحقول المطلوبة'); return; }
-
-    btn.textContent = 'جاري الإنشاء...';
-    btn.disabled = true;
-    try {
-      // 1. إنشاء الحساب في الـ Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      const user = userCredential.user;
-
-      // 2. تحديث الـ Display Name في ملفه الشخصي الأساسي
-      await updateProfile(user, { displayName: name });
-
-      // 3. حفظ بياناته الإضافية (الاسم + الهاتف) في الفايرستور كـ بروفايل مأمن
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        name: name,
-        email: email,
-        phone: phone,
-        createdAt: new Date()
-      });
-
-      window.location.href = 'host-dashboard.html';
-    } catch (e) {
-      console.error(e);
-      btn.textContent = 'فشل الإنشاء — تحقق من البيانات';
-      btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
-      setTimeout(() => {
-        btn.textContent = 'إنشاء حساب جديد';
-        btn.style.background = '';
-        btn.disabled = false;
-      }, 2500);
-    }
-  };
-
-  window.handleGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      
-      // حفظ بيانات مستخدم جوجل تلقائياً إذا كان أول دخول له
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        name: user.displayName || "مستخدم جديد",
-        email: user.email,
-        phone: user.phoneNumber || "غير مسجل",
-        createdAt: new Date()
-      }, { merge: true }); // Merge تمنع مسح البيانات القديمة لو كان مسجل من قبل
-
-      window.location.href = 'host-dashboard.html';
-    } catch (e) {
-      console.error(e);
-    }
-  };
-</script>
-
-<script>
-  function switchForm(type) {
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
-    const loginTab = document.getElementById('loginTab');
-    const signupTab = document.getElementById('signupTab');
-
-    if (type === 'login') {
-      loginForm.style.display = 'block';
-      signupForm.style.display = 'none';
-      loginTab.classList.add('active');
-      signupTab.classList.remove('active');
-    } else {
-      loginForm.style.display = 'none';
-      signupForm.style.display = 'block';
-      signupTab.classList.add('active');
-      loginTab.classList.remove('active');
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    window.togglePass = function(fieldId, btn) {
-      const field = document.getElementById(fieldId);
-      const icon = btn.querySelector('i');
-      if (field.type === 'password') {
-        field.type = 'text';
-        icon.className = 'fa-regular fa-eye-slash';
-      } else {
-        field.type = 'password';
-        icon.className = 'fa-regular fa-eye';
-      }
-    };
-  });
-</script>
+  <div class="bottom-nav">
+    <a href="listings.html" class="nav-link"><i class="fa-solid fa-house"></i><br>الرئيسية</a>
+    <a href="listings.html" class="nav-link"><i class="fa-solid fa-bullseye"></i><br>المستقبلية</a>
+    <a href="create-listing.html" class="nav-link"><i class="fa-solid fa-circle-plus"></i><br>أضف إعلان</a>
+    <a href="#" class="nav-link active"><i class="fa-solid fa-user-gear"></i><br>لوحتي</a>
+  </div>
 
 </body>
 </html>
