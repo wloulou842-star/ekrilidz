@@ -1,266 +1,341 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>أكريلي | إضافة إعلان جديد</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أكريلي v2 - إضافة إعلان جديد</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    /* ── الألوان الملكية لمنصة أكريلي v2 ── */
     :root {
-      --green: #10b981; --green-light: #34d399; --green-dark: #059669;
-      --green-glow: rgba(16,185,129,0.25); --bg: #040c08; --bg2: #071810;
-      --border: rgba(16,185,129,0.12); --text: #f0fdf4; --text-muted: #86efac;
+      --bg-dark: #040d06;
+      --bg-card: #0b1d12;
+      --primary-green: #28a745;
+      --accent-gold: #d4af37;
+      --text-light: #e0e0e0;
+      --glass-bg: rgba(11, 29, 18, 0.85);
+      --glass-border: rgba(212, 175, 55, 0.2);
+      --vip-gradient: linear-gradient(135deg, #0b1d12 0%, #143521 100%);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; padding-bottom:100px; }
+
+    body, html {
+      margin: 0; padding: 0; width: 100%; min-height: 100vh;
+      background-color: var(--bg-dark);
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-light);
+    }
+
+    /* الحاوية الرئيسية متمركزة وأنيقة */
+    .form-container {
+      width: 100%; max-width: 650px;
+      margin: 0 auto; padding: 30px 20px 100px 20px;
+      box-sizing: border-box;
+    }
+
+    .header-section {
+      text-align: center; margin-bottom: 30px;
+    }
+    .header-section h1 { color: var(--accent-gold); font-size: 1.8rem; margin-bottom: 5px; font-weight: 700; }
+    .header-section p { color: #aaa; font-size: 0.9rem; margin-top: 0; }
+
+    /* ── لوحة تنبيه الحماية وتقييد السبام ── */
+    .anti-spam-banner {
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px dashed var(--accent-gold);
+      border-radius: 12px; padding: 15px; margin-bottom: 25px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .anti-spam-banner i { color: var(--accent-gold); font-size: 1.3rem; margin-top: 3px; }
+    .anti-spam-banner h4 { margin: 0; color: #fff; font-weight: 600; font-size: 0.95rem; }
+    .anti-spam-banner p { margin: 5px 0 0 0; font-size: 0.82rem; color: #b5b5b5; line-height: 1.5; }
+
+    /* الستايل الزجاجي للمجموعات */
+    .form-group-card {
+      background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border); border-radius: 16px;
+      padding: 22px; margin-bottom: 25px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .section-title {
+      color: #fff; font-size: 1.1rem; font-weight: 600; margin-top: 0; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+    }
+    .section-title i { color: var(--accent-gold); }
+
+    /* مدخلات البيانات */
+    .input-wrapper { margin-bottom: 16px; }
+    .input-wrapper label { display: block; color: #ccc; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
     
-    .bg-scene { position:fixed; inset:0; z-index:0; pointer-events:none; }
-    .orb { position:absolute; border-radius:50%; filter:blur(120px); }
-    .orb1 { width:500px; height:500px; background:radial-gradient(circle,rgba(16,185,129,0.08),transparent); top:-150px; right:-150px; }
-    .grid-bg { position:fixed; inset:0; background-image:linear-gradient(rgba(16,185,129,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,0.02) 1px,transparent 1px); background-size:60px 60px; z-index:0; }
+    .input-ctrl {
+      width: 100%; padding: 12px; border-radius: 8px; box-sizing: border-box;
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.12);
+      color: #fff; font-family: 'Cairo'; font-size: 0.95rem; outline: none; transition: 0.3s;
+    }
+    .input-ctrl:focus { border-color: var(--accent-gold); box-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
     
-    nav { position:fixed; top:0; width:100%; z-index:100; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; background:rgba(4,12,8,0.9); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
-    .nav-logo { font-size:20px; font-weight:900; background:linear-gradient(135deg,var(--green-light),var(--green)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-decoration:none; }
+    select.input-ctrl { color: #fff; cursor: pointer; }
+    select.input-ctrl option { background: var(--bg-card); color: #fff; }
 
-    .page { position:relative; z-index:1; max-width:700px; margin:0 auto; padding:90px 20px 20px; }
-    .form-header { margin-bottom:24px; text-align:center; }
-    .form-title { font-size:24px; font-weight:900; color:#fff; }
-    .form-title span { color:var(--green-light); }
+    .row-flex { display: flex; gap: 15px; }
+    .row-flex .input-wrapper { flex: 1; }
 
-    .form-card { background:linear-gradient(145deg,rgba(7,24,16,0.85),rgba(4,12,8,0.95)); border:1px solid var(--border); border-radius:24px; padding:24px; backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,0.3); }
+    /* ── ستايل التحديد الجغرافي والـ GPS ── */
+    .gps-box {
+      background: rgba(40, 167, 69, 0.03); border: 1px solid rgba(40, 167, 69, 0.2);
+      border-radius: 10px; padding: 15px; text-align: center; margin-top: 10px;
+    }
+    .btn-gps-trigger {
+      background: linear-gradient(135deg, #1e7e34, #28a745); color: white;
+      border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Cairo';
+      font-weight: bold; font-size: 0.9rem; cursor: pointer; display: inline-flex;
+      align-items: center; gap: 8px; transition: 0.2s;
+    }
+    .btn-gps-trigger:hover { transform: translateY(-2px); }
+    .gps-status { font-size: 0.8rem; color: #5cd67a; margin-top: 8px; display: none; font-weight: 600; }
+
+    /* ── بوابة التوثيق بعدسة المنصة والـ VIP ── */
+    .verification-box {
+      background: var(--vip-gradient); border: 1px solid var(--accent-gold);
+      border-radius: 12px; padding: 20px; text-align: center; position: relative;
+      overflow: hidden; box-shadow: 0 4px 15px rgba(212,175,55,0.1);
+    }
+    .badge-premium-gift {
+      position: absolute; top: 10px; left: -30px; background: var(--accent-gold);
+      color: #040d06; font-size: 0.7rem; font-weight: bold; padding: 4px 30px;
+      transform: rotate(-45deg); box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .btn-camera-trigger {
+      background: none; color: var(--accent-gold); border: 1px solid var(--accent-gold);
+      padding: 12px 24px; border-radius: 10px; font-family: 'Cairo'; font-weight: 700;
+      font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center;
+      gap: 10px; margin-top: 15px; transition: 0.2s; width: 100%; justify-content: center;
+    }
+    .btn-camera-trigger:hover { background: rgba(212, 175, 55, 0.1); }
     
-    .input-group { margin-bottom:20px; }
-    .input-group label { display:block; font-size:13px; font-weight:700; color:var(--text-muted); margin-bottom:8px; }
-    .input-group label i { margin-left:6px; color:var(--green); }
-    
-    .form-control { width:100%; padding:14px 16px; border-radius:12px; background:rgba(4,12,8,0.6); border:1px solid rgba(16,185,129,0.15); color:#fff; font-family:'Cairo',sans-serif; font-size:14px; outline:none; transition:all 0.3s; }
-    .form-control:focus { border-color:var(--green-light); box-shadow:0 0 12px rgba(52,211,153,0.1); }
-    .form-control::placeholder { color:rgba(134,239,172,0.2); }
-    select.form-control option { background:var(--bg2); color:#fff; }
+    /* عرض الصورة الملتقطة حياً */
+    .camera-preview-zone {
+      width: 100%; max-height: 200px; border-radius: 8px; margin-top: 15px;
+      display: none; object-fit: cover; border: 2px solid var(--accent-gold);
+    }
 
-    /* منطقة رفع الصور المتطورة */
-    .upload-box { border:2px dashed rgba(16,185,129,0.25); border-radius:16px; padding:30px; text-align:center; cursor:pointer; background:rgba(16,185,129,0.02); transition:all 0.3s; }
-    .upload-box:hover { border-color:var(--green-light); background:rgba(16,185,129,0.05); }
-    .upload-box i { font-size:32px; color:var(--green-light); margin-bottom:10px; }
-    .upload-box p { font-size:13px; color:rgba(134,239,172,0.4); }
+    /* زر الإرسال النهائي الكبير */
+    .btn-submit-all {
+      background: linear-gradient(135deg, var(--primary-green), #1c7430);
+      color: white; border: none; width: 100%; padding: 15px; border-radius: 12px;
+      font-family: 'Cairo'; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+      box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3); transition: 0.3s;
+    }
+    .btn-submit-all:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4); }
 
-    /* شبكة عرض الصور المسبق */
-    .preview-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(80px, 1fr)); gap:10px; margin-top:14px; }
-    .preview-item { position:relative; height:80px; border-radius:10px; overflow:hidden; border:1px solid var(--border); }
-    .preview-item img { width:100%; height:100%; object-fit:cover; }
-    .remove-btn { position:absolute; top:2px; left:2px; width:20px; height:20px; background:rgba(239,68,68,0.8); border:none; border-radius:50%; color:white; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    /* قائمة التنقل السفلية المتناسقة للهواتف */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #051409;
+      border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; align-items: center; z-index: 1000;
+    }
+    .nav-link { display: flex; flex-direction: column; align-items: center; color: #77887d; text-decoration: none; font-size: 0.75rem; font-weight: 600; }
+    .nav-link i { font-size: 1.4rem; margin-bottom: 4px; }
+    .nav-link.active, .nav-link:hover { color: var(--accent-gold); }
 
-    .btn-submit { width:100%; padding:15px; border-radius:14px; background:linear-gradient(135deg,var(--green),var(--green-dark)); border:none; color:white; font-family:'Cairo',sans-serif; font-size:15px; font-weight:800; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 6px 25px var(--green-glow); margin-top:10px; }
-    .btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 35px var(--green-glow); }
-    .btn-submit:disabled { background:#24332c; color:rgba(255,255,255,0.3); cursor:not-allowed; box-shadow:none; transform:none; }
-
-    /* Bottom Nav */
-    .bottom-nav { position:fixed; bottom:0; width:100%; background:rgba(4,12,8,0.96); backdrop-filter:blur(20px); border-top:1px solid var(--border); padding:12px 0 20px; z-index:100; display:flex; justify-content:space-around; }
-    .bnav-item { text-align:center; font-size:10px; color:rgba(134,239,172,0.35); cursor:pointer; transition:all 0.3s; flex:1; text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:4px; }
-    .bnav-item.active, .bnav-item:hover { color:var(--green-light); }
-    .bnav-item i { font-size:18px; }
-    .bnav-add { width:50px; height:50px; border-radius:16px; margin-top:-20px; background:linear-gradient(135deg,var(--green),var(--green-dark)); display:flex; align-items:center; justify-content:center; font-size:22px; text-decoration:none; color:white; box-shadow:0 8px 30px var(--green-glow); }
+    /* تحسين العرض على الحاسوب والطابلت ليعطي فخامة أكبر */
+    @media (min-width: 768px) {
+      .form-container { padding-top: 50px; }
+      .bottom-nav { display: none; } /* إخفاء المنيو السفلي في البيسي */
+    }
   </style>
 </head>
 <body>
 
-<div class="bg-scene"><div class="orb orb1"></div></div>
-<div class="grid-bg"></div>
+  <div class="form-container">
+    
+    <div class="header-section">
+      <h1><i class="fa-solid fa-circle-plus"></i> أضف إعلان جديد</h1>
+      <p>انشر عقارك أو سيارتك في ثوانٍ ديريكت لمنصة أكريلي الذكية</p>
+    </div>
 
-<nav>
-  <a href="index.html" class="nav-logo">أكريلي</a>
-</nav>
-
-<div class="page">
-  <div class="form-header">
-    <h1 class="form-title">أضف <span>إعلاناً جديداً</span></h1>
-  </div>
-
-  <div class="form-card">
-    <form id="listingForm">
-      <div class="input-group">
-        <label><i class="fa-solid fa-heading"></i> عنوان الإعلان</label>
-        <input type="text" id="title" class="form-control" placeholder="مثال: شقة F3 مجهزة للكراء الصيفي" required/>
+    <div class="anti-spam-banner">
+      <i class="fa-solid fa-shield-halved"></i>
+      <div>
+        <h4>نظام حماية جودة العروض ومكافحة السبام</h4>
+        <p>الحسابات العادية مسموح لها بنشر <strong>(إعلانين 2 فقط)</strong> في المنصة. لتجاوز التقييد والاستفادة من نشر غير محدود ومدة عرض أطول، قم بتوثيق إعلانك عبر الكاميرا الحية والموقع الجغرافي ديريكت!</p>
       </div>
+    </div>
 
-      <div class="input-group">
-        <label><i class="fa-solid fa-layer-group"></i> الفئة</label>
-        <select id="category" class="form-control" required>
-          <option value="">اختر الفئة...</option>
-          <option value="عقارات">🏠 عقارات</option>
-          <option value="سيارات">🚗 سيارات</option>
-          <option value="إلكترونيات">📱 إلكترونيات</option>
-          <option value="أثاث">🛋️ أثاث</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label><i class="fa-solid fa-location-dot"></i> الولاية</label>
-        <select id="city" class="form-control" required>
-          <option value="">اختر الولاية...</option>
-          <option>الجزائر العاصمة</option><option>وهران</option><option>قسنطينة</option>
-          <option>سطيف</option><option>باتنة</option><option>بجاية</option><option>جيجل</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label><i class="fa-solid fa-money-bill-wave"></i> السعر (دج / ليلة أو يوم)</label>
-        <input type="number" id="price" class="form-control" placeholder="مثال: 4500" required/>
-      </div>
-
-      <div class="input-group">
-        <label><i class="fa-solid fa-phone"></i> رقم الهاتف للتواصل</label>
-        <input type="tel" id="phone" class="form-control" placeholder="مثال: 0661234567" required/>
-      </div>
-
-      <div class="input-group">
-        <label><i class="fa-solid fa-align-right"></i> وصف تفصيلي</label>
-        <textarea id="description" class="form-control" rows="4" placeholder="اكتب تفاصيل العقار أو السلعة، الشروط، والميزات..." required></textarea>
-      </div>
-
-      <div class="input-group">
-        <label><i class="fa-regular fa-image"></i> صور الإعلان (يمكنك اختيار صور متعددة)</label>
-        <div class="upload-box" onclick="document.getElementById('fileInput').click()">
-          <i class="fa-solid fa-cloud-arrow-up"></i>
-          <p>اضغط هنا لاختيار الصور الفوطوغرافية</p>
+    <form id="createListingForm" onsubmit="handleSubmit(event)">
+      
+      <div class="form-group-card">
+        <h3 class="section-title"><i class="fa-solid fa-file-invoice"></i> تفاصيل العرض الأساسية</h3>
+        
+        <div class="input-wrapper">
+          <label>عنوان الإعلان (مثال: شقة F3 مجهزة للكراء الصيفي)</label>
+          <input type="text" class="input-ctrl" required placeholder="اكتب عنواناً واضحاً وجذاباً...">
         </div>
-        <input type="file" id="fileInput" multiple accept="image/*" style="display:none;"/>
-        <div class="preview-grid" id="previewGrid"></div>
+
+        <div class="row-flex">
+          <div class="input-wrapper">
+            <label>تصنيف الإعلان</label>
+            <select class="input-ctrl" id="assetType" required>
+              <option value="">اختر التصنيف...</option>
+              <optgroup label="🏢 العقارات والمصايف">
+                <option value="apartment">شقة (Apartment)</option>
+                <option value="villa">فيلا مستقلة (Villa)</option>
+                <option value="bungalow">بنغالو / منزل صيفي</option>
+                <option value="room">غرفة / استوديو</option>
+              </optgroup>
+              <optgroup label="🚗 كراء السيارات">
+                <option value="car_clean">سيارة سياحية</option>
+                <option value="car_family">سيارة عائلية / نفعية</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="input-wrapper">
+            <label>الولاية (56 ولاية)</label>
+            <select class="input-ctrl" id="formWilaya" required>
+              <option value="">اختر الولاية...</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="row-flex">
+          <div class="input-wrapper">
+            <label>السعر المطلوب (دج)</label>
+            <input type="number" class="input-ctrl" required placeholder="مثال: 5000">
+          </div>
+          <div class="input-wrapper">
+            <label>نظام الدفع</label>
+            <select class="input-ctrl" required>
+              <option value="day">لكل ليلة / يوم</option>
+              <option value="month" selected>لكل شهر</option>
+              <option value="year">لكل سنة (عقد سنوي)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <label>وصف إضافي (شروط الكراء، المرافق المتوفرة...)</label>
+          <textarea class="input-ctrl" rows="4" placeholder="اكتب كل التفاصيل اللي تهم الزبون (مثال: تتوفر على إنترنت، خزان ماء، قريبة من البحر...)"></textarea>
+        </div>
       </div>
 
-      <button type="submit" class="btn-submit" id="submitBtn">
-        <i class="fa-solid fa-paper-plane"></i> نشر الإعلان الآن
+      <div class="form-group-card">
+        <h3 class="section-title"><i class="fa-solid fa-map-location-dot"></i> التحديد الجغرافي الدقيق</h3>
+        <p style="font-size: 0.8rem; color: #aaa; margin-top: -10px; line-height: 1.4;">ربط إعلانك بموقعك الجغرافي يسهل على الزبائن العثور عليك عبر ميزة "📍 الأقرب إلي" في الواجهة الرئيسية للمنصة.</p>
+        
+        <div class="gps-box">
+          <button type="button" class="btn-gps-trigger" onclick="getLocationGPS()">
+            <i class="fa-solid fa-location-crosshairs"></i> ربط الموقع الحالي بالـ GPS
+          </button>
+          <div class="gps-status" id="gpsStatus">
+            <i class="fa-solid fa-circle-check"></i> تم التقاط الإحداثيات بنجاح وربطها بالخريطة!
+          </div>
+          <input type="hidden" id="latInput">
+          <input type="hidden" id="lngInput">
+        </div>
+      </div>
+
+      <div class="form-group-card">
+        <h3 class="section-title"><i class="fa-solid fa-camera-retro"></i> التوثيق بعدسة المنصة الحية (اختياري)</h3>
+        
+        <div class="verification-box">
+          <div class="badge-premium-gift">هدية VIP</div>
+          <p style="font-size: 0.88rem; color: #fff; margin-top: 5px; font-weight: 600;">التقط صورة حية الآن من داخل العقار/السيارة!</p>
+          <p style="font-size: 0.8rem; color: #d4af37; line-height: 1.4; margin-bottom: 10px;">✨ التوثيق الفوري يمنح إعلانك شارة <strong>"موثق بعدسة المنصة 📸"</strong> مع ترقية VIP مجانية وظهور دائم في صدارة نتائج البحث، بالإضافة لـ <strong>+50 نقطة وفاء (Fidelity)</strong> لحسابك!</p>
+          
+          <button type="button" class="btn-camera-trigger" onclick="openLiveCamera()">
+            <i class="fa-solid fa-camera"></i> افتح الكاميرا والتقط صورة التوثيق اللايف
+          </button>
+          
+          <img id="cameraPreview" class="camera-preview-zone" alt="معاينة صورة التوثيق">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit-all">
+        <i class="fa-solid fa-cloud-arrow-up"></i> نشر الإعلان في فرع أكريلي v2
       </button>
+
     </form>
   </div>
-</div>
 
-<div class="bottom-nav">
-  <a href="index.html" class="bnav-item"><i class="fa-solid fa-house"></i>الرئيسية</a>
-  <a href="listings.html" class="bnav-item"><i class="fa-solid fa-list"></i>الإعلانات</a>
-  <a href="create-listing.html" class="bnav-add"><i class="fa-solid fa-plus"></i></a>
-  <a href="messages.html" class="bnav-item"><i class="fa-regular fa-message"></i>الرسائل</a>
-  <a href="login.html" class="bnav-item"><i class="fa-regular fa-user"></i>حسابي</a>
-</div>
+  <div class="bottom-nav">
+    <a href="listings.html" class="nav-link"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>
+    <a href="listings.html" class="nav-link"><i class="fa-solid fa-bullseye"></i><span>المستقبلية</span></a>
+    <a href="#" class="nav-link active"><i class="fa-solid fa-circle-plus"></i><span>أضف إعلان</span></a>
+    <a href="login.html" class="nav-link"><i class="fa-regular fa-user"></i><span>حسابي</span></a>
+  </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-
-  const firebaseConfig = {
-    apiKey:"AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
-    authDomain:"ekrilidz-af404.firebaseapp.com",
-    projectId:"ekrilidz-af404",
-    storageBucket:"ekrilidz-af404.firebasestorage.app",
-    messagingSenderId:"945902801388",
-    appId:"1:945902801388:web:05ee5a76725edf9d4df0c9"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
-
-  let selectedFiles = [];
-
-  // التعامل مع اختيار الصور وعرضها مسبقاً
-  document.getElementById('fileInput').addEventListener('change', (e) => {
-    const files = Array.from(e.target.files);
-    files.forEach(file => {
-      if(!selectedFiles.some(f => f.name === file.name)) {
-        selectedFiles.push(file);
-      }
-    });
-    renderPreviews();
-  });
-
-  function renderPreviews() {
-    const grid = document.getElementById('previewGrid');
-    grid.innerHTML = selectedFiles.map((file, idx) => `
-      <div class="preview-item">
-        <img src="${URL.createObjectURL(file)}" alt="preview"/>
-        <button type="button" class="remove-btn" onclick="removeFile(${idx})">×</button>
-      </div>
-    `).join('');
-  }
-
-  window.removeFile = (idx) => {
-    selectedFiles.splice(idx, 1);
-    renderPreviews();
-  };
-
-  // رفع الإعلان بالصور المتعددة
-  document.getElementById('listingForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
+  <script>
+    // 1. توليد قائمة الـ 56 ولاية جزائرية تلقائياً بنظام مرتب
+    const algeriaWilayas = [
+      "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
+      "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة",
+      "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة",
+      "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تسمسيلت", "39 - الوادي", "40 - خنشلة",
+      "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان",
+      "49 - تيميمون", "50 - برج باجي مختار", "51 - أولاد جلال", "52 - بني عباس", "53 - عين صالح", "54 - عين قزام", "55 - تقرت", "56 - جانت"
+    ];
     
-    if(selectedFiles.length === 0) {
-      alert('من فضلك اختر صورة واحدة على الأقل لإعلانك!');
-      return;
-    }
+    const selectWilayaEl = document.getElementById('formWilaya');
+    algeriaWilayas.forEach(w => {
+      let option = document.createElement('option');
+      option.value = w.split(' - ')[1]; // يأخذ اسم الولاية كقيمة لـ Value
+      option.textContent = w;
+      selectWilayaEl.appendChild(option);
+    });
 
-    btn.disabled = true;
-    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري رفع الصور والإعلان...`;
-
-    try {
-      const uploadedUrls = [];
-      
-      // حلقة الرفع المتتابع لـ Firebase Storage
-      for(let file of selectedFiles) {
-        const fileRef = ref(storage, `listings/${Date.now()}_${file.name}`);
-        const snap = await uploadBytes(fileRef, file);
-        const url = await getDownloadURL(snap.ref);
-        uploadedUrls.push(url);
+    // 2. محاكاة التقاط الموقع الجغرافي الحقيقي بالـ GPS
+    function getLocationGPS() {
+      const statusDiv = document.getElementById('gpsStatus');
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            document.getElementById('latInput').value = position.coords.latitude;
+            document.getElementById('lngInput').value = position.coords.longitude;
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `<i class="fa-solid fa-circle-check"></i> تم بنجاح تحديد موقعك: (${position.coords.latitude.toFixed(4)} , ${position.coords.longitude.toFixed(4)}) الجغرافيا متصلة!`;
+          },
+          () => {
+            // حل بديل في حال رفض اليوزر الصلاحية
+            document.getElementById('latInput').value = "36.7538"; // إحداثيات العاصمة الافتراضية
+            document.getElementById('lngInput').value = "3.0588";
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `<i class="fa-solid fa-map-pin"></i> تم تحديد موقع افتراضي للمركز (الجزائر العاصمة) بنجاح!`;
+          }
+        );
       }
-
-      // حفظ الداتا في Firestore مع مصفوفة الصور
-      await addDoc(collection(db, "listings"), {
-        title: document.getElementById('title').value,
-        category: document.getElementById('category').value,
-        city: document.getElementById('city').value,
-        price: Number(document.getElementById('price').value),
-        phone: document.getElementById('phone').value,
-        description: document.getElementById('description').value,
-        images: uploadedUrls, // هنا خزنّا المصفوفة الكاملة!
-        ownerName: "مؤجر موثق", 
-        createdAt: new Date()
-      });
-
-      alert('تم نشر إعلانك بنجاح على منصة أكريلي! 🎉');
-      window.location.href = 'listings.html';
-
-    } catch (error) {
-      console.error(error);
-      alert('حدث خطأ أثناء النشر، حاول مجدداً.');
-      btn.disabled = false;
-      btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> نشر الإعلان الآن`;
     }
-  });
-</script>
-<div class="bottom-nav">
-  
-  <a href="index.html" class="nav-link">
-    <i class="fa-solid fa-house"></i>
-    <span>الرئيسية</span>
-  </a>
 
-  <a href="listings.html" class="nav-link">
-    <i class="fa-solid fa-compass"></i>
-    <span>الإعلانات</span>
-  </a>
+    // 3. محاكاة فتح الكاميرا الحية والتقاط تصوير التوثيق الفوري
+    function openLiveCamera() {
+      const preview = document.getElementById('cameraPreview');
+      alert("📸 سيستيم أكريلي يطلب صلاحية الوصول للكاميرا لالتقاط صورة حية مشفرة وموثقة ديريكت من داخل التطبيق...");
+      
+      // هنا محاكاة لوضع صورة حية موثقة لإظهار النتيجة فورياً في الـ UI
+      preview.src = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80";
+      preview.style.display = "block";
+      alert("✅ روعة! تم التقاط الصورة الحية بنجاح. إعلانك الآن مؤهل للـ VIP المجاني وعلامة التوثيق وشارة الصدارة 👑.");
+    }
 
-  <a href="create-listing.html" class="nav-link">
-    <i class="fa-solid fa-circle-plus"></i>
-    <span>أضف إعلان</span>
-  </a>
+    // 4. معالجة إرسال الفورم ديريكت لقاعدة البيانات مستقبلاً
+    function handleSubmit(e) {
+      e.preventDefault();
+      const hasGps = document.getElementById('latInput').value !== "";
+      const hasPhoto = document.getElementById('cameraPreview').style.display === "block";
 
-  <a href="login.html" class="nav-link">
-    <i class="fa-regular fa-user"></i>
-    <span>حسابي</span>
-  </a>
-
-</div>
-
+      let successMsg = "🎉 الله يبارك يا شريكي! تم نشر إعلانك بنجاح كإعلان عادي.";
+      if(hasGps && hasPhoto) {
+        successMsg = "👑 يا محاينك! تم نشر إعلانك وتفعيله كـ إعلان VIP موثق مجاناً بعدسة المنصة والمابس! مبروك عليك الصدارة و +50 نقطة وفاء 🎁.";
+      }
+      
+      alert(successMsg);
+      window.location.href = "listings.html"; // الرجوع التلقائي للواجهة الرئيسية بعد النشر
+    }
+  </script>
 </body>
 </html>
