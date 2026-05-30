@@ -28,7 +28,9 @@
       font-family: 'Cairo', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow: hidden;
+      /* تم التصليح هنا لضمان السكرول عند ظهور كيبورد الهاتف */
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     /* ── خلفية حية ── */
@@ -54,7 +56,6 @@
       100% { transform: translate(30px, 20px) scale(1.1); }
     }
 
-    /* شبكة خلفية خفية */
     .grid-bg {
       position: fixed;
       inset: 0;
@@ -65,7 +66,6 @@
       z-index: 0;
     }
 
-    /* ── تخطيط الصفحة ── */
     .page {
       position: relative;
       z-index: 1;
@@ -76,7 +76,6 @@
       padding: 20px;
     }
 
-    /* ── البطاقة الرئيسية ── */
     .card {
       width: 100%;
       max-width: 420px;
@@ -97,7 +96,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── الشعار ── */
     .logo-section {
       text-align: center;
       margin-bottom: 32px;
@@ -142,7 +140,6 @@
       opacity: 0.7;
     }
 
-    /* ── تبويب تسجيل الدخول / إنشاء حساب ── */
     .tabs {
       display: flex;
       background: rgba(0,0,0,0.3);
@@ -172,33 +169,10 @@
       box-shadow: 0 0 20px rgba(16,185,129,0.15);
     }
 
-    /* ── حقول الإدخال ── */
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .input-wrap {
-      position: relative;
-    }
-
-    .input-wrap i {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: rgba(16,185,129,0.5);
-      font-size: 15px;
-      pointer-events: none;
-      transition: color 0.3s;
-    }
+    .form-group { margin-bottom: 18px; }
+    .form-label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
+    .input-wrap { position: relative; }
+    .input-wrap i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: rgba(16,185,129,0.5); font-size: 15px; pointer-events: none; transition: color 0.3s; }
 
     .field {
       width: 100%;
@@ -212,160 +186,40 @@
       outline: none;
       transition: all 0.3s;
     }
-
     .field::placeholder { color: rgba(134,239,172,0.3); }
+    .field:focus { border-color: var(--green); background: rgba(16,185,129,0.05); box-shadow: 0 0 20px rgba(16,185,129,0.1); }
+    .field:focus + i, .input-wrap:focus-within i { color: var(--green); }
 
-    .field:focus {
-      border-color: var(--green);
-      background: rgba(16,185,129,0.05);
-      box-shadow: 0 0 20px rgba(16,185,129,0.1);
-    }
-
-    .field:focus + i, .input-wrap:focus-within i {
-      color: var(--green);
-    }
-
-    /* إظهار كلمة السر */
-    .eye-btn {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: rgba(16,185,129,0.4);
-      cursor: pointer;
-      font-size: 15px;
-      transition: color 0.3s;
-      padding: 4px;
-    }
+    .eye-btn { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(16,185,129,0.4); cursor: pointer; font-size: 15px; transition: color 0.3s; padding: 4px; }
     .eye-btn:hover { color: var(--green); }
 
-    /* نسيت كلمة المرور */
-    .forgot {
-      text-align: left;
-      margin-top: -10px;
-      margin-bottom: 16px;
-    }
-    .forgot a {
-      font-size: 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-    }
+    .forgot { text-align: left; margin-top: -10px; margin-bottom: 16px; }
+    .forgot a { font-size: 12px; color: var(--text-muted); text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
     .forgot a:hover { opacity: 1; color: var(--green-light); }
 
-    /* ── زر تسجيل الدخول ── */
     .btn-main {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #10b981, #059669);
-      border: none;
-      border-radius: 14px;
-      color: white;
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(16,185,129,0.3);
-      margin-bottom: 20px;
+      width: 100%; padding: 16px; background: linear-gradient(135deg, #10b981, #059669); border: none; border-radius: 14px; color: white; font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 8px 30px rgba(16,185,129,0.3); margin-bottom: 20px;
     }
-
-    .btn-main::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.5s;
-    }
-
+    .btn-main::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
     .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(16,185,129,0.45); }
     .btn-main:hover::before { left: 100%; }
     .btn-main:active { transform: translateY(0); }
 
-    /* ── فاصل ── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      color: rgba(134,239,172,0.3);
-      font-size: 12px;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(16,185,129,0.1);
-    }
+    .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: rgba(134,239,172,0.3); font-size: 12px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(16,185,129,0.1); }
 
-    /* ── تسجيل بـ Google ── */
-    .btn-google {
-      width: 100%;
-      padding: 14px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      color: var(--text);
-      font-family: 'Cairo', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .btn-google:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.2);
-      transform: translateY(-1px);
-    }
+    .btn-google { width: 100%; padding: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; color: var(--text); font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .btn-google:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    .google-icon { width: 20px; height: 20px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23FFC107' d='M43.6 20.1H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z'/%3E%3Cpath fill='%23FF3D00' d='M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.1 7.9 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z'/%3E%3Cpath fill='%234CAF50' d='M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.3 26.8 36 24 36c-5.2 0-9.6-3.1-11.2-7.5l-6.6 5.1C9.5 39.5 16.2 44 24 44z'/%3E%3Cpath fill='%231976D2' d='M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.2 5.2C37.3 38.5 44 33 44 24c0-1.3-.1-2.6-.4-3.9z'/%3E%3C/svg%3E") center/contain no-repeat; }
 
-    .google-icon {
-      width: 20px;
-      height: 20px;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23FFC107' d='M43.6 20.1H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z'/%3E%3Cpath fill='%23FF3D00' d='M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.1 7.9 2.9l5.7-5.7C34.5 6.5 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z'/%3E%3Cpath fill='%234CAF50' d='M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.3 26.8 36 24 36c-5.2 0-9.6-3.1-11.2-7.5l-6.6 5.1C9.5 39.5 16.2 44 24 44z'/%3E%3Cpath fill='%231976D2' d='M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.2 5.2C37.3 38.5 44 33 44 24c0-1.3-.1-2.6-.4-3.9z'/%3E%3C/svg%3E") center/contain no-repeat;
-    }
-
-    /* ── تصفح كزائر ── */
-    .guest-link {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .guest-link a {
-      font-size: 13px;
-      color: rgba(134,239,172,0.5);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
+    .guest-link { text-align: center; margin-top: 20px; }
+    .guest-link a { font-size: 13px; color: rgba(134,239,172,0.5); text-decoration: none; transition: color 0.3s; }
     .guest-link a:hover { color: var(--green-light); }
 
-    /* ── خط سفلي فخم ── */
-    .bottom-line {
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(16,185,129,0.08);
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-    .bottom-line span {
-      font-size: 11px;
-      color: rgba(134,239,172,0.3);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+    .bottom-line { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(16,185,129,0.08); display: flex; justify-content: center; gap: 20px; }
+    .bottom-line span { font-size: 11px; color: rgba(134,239,172,0.3); display: flex; align-items: center; gap: 5px; }
     .bottom-line i { color: var(--green); }
 
-    /* ── نموذج إنشاء حساب (مخفي افتراضياً) ── */
     #signupForm { display: none; }
   </style>
 </head>
@@ -381,25 +235,22 @@
 <div class="page">
   <div class="card">
 
-    <!-- الشعار -->
     <div class="logo-section">
       <div class="logo-icon">🌿</div>
       <div class="logo-text">أكريلي</div>
       <div class="logo-sub">EKRILI · منصة الإعلانات الذكية</div>
     </div>
 
-    <!-- تبويب -->
     <div class="tabs">
       <button class="tab-btn active" id="loginTab" onclick="switchForm('login')">تسجيل الدخول</button>
       <button class="tab-btn" id="signupTab" onclick="switchForm('signup')">إنشاء حساب</button>
     </div>
 
-    <!-- نموذج تسجيل الدخول -->
     <div id="loginForm">
       <div class="form-group">
-        <label class="form-label">البريد الإلكتروني أو رقم الهاتف</label>
+        <label class="form-label">البريد الإلكتروني</label>
         <div class="input-wrap">
-          <input class="field" type="text" id="loginEmail" placeholder="example@email.com" />
+          <input class="field" type="email" id="loginEmail" placeholder="example@email.com" />
           <i class="fa-regular fa-envelope"></i>
         </div>
       </div>
@@ -434,12 +285,11 @@
       </div>
     </div>
 
-    <!-- نموذج إنشاء حساب -->
     <div id="signupForm">
       <div class="form-group">
         <label class="form-label">الاسم الكامل</label>
         <div class="input-wrap">
-          <input class="field" type="text" placeholder="وسيم لولو" />
+          <input class="field" type="text" id="signupName" placeholder="وسيم لولو" required />
           <i class="fa-regular fa-user"></i>
         </div>
       </div>
@@ -447,7 +297,7 @@
       <div class="form-group">
         <label class="form-label">البريد الإلكتروني</label>
         <div class="input-wrap">
-          <input class="field" type="email" id="signupEmail" placeholder="example@email.com" />
+          <input class="field" type="email" id="signupEmail" placeholder="example@email.com" required />
           <i class="fa-regular fa-envelope"></i>
         </div>
       </div>
@@ -455,7 +305,7 @@
       <div class="form-group">
         <label class="form-label">رقم الهاتف</label>
         <div class="input-wrap">
-          <input class="field" type="tel" placeholder="0555 123 456" />
+          <input class="field" type="tel" id="signupPhone" placeholder="0555 123 456" required />
           <i class="fa-solid fa-phone"></i>
         </div>
       </div>
@@ -463,7 +313,7 @@
       <div class="form-group">
         <label class="form-label">كلمة المرور</label>
         <div class="input-wrap">
-          <input class="field" type="password" id="signupPass" placeholder="••••••••" />
+          <input class="field" type="password" id="signupPass" placeholder="••••••••" required />
           <i class="fa-solid fa-lock"></i>
           <button class="eye-btn" onclick="togglePass('signupPass', this)" type="button">
             <i class="fa-regular fa-eye"></i>
@@ -484,7 +334,6 @@
       </button>
     </div>
 
-    <!-- خط سفلي -->
     <div class="bottom-line">
       <span><i class="fa-solid fa-shield-halved"></i> آمن 100%</span>
       <span><i class="fa-solid fa-lock"></i> مشفر</span>
@@ -496,7 +345,9 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  // تم استدعاء الـ Firestore هنا لحفظ بيانات اليوزر كاملة
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDXp0NC0dV0QHFzWwovlEczI44wlJUEdSw",
@@ -509,12 +360,16 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
 
   window.handleLogin = async () => {
     const email = document.getElementById('loginEmail').value;
     const pass = document.getElementById('loginPass').value;
     const btn = document.querySelector('#loginForm .btn-main');
+    
+    if(!email || !pass) { alert('يرجى إدخال البريد الإلكتروني وكلمة المرور'); return; }
+
     btn.textContent = 'جاري الدخول...';
     btn.disabled = true;
     try {
@@ -532,15 +387,36 @@
   };
 
   window.handleSignup = async () => {
+    const name = document.getElementById('signupName').value;
     const email = document.getElementById('signupEmail').value;
+    const phone = document.getElementById('signupPhone').value;
     const pass = document.getElementById('signupPass').value;
     const btn = document.querySelector('#signupForm .btn-main');
+    
+    if(!name || !email || !phone || !pass) { alert('يرجى ملء جميع الحقول المطلوبة'); return; }
+
     btn.textContent = 'جاري الإنشاء...';
     btn.disabled = true;
     try {
-      await createUserWithEmailAndPassword(auth, email, pass);
+      // 1. إنشاء الحساب في الـ Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+      const user = userCredential.user;
+
+      // 2. تحديث الـ Display Name في ملفه الشخصي الأساسي
+      await updateProfile(user, { displayName: name });
+
+      // 3. حفظ بياناته الإضافية (الاسم + الهاتف) في الفايرستور كـ بروفايل مأمن
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: name,
+        email: email,
+        phone: phone,
+        createdAt: new Date()
+      });
+
       window.location.href = 'host-dashboard.html';
     } catch (e) {
+      console.error(e);
       btn.textContent = 'فشل الإنشاء — تحقق من البيانات';
       btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
       setTimeout(() => {
@@ -553,7 +429,18 @@
 
   window.handleGoogle = async () => {
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      
+      // حفظ بيانات مستخدم جوجل تلقائياً إذا كان أول دخول له
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: user.displayName || "مستخدم جديد",
+        email: user.email,
+        phone: user.phoneNumber || "غير مسجل",
+        createdAt: new Date()
+      }, { merge: true }); // Merge تمنع مسح البيانات القديمة لو كان مسجل من قبل
+
       window.location.href = 'host-dashboard.html';
     } catch (e) {
       console.error(e);
@@ -581,17 +468,19 @@
     }
   }
 
-  function togglePass(fieldId, btn) {
-    const field = document.getElementById(fieldId);
-    const icon = btn.querySelector('i');
-    if (field.type === 'password') {
-      field.type = 'text';
-      icon.className = 'fa-regular fa-eye-slash';
-    } else {
-      field.type = 'password';
-      icon.className = 'fa-regular fa-eye';
-    }
-  }
+  document.addEventListener('DOMContentLoaded', () => {
+    window.togglePass = function(fieldId, btn) {
+      const field = document.getElementById(fieldId);
+      const icon = btn.querySelector('i');
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.className = 'fa-regular fa-eye-slash';
+      } else {
+        field.type = 'password';
+        icon.className = 'fa-regular fa-eye';
+      }
+    };
+  });
 </script>
 
 </body>
